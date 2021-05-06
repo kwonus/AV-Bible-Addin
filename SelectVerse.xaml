@@ -1,0 +1,87 @@
+﻿<Window x:Class="AVX.SelectVerse"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AVX"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="420"
+            Height="300" Width="420"
+            Title="AVX - Insert Verses"
+            Loaded="Window_Loaded">
+    <Grid>
+        <Button x:Name="button" Content="Insert" HorizontalAlignment="Left" Margin="276,204,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="-0.453,0.502" Click="button_Click"/>
+        <Label x:Name="label" Content="Book" HorizontalAlignment="Left" Margin="32,30,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="comboBoxBook" HorizontalAlignment="Left" Margin="74,34,0,0" VerticalAlignment="Top" Width="197" SelectionChanged="comboBox_SelectionChanged">
+            <ComboBoxItem Tag="bk01" Content="Genesis"/>
+            <ComboBoxItem Tag="bk02" Content="Exodus"/>
+            <ComboBoxItem Tag="bk03" Content="Leviticus"/>
+            <ComboBoxItem Tag="bk04" Content="Numbers"/>
+            <ComboBoxItem Tag="bk05" Content="Deutoronomy"/>
+            <ComboBoxItem Tag="bk06" Content="Joshua"/>
+            <ComboBoxItem Tag="bk07" Content="Judges"/>
+            <ComboBoxItem Tag="bk08" Content="Ruth"/>
+            <ComboBoxItem Tag="bk09" Content="1 Samuel"/>
+            <ComboBoxItem Tag="bk10" Content="2 Samuel"/>
+            <ComboBoxItem Tag="bk11" Content="1 Kings"/>
+            <ComboBoxItem Tag="bk12" Content="2 Kings"/>
+            <ComboBoxItem Tag="bk13" Content="1 Chronicles"/>
+            <ComboBoxItem Tag="bk14" Content="2 Chronicles"/>
+            <ComboBoxItem Tag="bk15" Content="Ezra"/>
+            <ComboBoxItem Tag="bk16" Content="Nehemiah"/>
+            <ComboBoxItem Tag="bk17" Content="Esther"/>
+            <ComboBoxItem Tag="bk18" Content="Job"/>
+            <ComboBoxItem Tag="bk19" Content="Psalms"/>
+            <ComboBoxItem Tag="bk20" Content="Proverbs"/>
+            <ComboBoxItem Tag="bk21" Content="Ecclesiastes"/>
+            <ComboBoxItem Tag="bk22" Content="Song of Solomon"/>
+            <ComboBoxItem Tag="bk23" Content="Isaiah"/>
+            <ComboBoxItem Tag="bk24" Content="Jeremiah"/>
+            <ComboBoxItem Tag="bk25" Content="Lamentations"/>
+            <ComboBoxItem Tag="bk26" Content="Ezekiel"/>
+            <ComboBoxItem Tag="bk27" Content="Daniel"/>
+            <ComboBoxItem Tag="bk28" Content="Hosea"/>
+            <ComboBoxItem Tag="bk29" Content="Joel" />
+            <ComboBoxItem Tag="bk30" Content="Amos"/>
+            <ComboBoxItem Tag="bk31" Content="Obadiah"/>
+            <ComboBoxItem Tag="bk32" Content="Jonah"/>
+            <ComboBoxItem Tag="bk33" Content="Micah"/>
+            <ComboBoxItem Tag="bk34" Content="Nahum"/>
+            <ComboBoxItem Tag="bk35" Content="Habakkuk"/>
+            <ComboBoxItem Tag="bk36" Content="Zephaniah"/>
+            <ComboBoxItem Tag="bk37" Content="Haggai"/>
+            <ComboBoxItem Tag="bk38" Content="Zechariah"/>
+            <ComboBoxItem Tag="bk39" Content="Malachi"/>
+            <ComboBoxItem Tag="bk40" Content="Matthew"/>
+            <ComboBoxItem Tag="bk41" Content="Mark"/>
+            <ComboBoxItem Tag="bk42" Content="Luke"/>
+            <ComboBoxItem Tag="bk43" Content="John"/>
+            <ComboBoxItem Tag="bk44" Content="Acts"/>
+            <ComboBoxItem Tag="bk45" Content="Romans"/>
+            <ComboBoxItem Tag="bk46" Content="1 Corinthians"/>
+            <ComboBoxItem Tag="bk47" Content="2 Corinthians"/>
+            <ComboBoxItem Tag="bk48" Content="Galatians"/>
+            <ComboBoxItem Tag="bk49" Content="Ephesians"/>
+            <ComboBoxItem Tag="bk50" Content="Philippians"/>
+            <ComboBoxItem Tag="bk51" Content="Colossians"/>
+            <ComboBoxItem Tag="bk52" Content="1 Thessalonians"/>
+            <ComboBoxItem Tag="bk53" Content="2 Thessalonians"/>
+            <ComboBoxItem Tag="bk54" Content="1 Timothy"/>
+            <ComboBoxItem Tag="bk55" Content="2 Timothy"/>
+            <ComboBoxItem Tag="bk56" Content="Titus"/>
+            <ComboBoxItem Tag="bk57" Content="Philemon"/>
+            <ComboBoxItem Tag="bk58" Content="Hebrews"/>
+            <ComboBoxItem Tag="bk59" Content="James"/>
+            <ComboBoxItem Tag="bk60" Content="1 Peter"/>
+            <ComboBoxItem Tag="bk61" Content="2 Peter"/>
+            <ComboBoxItem Tag="bk62" Content="1 John"/>
+            <ComboBoxItem Tag="bk63" Content="2 John"/>
+            <ComboBoxItem Tag="bk64" Content="3 John"/>
+            <ComboBoxItem Tag="bk65" Content="Jude"/>
+            <ComboBoxItem Tag="bk66" Content="Revelation"/> "
+        </ComboBox>
+        <Label x:Name="label1" Content="Chapter &amp; Verse" HorizontalAlignment="Left" Margin="32,71,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="textBoxChaterAndVerse" HorizontalAlignment="Left" Height="23" Margin="134,75,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" KeyUp="textBoxChaterAndVerse_KeyUp"/>
+        <TextBlock x:Name="info" HorizontalAlignment="Left" Margin="32,127,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="64" Width="277"/>
+    </Grid>
+</Window>
