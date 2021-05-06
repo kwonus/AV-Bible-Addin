@@ -119,6 +119,7 @@ namespace AVX
                 if ((records[r].tx & 0x70) == 0x70) // EoC or EoB
                     return;
             }
+            var keepr = r;
             var first = true;
             var verse = new StringBuilder();
             if (!contiguous)
@@ -156,6 +157,19 @@ namespace AVX
             dynamic rng = Ribbon.AVX.Application.ActiveDocument.Range();
             rng.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
             rng.Text = verse.ToString();
+
+            r = keepr;
+            foreach (Word.Range w in rng.Words)
+            {
+                var text = w.Text.Trim();
+                if (text.Length >= 1 && char.IsLetter(text[0]))
+                {
+                    var italics = PUNC.IsItalisized(records[r].punc);
+                    if (italics)
+                        w.Font.Italic = 1;
+                    r++;
+                }
+            }
         }
        public SelectVerse(byte bkNum)
         {
