@@ -95,11 +95,13 @@ namespace AVX
             var bk = item.Tag.ToString().Substring(2);
             var b = (byte)UInt16.Parse(bk);
             var book = Ribbon.RIBBON.bkIdx[b];
-            string spec = item.Content.ToString() + " " + this.textBoxChaterAndVerse.Text.Trim().Replace(" ", "").Replace(",", ", ") + "\n";
+            string spec = item.Content.ToString() + " " + this.textBoxChaterAndVerse.Text.Trim().Replace(" ", "").Replace(",", ", ");
+            if (this.modernize.IsChecked == true)
+                spec += "  AVX";
             dynamic rng = Ribbon.AVX.Application.ActiveDocument.Range();
             rng.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
             rng.Bold = 1;
-            rng.Text = spec;
+            rng.Text = spec + "\n";
             foreach (Word.Range w in rng.Words)
             {
                 w.Font.Bold = 1;
@@ -348,7 +350,7 @@ namespace AVX
                     int prev = 0;
                     foreach (var v in list)
                     {
-                        this.WriteVerse(b, c, v, true, first || (v == ++prev));
+                        this.WriteVerse(b, c, v, this.modernize.IsChecked == true, first || (v == ++prev));
                         prev = v;
                         first = false;
                     }

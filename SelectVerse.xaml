@@ -83,5 +83,6 @@
         <Label x:Name="label1" Content="Chapter &amp; Verse" HorizontalAlignment="Left" Margin="32,71,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="textBoxChaterAndVerse" HorizontalAlignment="Left" Height="23" Margin="134,75,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" KeyUp="textBoxChaterAndVerse_KeyUp"/>
         <TextBlock x:Name="info" HorizontalAlignment="Left" Margin="32,127,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="64" Width="277"/>
+        <CheckBox x:Name="modernize" Content="Modernize the text" HorizontalAlignment="Left" Margin="32,212,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>
