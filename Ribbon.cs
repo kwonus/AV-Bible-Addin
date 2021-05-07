@@ -37,6 +37,7 @@ namespace AVX
     [ComVisible(true)]
     public class Ribbon : Office.IRibbonExtensibility
     {
+        private string CommonFolder;
         private Office.IRibbonUI ribbon;
         public (UInt32 idx, byte ccnt)[] bkIdx { get; private set; }
         public Dictionary<byte, Dictionary<byte, (UInt32 writIdx, byte vcnt)>> chIdx { get; private set; }
@@ -57,8 +58,8 @@ namespace AVX
 
             Assembly assembly = Assembly.GetExecutingAssembly();
 
-            var folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonProgramFilesX86), "Digital-AV");
-            var path = Path.Combine(folder, "AV-Writ-32.dx");
+            this.CommonFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonProgramFilesX86), "Digital-AV");
+            var path = Path.Combine(this.CommonFolder, "AV-Writ-32.dx");
             var file = File.OpenRead(path);
 
             var len = file.Length;
@@ -115,7 +116,7 @@ namespace AVX
             reader.Close();
             file.Close();
 
-            path = Path.Combine(folder, "AV-Lexicon.dxi");
+            path = Path.Combine(this.CommonFolder, "AV-Lexicon.dxi");
             this.Search = new Dictionary<UInt16, string>();
             this.Display = new Dictionary<UInt16, string>();
             this.Modern = new Dictionary<UInt16, string>();
@@ -166,11 +167,11 @@ namespace AVX
             var xml = GetResourceText("AVX.Ribbon.xml");
             return xml;
         }
-        private string root = @"C:\Users\kevin\OneDrive\Documents\";
         private Bitmap BitmapAVX = null;
         public Bitmap GetImageAVX(IRibbonControl control)
-        { 
-            return (BitmapAVX != null) ? BitmapAVX : BitmapAVX = new Bitmap(root + "avx64.png");
+        {
+            var image = Path.Combine(this.CommonFolder, "avx64.png");
+            return (BitmapAVX != null) ? BitmapAVX : BitmapAVX = new Bitmap(image);
         }
         public void clickButtonAVX(Office.IRibbonControl control)
         {
