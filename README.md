@@ -6,7 +6,7 @@ The 1.0 release allows insertion of bible verses into your currently-open Micros
 
 
 
-![image-20210506222500439](.\AVXAddin.png)
+![image-20210506222500439](AVXAddin.png)
 
 
 
