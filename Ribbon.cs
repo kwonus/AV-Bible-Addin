@@ -57,7 +57,8 @@ namespace AVX
 
             Assembly assembly = Assembly.GetExecutingAssembly();
 
-            var path = "C:/src/Digital-AV/z-series/AV-Writ-32.dx";
+            var folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonProgramFilesX86), "Digital-AV");
+            var path = Path.Combine(folder, "AV-Writ-32.dx");
             var file = File.OpenRead(path);
 
             var len = file.Length;
@@ -114,7 +115,7 @@ namespace AVX
             reader.Close();
             file.Close();
 
-            path = "C:/src/Digital-AV/z-series/AV-Lexicon.dxi";
+            path = Path.Combine(folder, "AV-Lexicon.dxi");
             this.Search = new Dictionary<UInt16, string>();
             this.Display = new Dictionary<UInt16, string>();
             this.Modern = new Dictionary<UInt16, string>();
@@ -153,11 +154,9 @@ namespace AVX
                         }
                     }
                 }
-
             }
             reader.Close();
             file.Close();
-
         }
 
         #region IRibbonExtensibility Members
