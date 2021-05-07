@@ -1,8 +1,8 @@
-So you don't want to fiddle with the source code, and Windows installer is available here:
+So you don't want to fiddle with the source code ... a Windows installer is available here:
 
 http://digital-av.org/installer/AVX-Addin-For-Microsoft-Word.msi
 
-The 1.0 release allows insertion of bible verses into your currently-open Microsoft Word document. No more Copy&Paste; just by click a button, specific chapter & verse, and voila!
+The 1.0 release allows insertion of bible verses into your currently-open Microsoft Word document. No more Copy&Paste; just click a button in the Ribbon, specify chapter & verse, and voila!
 
 
 
