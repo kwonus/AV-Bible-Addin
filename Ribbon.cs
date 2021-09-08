@@ -187,6 +187,20 @@ namespace AVX
                 MessageBox.Show(null, "Please open a document prior to inserting verses", "Cannot insert text with a current document", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        public void clickButtonSearch(Office.IRibbonControl control)
+        {
+            try
+            {
+                //              Word.Range rng = this.avx.Application.ActiveDocument.Range(0, 0);
+                //              rng.Text = "New Text ";
+                var popup = new FindVerses();
+                popup.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(null, "Please open a document prior to searching", "Cannot insert text with a current document", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
         public void clickBookAVX(Office.IRibbonControl control)
         {
             try

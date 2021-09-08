@@ -10,9 +10,9 @@
             Title="AVX - Insert Verses"
             Loaded="Window_Loaded">
     <Grid>
-        <Button x:Name="button" Content="Insert" HorizontalAlignment="Left" Margin="276,204,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="-0.453,0.502" Click="button_Click"/>
+        <Button x:Name="button" Content="Insert" HorizontalAlignment="Right" Margin="0,0,44,42" VerticalAlignment="Bottom" Width="75" RenderTransformOrigin="-0.453,0.502" Click="button_Click"/>
         <Label x:Name="label" Content="Book" HorizontalAlignment="Left" Margin="32,30,0,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="comboBoxBook" HorizontalAlignment="Left" Margin="74,34,0,0" VerticalAlignment="Top" Width="197" SelectionChanged="comboBox_SelectionChanged">
+        <ComboBox x:Name="comboBoxBook" HorizontalAlignment="Left" Margin="134,34,0,0" VerticalAlignment="Top" Width="234" SelectionChanged="comboBox_SelectionChanged">
             <ComboBoxItem Tag="bk01" Content="Genesis"/>
             <ComboBoxItem Tag="bk02" Content="Exodus"/>
             <ComboBoxItem Tag="bk03" Content="Leviticus"/>
@@ -81,8 +81,8 @@
             <ComboBoxItem Tag="bk66" Content="Revelation"/> "
         </ComboBox>
         <Label x:Name="label1" Content="Chapter &amp; Verse" HorizontalAlignment="Left" Margin="32,71,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="textBoxChaterAndVerse" HorizontalAlignment="Left" Height="23" Margin="134,75,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" KeyUp="textBoxChaterAndVerse_KeyUp"/>
-        <TextBlock x:Name="info" HorizontalAlignment="Left" Margin="32,127,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="64" Width="277"/>
-        <CheckBox x:Name="modernize" Content="Modernize the text" HorizontalAlignment="Left" Margin="32,212,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="textBoxChaterAndVerse" Height="23" Margin="134,75,44,0" TextWrapping="Wrap" VerticalAlignment="Top" KeyUp="textBoxChaterAndVerse_KeyUp"/>
+        <TextBlock x:Name="info" Margin="32,127,44,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="64"/>
+        <CheckBox x:Name="modernize" Content="Modernize the text" HorizontalAlignment="Left" Margin="32,0,0,42" Height="15" VerticalAlignment="Bottom"/>
     </Grid>
 </Window>

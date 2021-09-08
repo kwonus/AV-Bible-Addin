@@ -4,7 +4,8 @@
         <tabs>
           <tab id="tabAVX" label="AVX">
             <group id="AVX1">
-              <button id="btnLogo" size="large" label="Any Verse" description="Insert a bible verse or verses into the current document" getImage="GetImageAVX" onAction="clickButtonAVX"  />
+              <button id="btnLogo" size="large" label="Insert Verse" description="Insert a bible verse or verses into current document" getImage="GetImageAVX" onAction="clickButtonAVX"  />
+              <button id="btnLogo2" size="large" label="Search Bible" description="Find a bible verse or verses (which can optionally be inserted into current document)" getImage="GetImageAVX" onAction="clickButtonSearch"  />
             </group>
             <group id="AVX2">
               <button id="bk01" size="normal" label="Genesis"       tag="Genesis" onAction="clickBookAVX"  />

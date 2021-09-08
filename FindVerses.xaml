@@ -1,0 +1,21 @@
+﻿<Window x:Class="AVX.FindVerses"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AVX"
+             mc:Ignorable="d" d:DesignWidth="420"
+            Height="528.516" Width="420"
+            Title="AVX - Find Verses">
+    <Grid>
+        <TextBox x:Name="findBoxChaterAndVerse" Margin="80,33,132,0" TextWrapping="Wrap" Height="23" VerticalAlignment="Top"/>
+        <Label Content="Find" HorizontalAlignment="Left" Margin="32,30,0,0" VerticalAlignment="Top"/>
+        <Label Content="Chapter &amp; Verse" HorizontalAlignment="Left" Margin="44,0,0,70" VerticalAlignment="Bottom"/>
+        <TextBox x:Name="textBoxChaterAndVerse" Margin="162,0,38,70" TextWrapping="Wrap" Height="23" VerticalAlignment="Bottom"/>
+        <CheckBox x:Name="modernize" Content="Modernize the text" HorizontalAlignment="Left" Margin="44,0,0,31" VerticalAlignment="Bottom"/>
+        <TreeView x:Name="FoundTree" Margin="80,79,38,128"/>
+        <Label Content="verses" HorizontalAlignment="Left" Margin="32,79,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="button_search" Content="Search" Margin="0,33,38,0" RenderTransformOrigin="-0.453,0.502" Click="search_Click" HorizontalAlignment="Right" Width="75" Height="20" VerticalAlignment="Top"/>
+        <Button x:Name="button_insert" Content="Insert" Margin="0,0,38,31" VerticalAlignment="Bottom" RenderTransformOrigin="-0.453,0.502" Click="insert_Click" HorizontalAlignment="Right" Width="75"/>
+    </Grid>
+</Window>
