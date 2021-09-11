@@ -226,11 +226,15 @@ namespace AVX
                     var book = api.Books[bk-1];
                     foreach (var abbr in book.abbreviations)
                     {
-                        var len =abbr.Length;
-
+                        var len = abbr.Length;
                         if (trimmed.StartsWith(abbr, StringComparison.InvariantCultureIgnoreCase))
                         {
-                            trimmed = trimmed.Substring(len).Trim();
+                            for (trimmed = trimmed.Substring(len); trimmed.Length > 0 && !char.IsWhiteSpace(trimmed[0]); trimmed = trimmed.Substring(1)) // handles Gen vs Ge for abbreviation
+                                ;
+                            trimmed = trimmed.Trim();
+                                if (trimmed.Length == 0)
+                                    return;
+
                             if (trimmed == ": all matching verses")
                             {
                                 var bookNode = this.FindNode(book.name);
