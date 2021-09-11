@@ -171,7 +171,7 @@ namespace AVX
                     foreach (var candidate in ((TreeViewItem)root).Items)
                     {
                         var bookNode = (TreeViewItem)candidate;
-                        var book = api.Books[(byte)bookNode.Tag];
+                        var book = api.Books[(byte)bookNode.Tag-1];
                         foreach (var chapterNode in bookNode.Items)
                             AddChapterToDocument(book, (TreeViewItem)chapterNode);
                     }
@@ -183,7 +183,7 @@ namespace AVX
             {
                 for (byte bk = 1; bk <= 66; bk++)
                 {
-                    var book = api.Books[bk];
+                    var book = api.Books[bk-1];
                     var len = book.name.Length;
 
                     if (trimmed.StartsWith(book.name, StringComparison.InvariantCultureIgnoreCase) && len < trimmed.Length)
@@ -223,7 +223,7 @@ namespace AVX
                 }
                 for (byte bk = 1; bk <= 66; bk++)
                 {
-                    var book = api.Books[bk];
+                    var book = api.Books[bk-1];
                     foreach (var abbr in book.abbreviations)
                     {
                         var len =abbr.Length;
