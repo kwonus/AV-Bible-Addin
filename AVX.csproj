@@ -223,6 +223,10 @@
       <Project>{612adea6-fb83-48f1-8ad2-2c7a1edf57b3}</Project>
       <Name>AVText-dotnet-4.8</Name>
     </ProjectReference>
+    <ProjectReference Include="..\HMI\HMI-dotnet-4.8.csproj">
+      <Project>{7c4cea87-7970-4b1f-abf0-43bffb2a21d9}</Project>
+      <Name>HMI-dotnet-4.8</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
