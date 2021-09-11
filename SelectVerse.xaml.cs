@@ -142,6 +142,9 @@ namespace AVX
 
         private void textBoxChaterAndVerse_KeyUp(object sender, KeyEventArgs e)
         {
+            if (this.comboBoxBook.SelectedItem == null)
+                return;
+
             ComboBoxItem item = (ComboBoxItem)this.comboBoxBook.SelectedItem;
             var bk = item.Tag.ToString().Substring(2);
             var b = (byte)UInt16.Parse(bk);
