@@ -12,6 +12,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using Word = Microsoft.Office.Interop.Word;
 using System.Windows.Resources;
+using System.Windows.Interop;
 
 // TODO:  Follow these steps to enable the Ribbon (XML) item:
 
@@ -37,6 +38,21 @@ namespace AVX
     [ComVisible(true)]
     public class Ribbon : Office.IRibbonExtensibility
     {
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool SetForegroundWindow(IntPtr hWnd);
+        public static void BringToTop(System.Windows.Window form)
+        {
+            form.Show();
+            form.BringIntoView();
+
+            IntPtr hwnd = new WindowInteropHelper(form).Handle;
+            SetForegroundWindow(hwnd);
+
+        }
+        public FindVerses SearchForm;
+        public SelectVerse BrowseForm;
+
         private string CommonFolder;
         private Office.IRibbonUI ribbon;
         public (UInt32 idx, byte ccnt)[] bkIdx { get; private set; }
@@ -177,10 +193,20 @@ namespace AVX
         {
             try
             {
-//              Word.Range rng = this.avx.Application.ActiveDocument.Range(0, 0);
-//              rng.Text = "New Text ";
-                var popup = new SelectVerse();
-                popup.Show();
+                try
+                {
+                    if (this.BrowseForm != null)
+                    {
+                        Ribbon.BringToTop(this.BrowseForm);
+                        return;
+                    }
+                }
+                catch
+                {
+                    ;
+                }
+                this.BrowseForm = new SelectVerse();
+                this.BrowseForm.Show();
             }
             catch (Exception ex)
             {
@@ -191,10 +217,20 @@ namespace AVX
         {
             try
             {
-                //              Word.Range rng = this.avx.Application.ActiveDocument.Range(0, 0);
-                //              rng.Text = "New Text ";
-                var popup = new FindVerses();
-                popup.Show();
+                try
+                {
+                    if (this.SearchForm != null)
+                    {
+                        Ribbon.BringToTop(this.SearchForm);
+                        return;
+                    }
+                }
+                catch
+                {
+                    ;
+                }
+                this.SearchForm = new FindVerses();
+                this.SearchForm.Show();
             }
             catch (Exception ex)
             {
