@@ -102,11 +102,16 @@ namespace AVX
                     chapter.Items.Add(verse);
                 }
                 if (this.FoundTree.Items.Count == 1)
-                    this.textBoxChaterAndVerse.Text = book.Header.ToString() + " " + ((uint)ch).ToString() + " " + ((uint)vs).ToString();
-                else if (this.FoundTree.Items.Count > 1)
-                    this.textBoxChaterAndVerse.Text = "all matching verses";
+                {
+                    if (root.Items.Count == 1)
+                        this.textBoxChaterAndVerse.Text = ((TreeViewItem)root.Items[0]).Header.ToString() + ": all matching verses";
+                    else
+                        this.textBoxChaterAndVerse.Text = "all matching verses";
+                }
                 else
-                    this.textBoxChaterAndVerse.Text = "";   
+                { 
+                    this.textBoxChaterAndVerse.Text = "";
+                }
             }
         }
         private void AddVerseToDocument(Book book, Chapter chapter, byte verse)
@@ -257,7 +262,7 @@ namespace AVX
 
                 if ((byte)parent.Tag == 0)        // Book
                 {
-                    this.textBoxChaterAndVerse.Text = node.Header.ToString() + ": all matching verses" + node.Header.ToString();
+                    this.textBoxChaterAndVerse.Text = node.Header.ToString() + ": all matching verses";
                 }
                 else
                 {
