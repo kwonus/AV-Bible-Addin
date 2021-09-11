@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AVSDK;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -89,6 +90,13 @@ namespace AVX
     /// </summary>
     public partial class SelectVerse : Window
     {
+        private static AVXAPI api
+        {
+            get
+            {
+                return ThisAddIn.api;
+            }
+        }
         private void WriteVerseSpec()
         {
             ComboBoxItem item = (ComboBoxItem)this.comboBoxBook.SelectedItem;
@@ -97,7 +105,7 @@ namespace AVX
             var book = Ribbon.RIBBON.bkIdx[b];
             string spec = item.Content.ToString() + " " + this.textBoxChaterAndVerse.Text.Trim().Replace(" ", "").Replace(",", ", ");
             if (this.modernize.IsChecked == true)
-                spec += "  AVX";
+                spec += "  (AVX)";
             dynamic rng = Ribbon.AVX.Application.ActiveDocument.Range();
             rng.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
             rng.Bold = 1;
@@ -107,73 +115,7 @@ namespace AVX
                 w.Font.Bold = 1;
             }
         }
-        private void WriteVerse(byte b, byte c, byte v, bool modern, bool contiguous)
-        {
-            byte prevPunc = 0;
-            var chapter = Ribbon.RIBBON.chIdx[b][c];
-            var records = Ribbon.RIBBON.writ;
-            UInt32 r = chapter.writIdx;
-            for (int i = 1; i < v; /**/)
-            {
-                r++;
-                if ((records[r].tx & 0x70) == 0x20) // BoV
-                    i++;
-                if ((records[r].tx & 0x70) == 0x70) // EoC or EoB
-                    return;
-            }
-            var keepr = r;
-            var first = true;
-            var verse = new StringBuilder();
-            if (!contiguous)
-                verse.Append("\n");
-            do
-            {
-                string word = null;
-                UInt16 key = (UInt16)(0x7FFF & records[r].word);
-                if (modern && Ribbon.RIBBON.Modern.ContainsKey(key))
-                    word = Ribbon.RIBBON.Modern[key];
-                if (word == null && Ribbon.RIBBON.Display.ContainsKey(key))
-                    word = Ribbon.RIBBON.Display[key];
-                if (word == null && Ribbon.RIBBON.Search.ContainsKey(key))
-                    word = Ribbon.RIBBON.Search[key];
-
-                if (first)
-                    first = false;
-                else
-                    verse.Append(' ');
-
-                var postfix = PUNC.PostfixPunctuation(word, records[r].punc);
-                var prefix = PUNC.PrefixPunctuation(records[r].punc, prevPunc);
-                prevPunc = records[r].punc;
-
-                if (prefix.Length > 0)
-                    verse.Append(prefix);
-                verse.Append(CAPS.Captitalize(records[r].word, word));
-                if (postfix.Length > 0)
-                    verse.Append(postfix);
-
-            }   while ((records[r++].tx & 0x30) != 0x30); // EoV or EoC or EoB
-
-            verse.Append("  ");
-
-            dynamic rng = Ribbon.AVX.Application.ActiveDocument.Range();
-            rng.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
-            rng.Text = verse.ToString();
-
-            r = keepr;
-            foreach (Word.Range w in rng.Words)
-            {
-                var text = w.Text.Trim();
-                if (text.Length >= 1 && char.IsLetter(text[0]))
-                {
-                    var italics = PUNC.IsItalisized(records[r].punc);
-                    if (italics)
-                        w.Font.Italic = 1;
-                    r++;
-                }
-            }
-        }
-       public SelectVerse(byte bkNum)
+        public SelectVerse(byte bkNum)
         {
             InitializeComponent();
             if (bkNum >= 1 && bkNum <= 66)
@@ -350,13 +292,12 @@ namespace AVX
                     int prev = 0;
                     foreach (var v in list)
                     {
-                        this.WriteVerse(b, c, v, this.modernize.IsChecked == true, first || (v == ++prev));
+                        ThisAddIn.WriteVerse(b, c, v, this.modernize.IsChecked == true, first || (v == ++prev));
                         prev = v;
                         first = false;
                     }
                     dynamic rng = Ribbon.AVX.Application.ActiveDocument.Range();
                     rng.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
-                    rng.Text = "\n";
 
                     this.Close();
                 }

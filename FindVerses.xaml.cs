@@ -19,7 +19,13 @@ namespace AVX
         {
             InitializeComponent();
         }
-        public static AVXAPI api { get; private set; } = new AVXAPI();
+        private static AVXAPI api
+        {
+            get
+            {
+                return ThisAddIn.api;
+            }
+        }
         private IQuelleSearchResult found;
 
         (bool success, HMICommand hmi, IQuelleSearchResult result) QuelleCommand(string text)
@@ -114,16 +120,32 @@ namespace AVX
                 }
             }
         }
-        private void AddVerseToDocument(Book book, Chapter chapter, byte verse)
+        private void WriteVerseSpec(Book book, byte chapter, byte verse)
         {
-            ;   // TODO: Add content to Word document
+            string spec = book.name + " " + chapter.ToString() + ":" + verse.ToString();
+            if (this.modernize.IsChecked == true)
+                spec += "  (AVX)";
+            dynamic rng = Ribbon.AVX.Application.ActiveDocument.Range();
+            rng.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
+            rng.Bold = 1;
+            rng.Text = spec;
+            foreach (Word.Range w in rng.Words)
+            {
+                w.Font.Bold = 1;
+            }
+        }
+        private void AddVerseToDocument(Book book, byte chapter, byte verse)
+        {
+            this.WriteVerseSpec(book, chapter, verse);
+            ThisAddIn.WriteVerse(book, chapter, verse, this.modernize.IsChecked == true, false);
         }
         private void AddChapterToDocument(Book book, TreeViewItem chapterNode)
         {
-            var chapter = api.Chapters[book.chapterIdx + (byte)chapterNode.Tag - 1];
+            var c = (byte)chapterNode.Tag;
+            //var chapter = api.Chapters[book.chapterIdx + c - 1];
             foreach (var verseNode in chapterNode.Items)
             {
-                AddVerseToDocument(book, chapter, (byte)((TreeViewItem)verseNode).Tag);
+                AddVerseToDocument(book, c, (byte)((TreeViewItem)verseNode).Tag);
             }
         }
         TreeViewItem FindNode(string bookName)
@@ -182,16 +204,16 @@ namespace AVX
                             var spec = trimmed.Split(':');
                             if (spec.Length == 2)
                             {
-                                var c = int.Parse(spec[0].Trim());
+                                var c = byte.Parse(spec[0].Trim());
                                 if (c >= 1 && c <= book.chapterCnt)
                                 {
-                                    Chapter chapter = api.Chapters[book.chapterIdx + c - 1];
+                                    // Chapter chapter = api.Chapters[book.chapterIdx + c - 1];
 
                                     foreach (var verse in spec[1].Split(','))
                                     {
                                         var v = int.Parse(verse.Trim());
                                         if (v >= 1 && v <= 255)
-                                            AddVerseToDocument(book, chapter, (byte)v);
+                                            AddVerseToDocument(book, c, (byte)v);
                                     }
                                 }
                             }
@@ -223,16 +245,16 @@ namespace AVX
                                 var spec = trimmed.Split(':');
                                 if (spec.Length == 2)
                                 {
-                                    var c = int.Parse(spec[0].Trim());
+                                    var c = byte.Parse(spec[0].Trim());
                                     if (c >= 1 && c <= book.chapterCnt)
                                     {
-                                        Chapter chapter = api.Chapters[book.chapterIdx + c - 1];
+                                        // Chapter chapter = api.Chapters[book.chapterIdx + c - 1];
 
                                         foreach (var verse in spec[1].Split(','))
                                         {
                                             var v = int.Parse(verse.Trim());
                                             if (v >= 1 && v <= 255)
-                                                AddVerseToDocument(book, chapter, (byte)v);
+                                                AddVerseToDocument(book, c, (byte)v);
                                         }
                                     }
                                 }
