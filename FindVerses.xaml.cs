@@ -312,5 +312,21 @@ namespace AVX
                 }
             }
         }
+
+        private void OnKeyDownCrieria(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                this.search_Click(sender, null);
+            }
+        }
+        private void OnKeyDownSpec(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                this.insert_Click(sender, null);
+            }
+        }
+
     }
 }
