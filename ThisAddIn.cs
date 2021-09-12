@@ -56,8 +56,28 @@ namespace AVX
             {
                 string word = null;
                 UInt16 key = (UInt16)(0x7FFF & records[r].word);
-                if (modern && Ribbon.RIBBON.Modern.ContainsKey(key))
+                bool diff = modern && Ribbon.RIBBON.Modern.ContainsKey(key);
+                if (diff)
+                {
                     word = Ribbon.RIBBON.Modern[key];
+                    ThisAddIn.api.XWrit.SetCursor(r);
+                    byte pn = (byte) (ThisAddIn.api.XWrit.WClass >> 12);
+                    bool plural = (pn & 0xC) == 0x8;
+                    bool singular = (pn & 0xC) == 0x4;
+                    byte p = (byte) (pn & 0x3);
+
+                    if ((p == 2) && singular)
+                        word += '†';
+                    else
+                    {
+                        var orig = Ribbon.RIBBON.Search[key];
+                        if (orig.StartsWith("th", StringComparison.InvariantCultureIgnoreCase) && word.StartsWith("you", StringComparison.InvariantCultureIgnoreCase))
+                            word += '†';
+                        else if (orig.EndsWith("st", StringComparison.InvariantCultureIgnoreCase) && !word.EndsWith("st", StringComparison.InvariantCultureIgnoreCase))
+                            word += '†';
+                    }
+
+                }
                 if (word == null && Ribbon.RIBBON.Display.ContainsKey(key))
                     word = Ribbon.RIBBON.Display[key];
                 if (word == null && Ribbon.RIBBON.Search.ContainsKey(key))
