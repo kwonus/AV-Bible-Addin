@@ -33,7 +33,7 @@ namespace AVX
             ThisAddIn.WriteVerse(book.num, c, v, modern, contiguous);
         }
 
-        public static void WriteVerse(byte b, byte c, byte v, bool modern, bool contiguous)
+        public static void WriteVerse(byte b, byte c, byte v, bool modern, bool contiguous, Word.WdColor label = Word.WdColor.wdColorBlue)
         {
             byte prevPunc = 0;
             var chapter = Ribbon.RIBBON.chIdx[b][c];
@@ -50,10 +50,12 @@ namespace AVX
             var keepr = r;
             var first = true;
             var verse = new StringBuilder();
-            if (!contiguous)
-                verse.Append("\n");
+
             do
             {
+                if (contiguous && ((records[r].tx & 0x70) == 0x20)) // BoV
+                    verse.Append(v.ToString() + (char)0x200B /* zero-width-space */);
+
                 string word = null;
                 UInt16 key = (UInt16)(0x7FFF & records[r].word);
                 bool diff = modern && Ribbon.RIBBON.Modern.ContainsKey(key);
@@ -67,7 +69,10 @@ namespace AVX
                     byte p = (byte) (pn & 0x3);
 
                     if ((p == 2) && singular)
+                    {
+                        word += (char)0x200B; /* zero-width-space */
                         word += '†';
+                    }
                     else
                     {
                         var orig = Ribbon.RIBBON.Search[key];
@@ -109,17 +114,43 @@ namespace AVX
             rng.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
             rng.Text = verse.ToString();
 
+            Word.WdColor original = label;
             r = keepr;
             foreach (Word.Range w in rng.Words)
             {
+                if (contiguous && (original == label))
+                    original = w.Font.Color;
+
                 w.Bold = 0;
                 var text = w.Text.Trim();
-                if (text.Length >= 1 && char.IsLetter(text[0]))
+                if (text.Length >= 1)
                 {
-                    var italics = PUNC.IsItalisized(records[r].punc);
-                    if (italics)
-                        w.Font.Italic = 1;
-                    r++;
+                    if (char.IsDigit(text[0]))
+                    {
+                        w.Font.Subscript = 0;
+                        w.Font.Superscript = 1;
+                        w.Font.Color = label;
+                    }
+                    else
+                    {
+                        w.Font.Superscript = 0;
+                        if (contiguous)
+                            w.Font.Color = original;
+
+                        if (char.IsLetter(text[0]))
+                        {
+                            w.Font.Subscript = 0;
+
+                            var italics = PUNC.IsItalisized(records[r].punc);
+                            if (italics)
+                                w.Font.Italic = 1;
+                            r++;
+                        }
+                        else
+                        {
+                            w.Font.Subscript = 1;
+                        }
+                    }
                 }
             }
         }

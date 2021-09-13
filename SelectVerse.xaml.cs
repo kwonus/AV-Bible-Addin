@@ -295,7 +295,7 @@ namespace AVX
                     int prev = 0;
                     foreach (var v in list)
                     {
-                        ThisAddIn.WriteVerse(b, c, v, this.modernize.IsChecked == true, first || (v == ++prev));
+                        ThisAddIn.WriteVerse(b, c, v, this.modernize.IsChecked == true, true);
                         prev = v;
                         first = false;
                     }
