@@ -183,11 +183,17 @@ namespace AVX
             var xml = GetResourceText("AVX.Ribbon.xml");
             return xml;
         }
-        private Bitmap BitmapAVX = null;
-        public Bitmap GetImageAVX(IRibbonControl control)
+        private Bitmap BitmapBook = null;
+        private Bitmap BitmapSearch = null;
+        public Bitmap GetImageBook(IRibbonControl control)
         {
             var image = Path.Combine(this.CommonFolder, "avx64.png");
-            return (BitmapAVX != null) ? BitmapAVX : BitmapAVX = new Bitmap(image);
+            return (BitmapBook != null) ? BitmapBook : BitmapBook = new Bitmap(image);
+        }
+        public Bitmap GetImageSearch(IRibbonControl control)
+        {
+            var image = Path.Combine(this.CommonFolder, "avx64-search.png");
+            return (BitmapSearch != null) ? BitmapSearch : BitmapSearch = new Bitmap(image);
         }
         public void clickButtonAVX(Office.IRibbonControl control)
         {
