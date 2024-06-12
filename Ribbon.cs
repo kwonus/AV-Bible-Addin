@@ -51,7 +51,7 @@ namespace AVX
 
         }
         public FindVerses SearchForm;
-        public SelectVerse BrowseForm;
+        public InsertVerses BrowseForm;
 
         private string CommonFolder;
         private Office.IRibbonUI ribbon;
@@ -74,14 +74,14 @@ namespace AVX
 
             Assembly assembly = Assembly.GetExecutingAssembly();
 
-            this.CommonFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonProgramFilesX86), "Digital-AV");
-            var path = Path.Combine(this.CommonFolder, "AV-Writ-32.dx");
-            var file = File.OpenRead(path);
+            //            this.CommonFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonProgramFilesX86), "Digital-AV");
+            //            var path = Path.Combine(this.CommonFolder, "AV-Writ-32.dx");
+            //            var file = File.OpenRead(path);
 
-            var len = file.Length;
+            var len = 0;// file.Length;
             var cnt = (UInt32) (len / 4);
             if (len != (0xC0C93) * 4)
-                MessageBox.Show(null, "AVX Addin for Microsoft Word", "Possible File corruption error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(null, "AV-Bible Addin for Microsoft Word", "Possible File corruption error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             this.writ = new (UInt16 word, byte punc, byte tx)[cnt];
             this.bkIdx = new (UInt32 idx, byte ccnt)[1 + 66];  // waste element-zero for a one-based index
@@ -92,7 +92,7 @@ namespace AVX
             byte b = 0;
             byte c = 0;
             byte v = 0;
-
+/*
             var reader = new BinaryReader(file);
             UInt32 cidx = 0;
             UInt32 vidx = 0;
@@ -174,6 +174,7 @@ namespace AVX
             }
             reader.Close();
             file.Close();
+            */
         }
 
         #region IRibbonExtensibility Members
@@ -185,41 +186,48 @@ namespace AVX
         }
         private Bitmap BitmapBook = null;
         private Bitmap BitmapSearch = null;
-        public Bitmap GetImageBook(IRibbonControl control)
+        private static Bitmap REF  = new Bitmap(Path.Combine("C:\\Users\\Me\\Downloads", "icons8-bible-80.png"));
+        private static Bitmap FIND = new Bitmap(Path.Combine("C:\\Users\\Me\\Downloads", "icons8-find-80.png"));
+        private static Bitmap BOOK = new Bitmap(Path.Combine("C:\\Users\\Me\\Downloads", "icons8-bookmark-40 (1).png"));
+        public Bitmap GetImage(IRibbonControl control)
         {
-            var image = Path.Combine(this.CommonFolder, "avx64.png");
-            return (BitmapBook != null) ? BitmapBook : BitmapBook = new Bitmap(image);
+            if (control.Tag == "OT" || control.Tag == "NT")
+                return REF;
+            if (control.Tag == "FIND")
+                return FIND;
+            
+            return BOOK;
         }
-        public Bitmap GetImageSearch(IRibbonControl control)
-        {
-            var image = Path.Combine(this.CommonFolder, "avx64-search.png");
-            return (BitmapSearch != null) ? BitmapSearch : BitmapSearch = new Bitmap(image);
-        }
-        public void clickButtonAVX(Office.IRibbonControl control)
+        public void clickRef(Office.IRibbonControl control)
         {
             try
             {
-                try
+                if (control.Tag == "NT")
                 {
-                    if (this.BrowseForm != null)
-                    {
-                        Ribbon.BringToTop(this.BrowseForm);
-                        return;
-                    }
+                    InsertVerses.InsertOT.Hide();
+                    InsertVerses.InsertAny.Hide();
+                    this.BrowseForm = InsertVerses.InsertNT;
                 }
-                catch
+                else if (control.Tag == "OT")
                 {
-                    ;
+                    InsertVerses.InsertNT.Hide();
+                    InsertVerses.InsertAny.Hide();
+                    this.BrowseForm = InsertVerses.InsertOT;
                 }
-                this.BrowseForm = new SelectVerse();
-                this.BrowseForm.Show();
+                else
+                {
+                    InsertVerses.InsertOT.Hide();
+                    InsertVerses.InsertNT.Hide();
+                    this.BrowseForm = InsertVerses.InsertAny;
+                }
+                Ribbon.BringToTop(this.BrowseForm);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(null, "Please open a document prior to inserting verses", "Cannot insert text with a current document", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(null, "Unexpected Exception", "Cannot show requested form", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        public void clickButtonSearch(Office.IRibbonControl control)
+        public void clickFind(Office.IRibbonControl control)
         {
             try
             {
@@ -243,14 +251,14 @@ namespace AVX
                 MessageBox.Show(null, "Please open a document prior to searching", "Cannot insert text with a current document", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        public void clickBookAVX(Office.IRibbonControl control)
+        public void clickBook(Office.IRibbonControl control)
         {
             try
             {
                 var num = control.Id.Substring(2);
                 var bk = UInt16.Parse(num);
 //              MessageBox.Show(null, "Book-" + num + " = " + control.Tag, "Book Selection", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                var popup = new SelectVerse((byte)bk);
+                var popup = InsertVerses.ShowForm((byte)bk);
                 popup.Show();
             }
             catch (Exception ex)

@@ -2,91 +2,99 @@
 <customUI onLoad="Ribbon_Load" xmlns="http://schemas.microsoft.com/office/2006/01/customui">
     <ribbon>
         <tabs>
-          <tab id="tabAVX" label="AVX">
-            <group id="AVX1">
-              <button id="btnLogo" size="large" label="Insert Verse" description="Insert a bible verse or verses into current document" getImage="GetImageBook" onAction="clickButtonAVX"  />
-              <button id="btnLogo2" size="large" label="Search Bible" description="Find a bible verse or verses (which can optionally be inserted into current document)" getImage="GetImageSearch" onAction="clickButtonSearch"  />
+          <tab id="KJV" label="AV-Bible">
+            <group id="Bible_Search">
+              <button id="btnFind"  size="large"  label="Find Verses"     tag="FIND"            onAction="clickFind" getImage="GetImage" description="Find a bible verse or verses (which can optionally be inserted into current document)" />
             </group>
-            <group id="AVX2">
-              <button id="bk01" size="normal" label="Genesis"       tag="Genesis" onAction="clickBookAVX"  />
-              <button id="bk02" size="normal" label="Exodus"        tag="Exodus" onAction="clickBookAVX"  />
-              <button id="bk03" size="normal" label="Leviticus"     tag="Leviticus" onAction="clickBookAVX"  />
-              <button id="bk04" size="normal" label="Numbers"       tag="Numbers" onAction="clickBookAVX"  />
-              <button id="bk05" size="normal" label="Deutoronomy"   tag="Deutoronomy" onAction="clickBookAVX"  />
-
-              <button id="bk06" size="normal" label="Joshua"        tag="Joshua" onAction="clickBookAVX"  />
-              <button id="bk07" size="normal" label="Judges"        tag="Judges" onAction="clickBookAVX"  />
-              <button id="bk08" size="normal" label="Ruth"          tag="Ruth" onAction="clickBookAVX"  />
-              <button id="bk09" size="normal" label="1 Samuel"      tag="1 Samuel " onAction="clickBookAVX"  />
-              <button id="bk10" size="normal" label="2 Samuel"      tag="2 Samuel " onAction="clickBookAVX"  />
-
-              <button id="bk11" size="normal" label="1 Kings"       tag="1 Kings" onAction="clickBookAVX"  />
-              <button id="bk12" size="normal" label="2 Kings"       tag="2 Kings" onAction="clickBookAVX"  />
-              <button id="bk13" size="normal" label="1 Chronicles"  tag="1 Chronicles" onAction="clickBookAVX"  />
-              <button id="bk14" size="normal" label="2 Chronicles"  tag="2 Chronicles" onAction="clickBookAVX"  />
-              <button id="bk15" size="normal" label="Ezra"          tag="Ezra" onAction="clickBookAVX"  />
-
-              <button id="bk16" size="normal" label="Nehemiah"      tag="Nehemiah" onAction="clickBookAVX"  />
-              <button id="bk17" size="normal" label="Esther"        tag="Esther" onAction="clickBookAVX"  />
-              <button id="bk18" size="normal" label="Job"           tag="Job" onAction="clickBookAVX"  />
-              <button id="bk19" size="normal" label="Psalms"        tag="Psalms" onAction="clickBookAVX"  />
-              <button id="bk20" size="normal" label="Proverbs"      tag="Proverbs" onAction="clickBookAVX"  />
-
-              <button id="bk21" size="normal" label="Ecclesiastes"  tag="Ecclesiastes" onAction="clickBookAVX"  />
-              <button id="bk22" size="normal" label="Song of Solomon" tag="Song of Solomon" onAction="clickBookAVX"  />
-              <button id="bk23" size="normal" label="Isaiah"        tag="Isaiah" onAction="clickBookAVX"  />
-              <button id="bk24" size="normal" label="Jeremiah"      tag="Jeremiah" onAction="clickBookAVX"  />
-              <button id="bk25" size="normal" label="Lamentations"  tag="Lamentations" onAction="clickBookAVX"  />
-
-              <button id="bk26" size="normal" label="Ezekiel"       tag="Ezekiel" onAction="clickBookAVX"  />
-              <button id="bk27" size="normal" label="Daniel"        tag="Daniel" onAction="clickBookAVX"  />
-              <button id="bk28" size="normal" label="Hosea"         tag="Hosea" onAction="clickBookAVX"  />
-              <button id="bk29" size="normal" label="Joel"          tag="Joel" onAction="clickBookAVX"  />
-              <button id="bk30" size="normal" label="Amos"          tag="Amos" onAction="clickBookAVX"  />
-
-              <button id="bk31" size="normal" label="Obadiah"       tag="Obadiah" onAction="clickBookAVX"  />
-              <button id="bk32" size="normal" label="Jonah"         tag="Jonah" onAction="clickBookAVX"  />
-              <button id="bk33" size="normal" label="Micah"         tag="Micah" onAction="clickBookAVX"  />
-              <button id="bk34" size="normal" label="Nahum"         tag="Nahum" onAction="clickBookAVX"  />
-              <button id="bk35" size="normal" label="Habakkuk"      tag="Habakkuk" onAction="clickBookAVX"  />
-
-              <button id="bk36" size="normal" label="Zephaniah"     tag="Zephaniah" onAction="clickBookAVX"  />
-              <button id="bk37" size="normal" label="Haggai"        tag="Haggai" onAction="clickBookAVX"  />
-              <button id="bk38" size="normal" label="Zechariah"     tag="Zechariah" onAction="clickBookAVX"  />
-              <button id="bk39" size="normal" label="Malachi"       tag="Malachi" onAction="clickBookAVX"  />
-              <button id="bk40" size="normal" label="Matthew"       tag="Matthew" onAction="clickBookAVX"  />
-
-              <button id="bk41" size="normal" label="Mark"          tag="Mark" onAction="clickBookAVX"  />
-              <button id="bk42" size="normal" label="Luke"          tag="Luke" onAction="clickBookAVX"  />
-              <button id="bk43" size="normal" label="John"          tag="John" onAction="clickBookAVX"  />
-              <button id="bk44" size="normal" label="Acts"          tag="Acts" onAction="clickBookAVX"  />
-              <button id="bk45" size="normal" label="Romans"        tag="Romans" onAction="clickBookAVX"  />
-
-              <button id="bk46" size="normal" label="1 Corinthians" tag="1 Corinthians" onAction="clickBookAVX"  />
-              <button id="bk47" size="normal" label="2 Corinthians" tag="2 Corinthians" onAction="clickBookAVX"  />
-              <button id="bk48" size="normal" label="Galatians"     tag="Galatians" onAction="clickBookAVX"  />
-              <button id="bk49" size="normal" label="Ephesians"     tag="Ephesians" onAction="clickBookAVX"  />
-              <button id="bk50" size="normal" label="Philippians"   tag="Philippians" onAction="clickBookAVX"  />
-
-              <button id="bk51" size="normal" label="Colossians"    tag="Colossians" onAction="clickBookAVX"  />
-              <button id="bk52" size="normal" label="1 Thessalonians" tag="1 Thessalonians" onAction="clickBookAVX"  />
-              <button id="bk53" size="normal" label="2 Thessalonians" tag="2 Thessalonians" onAction="clickBookAVX"  />
-              <button id="bk54" size="normal" label="1 Timothy"     tag="1 Timothy" onAction="clickBookAVX"  />
-              <button id="bk55" size="normal" label="2 Timothy"     tag="2 Timothy" onAction="clickBookAVX"  />
-
-              <button id="bk56" size="normal" label="Titus"         tag="Titus" onAction="clickBookAVX"  />
-              <button id="bk57" size="normal" label="Philemon"      tag="Philemon" onAction="clickBookAVX"  />
-              <button id="bk58" size="normal" label="Hebrews"       tag="Hebrews" onAction="clickBookAVX"  />
-              <button id="bk59" size="normal" label="James"         tag="James" onAction="clickBookAVX"  />
-              <button id="bk60" size="normal" label="1 Peter"       tag="1 Peter" onAction="clickBookAVX"  />
-
-              <button id="bk61" size="normal" label="2 Peter"       tag="2 Peter" onAction="clickBookAVX"  />
-              <button id="bk62" size="normal" label="1 John"        tag="1 John" onAction="clickBookAVX"  />
-              <button id="bk63" size="normal" label="2 John"        tag="2 John" onAction="clickBookAVX"  />
-              <button id="bk64" size="normal" label="3 John"        tag="3 John" onAction="clickBookAVX"  />
-              <button id="bk65" size="normal" label="Jude"          tag="Jude" onAction="clickBookAVX"  />
-              <button id="bk66" size="normal" label="Revelation"    tag="Revelation" onAction="clickBookAVX"  />
-
+            <group id="Bible_OT">
+              <button id="btnOT" size="large"  label="Old Testament"      tag="OT"              onAction="clickRef"  getImage="GetImage" description="Insert a bible verse or verses into current document" />
+            </group>
+            <group id="OT_Law" label="Old Testament Law">
+              <button id="bk01"     size="normal" label="Genesis"         tag="Genesis"         onAction="clickBook" getImage="GetImage" />
+              <button id="bk02"     size="normal" label="Exodus"          tag="Exodus"          onAction="clickBook" getImage="GetImage" />
+              <button id="bk03"     size="normal" label="Leviticus"       tag="Leviticus"       onAction="clickBook" getImage="GetImage" />
+              <button id="bk04"     size="normal" label="Numbers"         tag="Numbers"         onAction="clickBook" getImage="GetImage" />
+              <button id="bk05"     size="normal" label="Deutoronomy"     tag="Deutoronomy"     onAction="clickBook" getImage="GetImage" />
+            </group>
+            <group id="OT_History" label="Old Testament History">
+              <button id="bk06"     size="normal" label="Joshua"          tag="Joshua"          onAction="clickBook" getImage="GetImage" />
+              <button id="bk07"     size="normal" label="Judges"          tag="Judges"          onAction="clickBook" getImage="GetImage" />
+              <button id="bk08"     size="normal" label="Ruth"            tag="Ruth"            onAction="clickBook" getImage="GetImage" />
+              <button id="bk09"     size="normal" label="1 Samuel"        tag="1 Samuel"        onAction="clickBook" getImage="GetImage" />
+              <button id="bk10"     size="normal" label="2 Samuel"        tag="2 Samuel"        onAction="clickBook" getImage="GetImage" />
+              <button id="bk11"     size="normal" label="1 Kings"         tag="1 Kings"         onAction="clickBook" getImage="GetImage" />
+              <button id="bk12"     size="normal" label="2 Kings"         tag="2 Kings"         onAction="clickBook" getImage="GetImage" />
+              <button id="bk13"     size="normal" label="1 Chronicles"    tag="1 Chronicles"    onAction="clickBook" getImage="GetImage" />
+              <button id="bk14"     size="normal" label="2 Chronicles"    tag="2 Chronicles"    onAction="clickBook" getImage="GetImage" />
+              <button id="bk15"     size="normal" label="Ezra"            tag="Ezra"            onAction="clickBook" getImage="GetImage" />                                                                                                
+              <button id="bk16"     size="normal" label="Nehemiah"        tag="Nehemiah"        onAction="clickBook" getImage="GetImage" />
+              <button id="bk17"     size="normal" label="Esther"          tag="Esther"          onAction="clickBook" getImage="GetImage" />
+            </group>
+            <group id="OT_Wisdom_and_Poetry" label="Wisdom &#38;&#38; Poetry">
+              <button id="bk18"     size="normal" label="Job"             tag="Job"             onAction="clickBook" getImage="GetImage" />
+              <button id="bk19"     size="normal" label="Psalms"          tag="Psalms"          onAction="clickBook" getImage="GetImage" />
+              <button id="bk20"     size="normal" label="Proverbs"        tag="Proverbs"        onAction="clickBook" getImage="GetImage" />
+              <button id="bk21"     size="normal" label="Ecclesiastes"    tag="Ecclesiastes"    onAction="clickBook" getImage="GetImage" />
+              <button id="bk22"     size="normal" label="Song of Solomon" tag="Song of Solomon" onAction="clickBook" getImage="GetImage" />
+            </group>
+            <group id="OT_Major_Prophets" label="Minor Prophets">
+              <button id="bk23"     size="normal" label="Isaiah"          tag="Isaiah"          onAction="clickBook" getImage="GetImage" />
+              <button id="bk24"     size="normal" label="Jeremiah"        tag="Jeremiah"        onAction="clickBook" getImage="GetImage" />
+              <button id="bk25"     size="normal" label="Lamentations"    tag="Lamentations"    onAction="clickBook" getImage="GetImage" />
+              <button id="bk26"     size="normal" label="Ezekiel"         tag="Ezekiel"         onAction="clickBook" getImage="GetImage" />
+              <button id="bk27"     size="normal" label="Daniel"          tag="Daniel"          onAction="clickBook" getImage="GetImage" />
+            </group>
+            <group id="OT_Minor_Prophets" label="Minor Prophets">
+              <button id="bk28"     size="normal" label="Hosea"           tag="Hosea"           onAction="clickBook" getImage="GetImage" />
+              <button id="bk29"     size="normal" label="Joel"            tag="Joel"            onAction="clickBook" getImage="GetImage" />
+              <button id="bk30"     size="normal" label="Amos"            tag="Amos"            onAction="clickBook" getImage="GetImage" />
+              <button id="bk31"     size="normal" label="Obadiah"         tag="Obadiah"         onAction="clickBook" getImage="GetImage" />
+              <button id="bk32"     size="normal" label="Jonah"           tag="Jonah"           onAction="clickBook" getImage="GetImage" />
+              <button id="bk33"     size="normal" label="Micah"           tag="Micah"           onAction="clickBook" getImage="GetImage" />
+              <button id="bk34"     size="normal" label="Nahum"           tag="Nahum"           onAction="clickBook" getImage="GetImage" />
+              <button id="bk35"     size="normal" label="Habakkuk"        tag="Habakkuk"        onAction="clickBook" getImage="GetImage" />
+              <button id="bk36"     size="normal" label="Zephaniah"       tag="Zephaniah"       onAction="clickBook" getImage="GetImage" />
+              <button id="bk37"     size="normal" label="Haggai"          tag="Haggai"          onAction="clickBook" getImage="GetImage" />
+              <button id="bk38"     size="normal" label="Zechariah"       tag="Zechariah"       onAction="clickBook" getImage="GetImage" />
+              <button id="bk39"     size="normal" label="Malachi"         tag="Malachi"         onAction="clickBook" getImage="GetImage" />
+            </group>
+            <group id="Bible_NT">
+              <button id="btnNT" size="large"  label="New Testament"      tag="NT"              onAction="clickRef"  getImage="GetImage" description="Insert a bible verse or verses into current document" />
+            </group>
+            <group id="NT_Gospels_and_Acts" label="Gospels &#38;&#38; Acts">
+              <button id="bk40"     size="normal" label="Matthew"         tag="Matthew"         onAction="clickBook" getImage="GetImage" />
+              <button id="bk41"     size="normal" label="Mark"            tag="Mark"            onAction="clickBook" getImage="GetImage" />
+              <button id="bk42"     size="normal" label="Luke"            tag="Luke"            onAction="clickBook" getImage="GetImage" />
+              <button id="bk43"     size="normal" label="John"            tag="John"            onAction="clickBook" getImage="GetImage" />
+              <button id="bk44"     size="normal" label="Acts"            tag="Acts"            onAction="clickBook" getImage="GetImage" />
+            </group>
+            <group id="NT_Church_Epistles" label="Church Epistles">
+              <button id="bk45"     size="normal" label="Romans"          tag="Romans"          onAction="clickBook" getImage="GetImage" />
+              <button id="bk46"     size="normal" label="1 Corinthians"   tag="1 Corinthians"   onAction="clickBook" getImage="GetImage" />
+              <button id="bk47"     size="normal" label="2 Corinthians"   tag="2 Corinthians"   onAction="clickBook" getImage="GetImage" />
+              <button id="bk48"     size="normal" label="Galatians"       tag="Galatians"       onAction="clickBook" getImage="GetImage" />
+              <button id="bk49"     size="normal" label="Ephesians"       tag="Ephesians"       onAction="clickBook" getImage="GetImage" />
+              <button id="bk50"     size="normal" label="Philippians"     tag="Philippians"     onAction="clickBook" getImage="GetImage" />
+              <button id="bk51"     size="normal" label="Colossians"      tag="Colossians"      onAction="clickBook" getImage="GetImage" />
+            </group>
+            <group id="NT_Pastoral_Epistles" label="Pastoral Epistles">
+              <button id="bk52"     size="normal" label="1 Thessalonians" tag="1 Thessalonians" onAction="clickBook" getImage="GetImage" />
+              <button id="bk53"     size="normal" label="2 Thessalonians" tag="2 Thessalonians" onAction="clickBook" getImage="GetImage" />
+              <button id="bk54"     size="normal" label="1 Timothy"       tag="1 Timothy"       onAction="clickBook" getImage="GetImage" />
+              <button id="bk55"     size="normal" label="2 Timothy"       tag="2 Timothy"       onAction="clickBook" getImage="GetImage" />
+              <button id="bk56"     size="normal" label="Titus"           tag="Titus"           onAction="clickBook" getImage="GetImage" />
+              <button id="bk57"     size="normal" label="Philemon"        tag="Philemon"        onAction="clickBook" getImage="GetImage" />
+            </group>
+            <group id="NT_General_Epistles" label="General Epistles">
+              <button id="bk58"     size="normal" label="Hebrews"         tag="Hebrews"         onAction="clickBook" getImage="GetImage" />
+              <button id="bk59"     size="normal" label="James"           tag="James"           onAction="clickBook" getImage="GetImage" />
+              <button id="bk60"     size="normal" label="1 Peter"         tag="1 Peter"         onAction="clickBook" getImage="GetImage" />
+              <button id="bk61"     size="normal" label="2 Peter"         tag="2 Peter"         onAction="clickBook" getImage="GetImage" />
+              <button id="bk62"     size="normal" label="1 John"          tag="1 John"          onAction="clickBook" getImage="GetImage" />
+              <button id="bk63"     size="normal" label="2 John"          tag="2 John"          onAction="clickBook" getImage="GetImage" />
+              <button id="bk64"     size="normal" label="3 John"          tag="3 John"          onAction="clickBook" getImage="GetImage" />
+              <button id="bk65"     size="normal" label="Jude"            tag="Jude"            onAction="clickBook" getImage="GetImage" />
+              <button id="bk66"     size="normal" label="Revelation"      tag="Revelation"      onAction="clickBook" getImage="GetImage" />
             </group>
           </tab>
         </tabs>

@@ -6,12 +6,12 @@ using System.Security;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("AVX")]
+[assembly: AssemblyTitle("AV-Bible-Addin")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("AVX")]
-[assembly: AssemblyCopyright("Copyright ©  2021")]
+[assembly: AssemblyProduct("AV-Bible-Addin")]
+[assembly: AssemblyCopyright("Copyright © Kevin Wonus")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

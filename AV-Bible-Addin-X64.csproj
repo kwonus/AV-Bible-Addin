@@ -21,18 +21,42 @@
     <ProjectTypeGuids>{BAA0C2D2-18E2-41B9-852F-F413020CAA33};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1135677F-94EC-441C-9A60-2258A66816C7}</ProjectGuid>
+    <ProjectGuid>{60FD9236-8674-4A48-8792-E5D9AB111D40}</ProjectGuid>
     <OutputType>Library</OutputType>
     <NoStandardLibraries>false</NoStandardLibraries>
     <RootNamespace>AVX</RootNamespace>
-    <AssemblyName>AVX</AssemblyName>
-    <LoadBehavior>3</LoadBehavior>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <AssemblyName>AV-Bible-Addin-Unusable</AssemblyName>
+    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
     <DefineConstants>VSTO40</DefineConstants>
+    <TargetFrameworkProfile />
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <BootstrapperComponentsLocation>HomeSite</BootstrapperComponentsLocation>
+    <PublishUrl>publish\</PublishUrl>
+    <InstallUrl />
+    <TargetCulture>en</TargetCulture>
+    <ApplicationVersion>1.0.0.0</ApplicationVersion>
+    <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>days</UpdateIntervalUnits>
+    <IsWebBootstrapper>False</IsWebBootstrapper>
+    <ProductName>AV-Bible-Addin-Unusable</ProductName>
+    <PublisherName />
+    <SupportUrl />
+    <FriendlyName>AV-Bible-Addin-Unusable</FriendlyName>
+    <OfficeApplicationDescription />
+    <LoadBehavior>3</LoadBehavior>
   </PropertyGroup>
   <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.8.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.8.1 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.VSTORuntime.4.0">
       <Visible>False</Visible>
       <ProductName>Microsoft Visual Studio 2010 Tools for Office Runtime %28x86 and x64%29</ProductName>
@@ -174,8 +198,8 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="AVX_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -183,12 +207,13 @@
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Ribbon.cs">
       <XmlRibbon>true</XmlRibbon>
     </Compile>
-    <Compile Include="SelectVerse.xaml.cs">
-      <DependentUpon>SelectVerse.xaml</DependentUpon>
+    <Compile Include="InsertVerses.xaml.cs">
+      <DependentUpon>InsertVerses.xaml</DependentUpon>
     </Compile>
     <Compile Include="ThisAddIn.cs">
       <SubType>Code</SubType>
@@ -206,7 +231,7 @@
     <EmbeddedResource Include="Ribbon.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="SelectVerse.xaml">
+    <Page Include="InsertVerses.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -218,16 +243,6 @@
   <ItemGroup>
     <Content Include="AVXAddin.png" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AVXText\AVText-dotnet-4.8.csproj">
-      <Project>{612adea6-fb83-48f1-8ad2-2c7a1edf57b3}</Project>
-      <Name>AVText-dotnet-4.8</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\HMI\HMI-dotnet-4.8.csproj">
-      <Project>{7c4cea87-7970-4b1f-abf0-43bffb2a21d9}</Project>
-      <Name>HMI-dotnet-4.8</Name>
-    </ProjectReference>
-  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -236,10 +251,11 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>AVX_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>
+    </ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>D2E8747121F0E1A832DAD8D22544FA1E8A5658C6</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>FF02567CD56307CD95CFBDB1AA1BF2E0A8CFAAB0</ManifestCertificateThumbprint>
   </PropertyGroup>
   <!-- Include the build rules for a C# project. -->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

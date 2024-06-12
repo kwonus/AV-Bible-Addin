@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:AVX"
              mc:Ignorable="d" d:DesignWidth="420"
             Height="528.516" Width="420"
-            Title="AVX - Find Verses">
+            Title="AV-Bible – Find Verses">
     <Grid>
         <TextBox x:Name="TextCriteria" Margin="80,33,132,0" TextWrapping="Wrap" Height="23" VerticalAlignment="Top" KeyDown="OnKeyDownCrieria"/>
         <Label Content="Find" HorizontalAlignment="Left" Margin="32,30,0,0" VerticalAlignment="Top"/>

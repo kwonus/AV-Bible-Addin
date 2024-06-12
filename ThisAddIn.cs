@@ -6,28 +6,25 @@ using System.Xml.Linq;
 using Word = Microsoft.Office.Interop.Word;
 using Office = Microsoft.Office.Core;
 using Microsoft.Office.Tools.Word;
-using AVSDK;
 
 namespace AVX
 {
     public partial class ThisAddIn
     {
-        public static AVXAPI api { get; private set; }
-
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
-            ThisAddIn.api = new AVXAPI();
+            InsertVerses.ForceClose = false;
         }
 
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
         {
-            ThisAddIn.api = null;
+            InsertVerses.ForceClose = true;
         }
         protected override Microsoft.Office.Core.IRibbonExtensibility CreateRibbonExtensibilityObject()
         {
             return new Ribbon(this);
         }
-
+        /*
         public static void WriteVerse(Book book, byte c, byte v, bool modern, bool contiguous)
         {
             ThisAddIn.WriteVerse(book.num, c, v, modern, contiguous);
@@ -39,7 +36,7 @@ namespace AVX
             var chapter = Ribbon.RIBBON.chIdx[b][c];
             var records = Ribbon.RIBBON.writ;
             UInt32 r = chapter.writIdx;
-            for (int i = 1; i < v; /**/)
+            for (int i = 1; i < v; //)
             {
                 r++;
                 if ((records[r].tx & 0x70) == 0x20) // BoV
@@ -54,7 +51,7 @@ namespace AVX
             do
             {
                 if (contiguous && ((records[r].tx & 0x70) == 0x20)) // BoV
-                    verse.Append(v.ToString() + (char)0x200B /* zero-width-space */);
+                    verse.Append(v.ToString() + (char)0x200B // zero-width-space //);
 
                 string word = null;
                 UInt16 key = (UInt16)(0x7FFF & records[r].word);
@@ -70,7 +67,7 @@ namespace AVX
 
                     if ((p == 2) && singular)
                     {
-                        word += (char)0x200B; /* zero-width-space */
+                        word += (char)0x200B; // zero-width-space //
                         word += '†';
                     }
                     else
@@ -153,7 +150,7 @@ namespace AVX
                     }
                 }
             }
-        }
+        }*/
 
 
         #region VSTO generated code

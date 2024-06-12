@@ -1,7 +1,5 @@
-﻿using AVSDK;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -88,15 +86,12 @@ namespace AVX
     /// <summary>
     /// Interaction logic for SelectVerse.xaml
     /// </summary>
-    public partial class SelectVerse : Window
+    public partial class InsertVerses : Window
     {
-        private static AVXAPI api
-        {
-            get
-            {
-                return ThisAddIn.api;
-            }
-        }
+        public static InsertVerses InsertAny { get; private set; } = new InsertVerses(ot:true,  nt:true);
+        public static InsertVerses InsertNT  { get; private set; } = new InsertVerses(ot:false, nt:true);
+        public static InsertVerses InsertOT  { get; private set; } = new InsertVerses(ot:true,  nt:false);
+
         private void WriteVerseSpec()
         {
             ComboBoxItem item = (ComboBoxItem)this.comboBoxBook.SelectedItem;
@@ -115,16 +110,46 @@ namespace AVX
                 w.Font.Bold = 1;
             }
         }
-        public SelectVerse(byte bkNum)
+        public static InsertVerses ShowForm(byte bkNum)
         {
-            InitializeComponent();
-            if (bkNum >= 1 && bkNum <= 66)
-                this.comboBoxBook.SelectedItem = this.comboBoxBook.Items.GetItemAt(bkNum - 1);
+            var form = InsertAny;
 
+            if (bkNum >= 1 && bkNum <= 66)
+                form.comboBoxBook.SelectedItem = form.comboBoxBook.Items.GetItemAt(bkNum - 1);
+
+            return form;
         }
-        public SelectVerse()
+
+        private InsertVerses(bool ot = false, bool nt = false)
         {
             InitializeComponent();
+
+            if (this.comboBoxBook.Items.Count > 66) // Why?
+            {
+                for (int i = this.comboBoxBook.Items.Count - 1; i >= 66; i--)
+                {
+                    this.comboBoxBook.Items.RemoveAt(i);
+                }
+            }
+            if (nt != ot && this.comboBoxBook.Items.Count == 66)
+            {
+                if (ot)
+                {
+                    this.Title = this.Title.Replace("Verses", "OT Verses");
+                    for (int i = 40; i <= 66; i++)
+                    {
+                        this.comboBoxBook.Items.RemoveAt(39);
+                    }
+                }
+                else
+                {
+                    this.Title = this.Title.Replace("Verses", "NT Verses");
+                    for (int i = 1; i <= 39; i++)
+                    {
+                        this.comboBoxBook.Items.RemoveAt(0);
+                    }
+                }
+            }
         }
 
         private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -295,7 +320,7 @@ namespace AVX
                     int prev = 0;
                     foreach (var v in list)
                     {
-                        ThisAddIn.WriteVerse(b, c, v, this.modernize.IsChecked == true, true);
+                        //ThisAddIn.WriteVerse(b, c, v, this.modernize.IsChecked == true, true);
                         prev = v;
                         first = false;
                     }
@@ -322,6 +347,18 @@ namespace AVX
             {
                 button_Click(null, null);
             }
+        }
+
+        public static bool ForceClose = false; // Indicate if it is an explicit close request
+
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            base.OnClosing(e);
+            if (ForceClose)
+                return;
+
+            e.Cancel = true;
+            this.Hide();
         }
     }
 }

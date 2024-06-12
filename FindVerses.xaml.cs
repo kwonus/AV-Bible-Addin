@@ -1,12 +1,10 @@
-﻿using QuelleHMI;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Word = Microsoft.Office.Interop.Word;
-using AVSDK;
 
 namespace AVX
 {
@@ -19,48 +17,8 @@ namespace AVX
         {
             InitializeComponent();
         }
-        private static AVXAPI api
-        {
-            get
-            {
-                return ThisAddIn.api;
-            }
-        }
-        private IQuelleSearchResult found;
-
-        (bool success, HMICommand hmi, IQuelleSearchResult result) QuelleCommand(string text)
-        {
-            HMICommand command = new HMICommand(text.Replace('+', ';')); // allow plus to be used to delimit search segments
-
-            if (command.statement != null && command.statement.segmentation != null && command.statement.segmentation.Count >= 1 && command.errors.Count == 0)
-            {
-                var result = command.statement.ExecuteEx(api);
-
-                if (result != null)
-                {
-                    foreach (var message in command.warnings)
-                    {
-                        Console.WriteLine("WARNING: " + message);
-                    }
-                    this.found = result;
-                    return (true, command, result);
-                }
-                else
-                {
-                    foreach (var message in command.errors)
-                    {
-                        Console.WriteLine("ERROR: " + message);
-                    }
-                }
-            }
-            else
-            {
-                Console.WriteLine("error: " + "Statement is not expected to be null; Quelle driver implementation error");
-            }
-            return (false, command, null);
-        }
         private void search_Click(object sender, RoutedEventArgs e)
-        {
+        {/*
             this.FoundTree.Items.Clear();
 
             var command = QuelleCommand(this.TextCriteria.Text);
@@ -118,22 +76,9 @@ namespace AVX
                 { 
                     this.textBoxChaterAndVerse.Text = "";
                 }
-            }
+            }*/
         }
-        private void WriteVerseSpec(Book book, byte chapter, byte verse)
-        {
-            string spec = book.name + " " + chapter.ToString() + ":" + verse.ToString();
-            if (this.modernize.IsChecked == true)
-                spec += "  (AVX)";
-            dynamic rng = Ribbon.AVX.Application.ActiveDocument.Range();
-            rng.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
-            rng.Bold = 1;
-            rng.Text = spec;
-            foreach (Word.Range w in rng.Words)
-            {
-                w.Font.Bold = 1;
-            }
-        }
+        /*
         private void AddVerseToDocument(Book book, byte chapter, byte verse)
         {
             this.WriteVerseSpec(book, chapter, verse);
@@ -148,8 +93,9 @@ namespace AVX
                 AddVerseToDocument(book, c, (byte)((TreeViewItem)verseNode).Tag);
             }
         }
+        */
         TreeViewItem FindNode(string bookName)
-        {
+        {/*
             foreach (var root in this.FoundTree.Items)
             {
                 foreach (var candidate in ((TreeViewItem)root).Items)
@@ -158,11 +104,11 @@ namespace AVX
                     if (book.Header.ToString().Equals(bookName, StringComparison.InvariantCultureIgnoreCase))
                         return book;
                 }
-            }
+            }*/
             return null;
         }
         private void insert_Click(object sender, RoutedEventArgs e)
-        {
+        {/*
             var trimmed = this.textBoxChaterAndVerse.Text.Trim();
             if (trimmed.Equals("all matching verses", StringComparison.InvariantCultureIgnoreCase))
             {
@@ -267,11 +213,11 @@ namespace AVX
                         }
                     }
                 }
-            }
+            }*/
         }
 
         private void FoundTree_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
-        {
+        {/*
             var node = (TreeViewItem) this.FoundTree.SelectedItem;
 
             if (node == null)
@@ -310,7 +256,7 @@ namespace AVX
                         this.textBoxChaterAndVerse.Text = grandParent.Header.ToString() + ' ' + ((byte)parent.Tag).ToString() + ':' + ((byte)node.Tag).ToString();
                     }
                 }
-            }
+            }*/
         }
 
         private void OnKeyDownCrieria(object sender, KeyEventArgs e)
