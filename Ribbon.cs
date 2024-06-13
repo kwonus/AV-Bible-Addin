@@ -1,9 +1,7 @@
-﻿using AVX.Properties;
-using Microsoft.Office.Core;
+﻿using Microsoft.Office.Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -11,7 +9,6 @@ using Office = Microsoft.Office.Core;
 using System.Drawing;
 using System.Windows.Forms;
 using Word = Microsoft.Office.Interop.Word;
-using System.Windows.Resources;
 using System.Windows.Interop;
 
 // TODO:  Follow these steps to enable the Ribbon (XML) item:
@@ -200,31 +197,17 @@ namespace AVX
         }
         public void clickRef(Office.IRibbonControl control)
         {
-            try
+            if (control.Tag == "NT")
             {
-                if (control.Tag == "NT")
-                {
-                    InsertVerses.InsertOT.Hide();
-                    InsertVerses.InsertAny.Hide();
-                    this.BrowseForm = InsertVerses.InsertNT;
-                }
-                else if (control.Tag == "OT")
-                {
-                    InsertVerses.InsertNT.Hide();
-                    InsertVerses.InsertAny.Hide();
-                    this.BrowseForm = InsertVerses.InsertOT;
-                }
-                else
-                {
-                    InsertVerses.InsertOT.Hide();
-                    InsertVerses.InsertNT.Hide();
-                    this.BrowseForm = InsertVerses.InsertAny;
-                }
-                Ribbon.BringToTop(this.BrowseForm);
+                InsertVerses.ShowForm(InsertVerses.InsertNT);
             }
-            catch (Exception ex)
+            else if (control.Tag == "OT")
             {
-                MessageBox.Show(null, "Unexpected Exception", "Cannot show requested form", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                InsertVerses.ShowForm(InsertVerses.InsertOT);
+            }
+            else
+            {
+                InsertVerses.ShowForm(InsertVerses.InsertAny);
             }
         }
         public void clickFind(Office.IRibbonControl control)
@@ -258,8 +241,7 @@ namespace AVX
                 var num = control.Id.Substring(2);
                 var bk = UInt16.Parse(num);
 //              MessageBox.Show(null, "Book-" + num + " = " + control.Tag, "Book Selection", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                var popup = InsertVerses.ShowForm((byte)bk);
-                popup.Show();
+                InsertVerses.ShowForm((byte)bk);
             }
             catch (Exception ex)
             {

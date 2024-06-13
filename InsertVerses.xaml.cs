@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Forms;
 using System.Windows.Input;
+using System.Windows.Interop;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace AVX
@@ -88,6 +91,100 @@ namespace AVX
     /// </summary>
     public partial class InsertVerses : Window
     {
+        private static bool PositionForm(InsertVerses form)
+        {
+            bool repositioned = false;
+
+            if (double.IsNaN(form.Top))
+            {
+                form.Top = form.PointToScreen(Mouse.GetPosition(null)).Y;
+                repositioned = true;
+            }
+            if (double.IsNaN(form.Left))
+            {
+                form.Left = form.PointToScreen(Mouse.GetPosition(null)).X;
+                repositioned = true;
+            }
+//          Screen[] screens = Screen.AllScreens;
+            return repositioned;
+        }
+        private static (double top, double left, double height, double width) Coordinates = (0, 0, 0, 0);
+
+        public static void ShowForm(InsertVerses form)
+        {
+            if (form != null)
+            {
+                form.WindowStartupLocation = WindowStartupLocation.Manual;
+
+                if (InsertVerses.Coordinates.height > 0.0 && InsertVerses.Coordinates.width > 0.0)
+                {
+                    form.Top = Coordinates.top;
+                    form.Left = Coordinates.left;
+                    form.Height = Coordinates.height;
+                    form.Width = Coordinates.width;
+                }
+                else
+                {
+                    Coordinates.top = form.Top;
+                    Coordinates.left = form.Left;
+                    Coordinates.height = form.Height;
+                    Coordinates.width = form.Width;
+                }
+                form.Show();
+                if (InsertVerses.PositionForm(form))
+                {
+                    Coordinates.top = form.Top;
+                    Coordinates.left = form.Left;
+                }
+                if (form == InsertVerses.InsertNT)
+                {
+                    InsertVerses.InsertOT.Hide();
+                    InsertVerses.InsertAny.Hide();
+                }
+                else if (form == InsertVerses.InsertOT)
+                {
+                    InsertVerses.InsertNT.Hide();
+                    InsertVerses.InsertAny.Hide();
+                }
+                else if (form == InsertVerses.InsertAny)
+                {
+                    InsertVerses.InsertOT.Hide();
+                    InsertVerses.InsertNT.Hide();
+                }
+                Ribbon.BringToTop(form);
+            }
+        }
+        public static void ShowForm(byte bkNum)
+        {
+            var form = InsertAny;
+
+            if (bkNum >= 1 && bkNum <= 66)
+                form.comboBoxBook.SelectedItem = form.comboBoxBook.Items.GetItemAt(bkNum - 1);
+
+            InsertVerses.ShowForm(form);
+        }
+        public static bool ForceClose = false; // Indicate if it is an explicit close request
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            base.OnClosing(e);
+            if (ForceClose)
+                return;
+
+            Coordinates.top = this.Top;
+            Coordinates.left = this.Left;
+            Coordinates.height = this.Height;
+            Coordinates.width = this.Width;
+
+            e.Cancel = true;
+            this.Hide();
+        }
+        private void ResetCoordinates()
+        {
+            Coordinates.top = this.Top;
+            Coordinates.left = this.Left;
+            Coordinates.height = this.Height;
+            Coordinates.width = this.Width;
+        }
         public static InsertVerses InsertAny { get; private set; } = new InsertVerses(ot:true,  nt:true);
         public static InsertVerses InsertNT  { get; private set; } = new InsertVerses(ot:false, nt:true);
         public static InsertVerses InsertOT  { get; private set; } = new InsertVerses(ot:true,  nt:false);
@@ -109,15 +206,6 @@ namespace AVX
             {
                 w.Font.Bold = 1;
             }
-        }
-        public static InsertVerses ShowForm(byte bkNum)
-        {
-            var form = InsertAny;
-
-            if (bkNum >= 1 && bkNum <= 66)
-                form.comboBoxBook.SelectedItem = form.comboBoxBook.Items.GetItemAt(bkNum - 1);
-
-            return form;
         }
 
         private InsertVerses(bool ot = false, bool nt = false)
@@ -165,7 +253,7 @@ namespace AVX
             }
         }
 
-        private void textBoxChaterAndVerse_KeyUp(object sender, KeyEventArgs e)
+        private void textBoxChaterAndVerse_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (this.comboBoxBook.SelectedItem == null)
                 return;
@@ -338,10 +426,10 @@ namespace AVX
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            this.KeyUp += new KeyEventHandler(MainWindow_KeyUp);
+            this.KeyUp += new System.Windows.Input.KeyEventHandler(MainWindow_KeyUp);
         }
 
-        void MainWindow_KeyUp(object sender, KeyEventArgs e)
+        void MainWindow_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
@@ -349,16 +437,14 @@ namespace AVX
             }
         }
 
-        public static bool ForceClose = false; // Indicate if it is an explicit close request
-
-        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        private void Window_Leave(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            base.OnClosing(e);
-            if (ForceClose)
-                return;
+            ResetCoordinates();
+        }
 
-            e.Cancel = true;
-            this.Hide();
+        private void Window_TouchMove(object sender, TouchEventArgs e)
+        {
+            ResetCoordinates();
         }
     }
 }
