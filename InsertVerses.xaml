@@ -8,9 +8,7 @@
              d:DesignHeight="300" d:DesignWidth="420"
             Height="300" Width="420"
             Title="AV-Bible – Insert Verses"
-            Loaded="Window_Loaded"
-            MouseLeave="Window_Leave"
-            TouchMove="Window_TouchMove">
+            Loaded="Window_Loaded">
     <Grid>
         <Button x:Name="button" Content="Insert" HorizontalAlignment="Right" Margin="0,0,44,42" VerticalAlignment="Bottom" Width="75" RenderTransformOrigin="-0.453,0.502" Click="button_Click"/>
         <Label x:Name="label" Content="Book" HorizontalAlignment="Left" Margin="32,30,0,0" VerticalAlignment="Top"/>

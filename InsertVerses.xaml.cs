@@ -116,6 +116,8 @@ namespace AVX
             {
                 form.WindowStartupLocation = WindowStartupLocation.Manual;
 
+                // First Insert* ShowForm()
+                //
                 if (InsertVerses.Coordinates.height > 0.0 && InsertVerses.Coordinates.width > 0.0)
                 {
                     form.Top = Coordinates.top;
@@ -125,31 +127,31 @@ namespace AVX
                 }
                 else
                 {
-                    Coordinates.top = form.Top;
-                    Coordinates.left = form.Left;
-                    Coordinates.height = form.Height;
-                    Coordinates.width = form.Width;
+                    form.ResetCoordinates();
                 }
+                // User may not have closed previous form, grab its coordinates and hide previous form
+                //
+                if (form == InsertVerses.InsertNT)
+                {
+                    form.ReplaceForm(InsertVerses.InsertOT);
+                    form.ReplaceForm(InsertVerses.InsertAny);
+                }
+                else if (form == InsertVerses.InsertOT)
+                {
+                    form.ReplaceForm(InsertVerses.InsertNT);
+                    form.ReplaceForm(InsertVerses.InsertAny);
+                }
+                else if (form == InsertVerses.InsertAny)
+                {
+                    form.ReplaceForm(InsertVerses.InsertOT);
+                    form.ReplaceForm(InsertVerses.InsertNT);
+                }
+
                 form.Show();
                 if (InsertVerses.PositionForm(form))
                 {
                     Coordinates.top = form.Top;
                     Coordinates.left = form.Left;
-                }
-                if (form == InsertVerses.InsertNT)
-                {
-                    InsertVerses.InsertOT.Hide();
-                    InsertVerses.InsertAny.Hide();
-                }
-                else if (form == InsertVerses.InsertOT)
-                {
-                    InsertVerses.InsertNT.Hide();
-                    InsertVerses.InsertAny.Hide();
-                }
-                else if (form == InsertVerses.InsertAny)
-                {
-                    InsertVerses.InsertOT.Hide();
-                    InsertVerses.InsertNT.Hide();
                 }
                 Ribbon.BringToTop(form);
             }
@@ -170,10 +172,7 @@ namespace AVX
             if (ForceClose)
                 return;
 
-            Coordinates.top = this.Top;
-            Coordinates.left = this.Left;
-            Coordinates.height = this.Height;
-            Coordinates.width = this.Width;
+            this.ResetCoordinates();
 
             e.Cancel = true;
             this.Hide();
@@ -184,6 +183,19 @@ namespace AVX
             Coordinates.left = this.Left;
             Coordinates.height = this.Height;
             Coordinates.width = this.Width;
+        }
+        public void ReplaceForm(InsertVerses old)
+        {
+            if (old.Visibility == Visibility.Visible)
+            {
+                old.ResetCoordinates();
+                old.Hide();
+
+                this.Top = Coordinates.top;
+                this.Left = Coordinates.left;
+                this.Height = Coordinates.height;
+                this.Width = Coordinates.width;
+            }
         }
         public static InsertVerses InsertAny { get; private set; } = new InsertVerses(ot:true,  nt:true);
         public static InsertVerses InsertNT  { get; private set; } = new InsertVerses(ot:false, nt:true);
@@ -435,16 +447,6 @@ namespace AVX
             {
                 button_Click(null, null);
             }
-        }
-
-        private void Window_Leave(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-            ResetCoordinates();
-        }
-
-        private void Window_TouchMove(object sender, TouchEventArgs e)
-        {
-            ResetCoordinates();
         }
     }
 }
