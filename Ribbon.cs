@@ -247,7 +247,14 @@ namespace AVX
                 MessageBox.Show(null, "Please open a document prior to inserting verses", "Cannot insert text with a current document", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
+        public void clickInfo(Office.IRibbonControl control)
+        {
+            MessageBox.Show(null, "AV-Bible Addin for Microsoft Word", "About AV-Bible", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        public void clickHelp(Office.IRibbonControl control)
+        {
+            MessageBox.Show(null, "AV-Bible Addin for Microsoft Word", "AV-Bible User Help", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
         #endregion
 
         #region Ribbon Callbacks
