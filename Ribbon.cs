@@ -77,8 +77,8 @@ namespace AVX
 
             var len = 0;// file.Length;
             var cnt = (UInt32) (len / 4);
-            if (len != (0xC0C93) * 4)
-                MessageBox.Show(null, "AV-Bible Addin for Microsoft Word", "Possible File corruption error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+//            if (len != (0xC0C93) * 4)
+//                MessageBox.Show(null, "AV-Bible Addin for Microsoft Word", "Possible File corruption error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             this.writ = new (UInt16 word, byte punc, byte tx)[cnt];
             this.bkIdx = new (UInt32 idx, byte ccnt)[1 + 66];  // waste element-zero for a one-based index
@@ -181,19 +181,18 @@ namespace AVX
             var xml = GetResourceText("AVX.Ribbon.xml");
             return xml;
         }
-        private Bitmap BitmapBook = null;
-        private Bitmap BitmapSearch = null;
-        private static Bitmap REF  = new Bitmap(Path.Combine("C:\\Users\\Me\\Downloads", "icons8-bible-80.png"));
-        private static Bitmap FIND = new Bitmap(Path.Combine("C:\\Users\\Me\\Downloads", "icons8-find-80.png"));
-        private static Bitmap BOOK = new Bitmap(Path.Combine("C:\\Users\\Me\\Downloads", "icons8-bookmark-40 (1).png"));
         public Bitmap GetImage(IRibbonControl control)
         {
             if (control.Tag == "OT" || control.Tag == "NT")
-                return REF;
+                return ThisAddIn.BIBLE;
             if (control.Tag == "FIND")
-                return FIND;
-            
-            return BOOK;
+                return ThisAddIn.FIND;
+            if (control.Tag == "HELP")
+                return ThisAddIn.HELP;
+            if (control.Tag == "ABOUT")
+                return ThisAddIn.INFO;
+
+            return ThisAddIn.BOOK;
         }
         public void clickRef(Office.IRibbonControl control)
         {

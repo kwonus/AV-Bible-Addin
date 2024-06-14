@@ -241,7 +241,14 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AVXAddin.png" />
+    <EmbeddedResource Include="icons\bible-80.png" />
+    <EmbeddedResource Include="icons\book-40.png" />
+    <EmbeddedResource Include="icons\find-80.png" />
+    <EmbeddedResource Include="icons\help-80.png" />
+    <EmbeddedResource Include="icons\info-80.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BOOK.png" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

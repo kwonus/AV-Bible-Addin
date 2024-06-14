@@ -6,14 +6,26 @@ using System.Xml.Linq;
 using Word = Microsoft.Office.Interop.Word;
 using Office = Microsoft.Office.Core;
 using Microsoft.Office.Tools.Word;
+using System.Drawing;
 
 namespace AVX
 {
     public partial class ThisAddIn
     {
+        public static Bitmap BIBLE { get; private set; }
+        public static Bitmap FIND { get; private set; }
+        public static Bitmap BOOK { get; private set; }
+        public static Bitmap HELP { get; private set; }
+        public static Bitmap INFO { get; private set; }
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
             InsertVerses.ForceClose = false;
+
+            ThisAddIn.BIBLE = Properties.Resources.bible_80;
+            ThisAddIn.FIND = Properties.Resources.find_80;
+            ThisAddIn.BOOK = Properties.Resources.book_40;
+            ThisAddIn.INFO = Properties.Resources.info_80;
+            ThisAddIn.HELP = Properties.Resources.help_80;
         }
 
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
