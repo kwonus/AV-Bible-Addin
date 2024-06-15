@@ -47,9 +47,6 @@ namespace AVX
             SetForegroundWindow(hwnd);
 
         }
-        public FindVerses SearchForm;
-        public InsertVerses BrowseForm;
-
         private string CommonFolder;
         private Office.IRibbonUI ribbon;
         public (UInt32 idx, byte ccnt)[] bkIdx { get; private set; }
@@ -211,26 +208,31 @@ namespace AVX
         }
         public void clickFind(Office.IRibbonControl control)
         {
+            FindVerses.SearchForm.Show();
             try
             {
-                try
-                {
-                    if (this.SearchForm != null)
-                    {
-                        Ribbon.BringToTop(this.SearchForm);
-                        return;
-                    }
-                }
-                catch
-                {
-                    ;
-                }
-                this.SearchForm = new FindVerses();
-                this.SearchForm.Show();
+                Ribbon.BringToTop(FindVerses.SearchForm);
             }
-            catch (Exception ex)
+            catch
             {
-                MessageBox.Show(null, "Please open a document prior to searching", "Cannot insert text with a current document", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ;
+            }
+        }
+        public void clickInfo(Office.IRibbonControl control)
+        {
+            MessageBox.Show(null, "AV-Bible Addin for Microsoft Word", "AV-Bible User Help", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+        }
+        public void clickHelp(Office.IRibbonControl control)
+        {
+            AboutInfo.AboutForm.Show();
+            try
+            {
+                Ribbon.BringToTop(AboutInfo.AboutForm);
+            }
+            catch
+            {
+                ;
             }
         }
         public void clickBook(Office.IRibbonControl control)
@@ -246,14 +248,6 @@ namespace AVX
             {
                 MessageBox.Show(null, "Please open a document prior to inserting verses", "Cannot insert text with a current document", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-        public void clickInfo(Office.IRibbonControl control)
-        {
-            MessageBox.Show(null, "AV-Bible Addin for Microsoft Word", "About AV-Bible", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-        public void clickHelp(Office.IRibbonControl control)
-        {
-            MessageBox.Show(null, "AV-Bible Addin for Microsoft Word", "AV-Bible User Help", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
 

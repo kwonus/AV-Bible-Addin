@@ -13,9 +13,21 @@ namespace AVX
     /// </summary>
     public partial class FindVerses : Window
     {
+        public static FindVerses SearchForm { get; private set; } = new FindVerses();
+
         public FindVerses()
         {
             InitializeComponent();
+        }
+        public static bool ForceClose = false; // Indicate if it is an explicit close request
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            base.OnClosing(e);
+            if (ForceClose)
+                return;
+
+            e.Cancel = true;
+            this.Hide();
         }
         private void search_Click(object sender, RoutedEventArgs e)
         {/*

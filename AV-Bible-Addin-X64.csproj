@@ -187,6 +187,9 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+	<Compile Include="AboutInfo.xaml.cs">
+      <DependentUpon>AboutInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FindVerses.xaml.cs">
       <DependentUpon>FindVerses.xaml</DependentUpon>
     </Compile>
@@ -231,6 +234,10 @@
     <EmbeddedResource Include="Ribbon.xml" />
   </ItemGroup>
   <ItemGroup>
+	<Page Include="AboutInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="InsertVerses.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -248,7 +255,10 @@
     <EmbeddedResource Include="icons\info-80.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\BOOK.png" />
+    <EmbeddedResource Include="icons\logo-160.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="icons\logo-80.png" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -57,8 +57,8 @@
               <button id="bk39"     size="normal" label="Malachi"         tag="Malachi"         onAction="clickBook" getImage="GetImage" />
             </group>
             <group id="Info_OT" label="Information">
-              <button id="Help_OT"  size="large"  label="User Help"       tag="HELP"            onAction="clickHelp" getImage="GetImage" description="Find a bible verse or verses (which can optionally be inserted into current document)" />
-              <button id="About_OT" size="large"  label="About AV-Bible"  tag="ABOUT"           onAction="clickInfo" getImage="GetImage" description="Insert a bible verse or verses into current document" />
+              <button id="Help_OT"  size="large"  label="User Help"       tag="HELP"            onAction="clickInfo" getImage="GetImage" description="Click for more information about the AV-Bible Addin for Microsoft Word" />
+              <button id="About_OT" size="large"  label="About AV-Bible"  tag="ABOUT"           onAction="clickHelp" getImage="GetImage" description="Click for user help with the AV-Bible Addin for Microsoft Word" />
             </group>
           </tab>
           <tab id="NT" label="New Testament">
@@ -102,8 +102,8 @@
               <button id="bk66"     size="normal" label="Revelation"      tag="Revelation"      onAction="clickBook" getImage="GetImage" />
             </group>
             <group id="Info_NT" label="Information">
-              <button id="Help_NT"  size="large"  label="User Help"       tag="HELP"            onAction="clickHelp" getImage="GetImage" description="Find a bible verse or verses (which can optionally be inserted into current document)" />
-              <button id="About_NT" size="large"  label="About AV-Bible"  tag="ABOUT"           onAction="clickInfo" getImage="GetImage" description="Insert a bible verse or verses into current document" />
+              <button id="Help_NT"  size="large"  label="User Help"       tag="HELP"            onAction="clickInfo" getImage="GetImage" description="Click for more information about the AV-Bible Addin for Microsoft Word" />
+              <button id="About_NT" size="large"  label="About AV-Bible"  tag="ABOUT"           onAction="clickHelp" getImage="GetImage" description="Click for user help with the AV-Bible Addin for Microsoft Word" />
             </group>
           </tab>
         </tabs>

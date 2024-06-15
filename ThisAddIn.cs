@@ -17,6 +17,7 @@ namespace AVX
         public static Bitmap BOOK { get; private set; }
         public static Bitmap HELP { get; private set; }
         public static Bitmap INFO { get; private set; }
+        public static Bitmap ICON { get; private set; }
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
             InsertVerses.ForceClose = false;
@@ -26,11 +27,14 @@ namespace AVX
             ThisAddIn.BOOK = Properties.Resources.book_40;
             ThisAddIn.INFO = Properties.Resources.info_80;
             ThisAddIn.HELP = Properties.Resources.help_80;
+            ThisAddIn.ICON = Properties.Resources.logo_160;
         }
 
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
         {
             InsertVerses.ForceClose = true;
+            FindVerses.ForceClose = true;
+            AboutInfo.ForceClose = true;
         }
         protected override Microsoft.Office.Core.IRibbonExtensibility CreateRibbonExtensibilityObject()
         {
