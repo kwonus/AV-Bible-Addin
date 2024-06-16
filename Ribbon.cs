@@ -188,6 +188,8 @@ namespace AVX
                 return ThisAddIn.HELP;
             if (control.Tag == "ABOUT")
                 return ThisAddIn.INFO;
+            if (control.Tag == "CFG")
+                return ThisAddIn.CFG;
 
             return ThisAddIn.BOOK;
         }
@@ -206,6 +208,30 @@ namespace AVX
                 InsertVerses.ShowForm(InsertVerses.InsertAny);
             }
         }
+        public void clickAbout(Office.IRibbonControl control)
+        {
+            AboutInfo.AboutForm.Show();
+            try
+            {
+                Ribbon.BringToTop(AboutInfo.AboutForm);
+            }
+            catch
+            {
+                ;
+            }
+        }
+        public void clickCfg(Office.IRibbonControl control)
+        {
+            Settings.SettingsForm.Show();
+            try
+            {
+                Ribbon.BringToTop(Settings.SettingsForm);
+            }
+            catch
+            {
+                ;
+            }
+        }
         public void clickFind(Office.IRibbonControl control)
         {
             FindVerses.SearchForm.Show();
@@ -218,17 +244,12 @@ namespace AVX
                 ;
             }
         }
-        public void clickInfo(Office.IRibbonControl control)
-        {
-            MessageBox.Show(null, "AV-Bible Addin for Microsoft Word", "AV-Bible User Help", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-        }
         public void clickHelp(Office.IRibbonControl control)
         {
-            AboutInfo.AboutForm.Show();
+            HelpWindow.HelpForm.Show();
             try
             {
-                Ribbon.BringToTop(AboutInfo.AboutForm);
+                Ribbon.BringToTop(HelpWindow.HelpForm);
             }
             catch
             {

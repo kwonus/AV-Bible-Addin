@@ -111,6 +111,19 @@ namespace AVX.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+        ///{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+        ///\widowctrl\hyphauto
+        ///
+        ///{\pard \ql \f0 \sa180 \li0 \fi0 Early-Modern-English, the language spoken at the time of Shakespeare, is known to be more morphologically rich than contemporary Modern-English. There are also some words that are seldomly used today. We&apos;ll discuss a few of those, too. For brevity&apos;s sake, we will refer to a word in the Early-Modern-English vocabulary as an &quot;Eli [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string language {
+            get {
+                return ResourceManager.GetString("language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap logo_160 {
@@ -126,6 +139,58 @@ namespace AVX.Properties {
         internal static System.Drawing.Bitmap logo_80 {
             get {
                 object obj = ResourceManager.GetObject("logo_80", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+        ///{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+        ///\widowctrl\hyphauto
+        ///
+        ///{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel1 \b \fs32 Background\par}
+        ///{\pard \ql \f0 \sa180 \li0 \fi0 Near the end of the last century, Google pioneered the modern search interface by employing an elegantly simple &quot;search box&quot;. This was an evolution away from the complex interfaces that preceded it. Still, it becomes problematic when we want to search for m [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string overview {
+            get {
+                return ResourceManager.GetString("overview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+        ///{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+        ///\widowctrl\hyphauto
+        ///
+        ///{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel1 \b \fs32 Selection Criteria\par}
+        ///{\pard \ql \f0 \sa180 \li0 \fi0 The selection criteria controls how verses are selected. It is made up of one to three blocks. The ordering of blocks is partly prescribed. When present, the expression block must be in the initial position. The scoping block and the settings-block  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string searching {
+            get {
+                return ResourceManager.GetString("searching", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+        ///{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+        ///\widowctrl\hyphauto
+        ///
+        ///{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel2 \b \fs28 Commands that control persistent Settings\par}
+        ///{\pard \ql \f0 \sa180 \li0 \fi0 | Action | Parameters | shorthand invocation | | ---------- | ---------------------------- | -------------------- | | {\b @clear} | {\i setting} or ALL | n/a | | {\b @get} | {\i setting} or ALL or revision | n/a | | {\b @set}  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string settings {
+            get {
+                return ResourceManager.GetString("settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap settings_64 {
+            get {
+                object obj = ResourceManager.GetObject("settings_64", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
