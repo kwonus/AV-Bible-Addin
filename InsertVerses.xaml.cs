@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -303,9 +305,29 @@ namespace AVX
                 }
             }
         }
-
+        private static HttpClient AVAPI = new HttpClient()
+        {
+            BaseAddress = new Uri("https://github.com/kwonus"),
+        };
         private void button_Click(object sender, RoutedEventArgs e)
         {
+            // using System.Net;
+            ServicePointManager.Expect100Continue = true;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            // Use SecurityProtocolType.Ssl3 if needed for compatibility reasons
+
+            using (var awaitable = AVAPI.GetAsync("Quelle"))
+            {
+                awaitable.Wait();
+                var response = awaitable.Result;
+
+                //if (response.EnsureSuccessStatusCode())
+                {
+                    var content = response.Content.ReadAsStringAsync();
+                    content.Wait();
+                    Console.WriteLine($"{content}\n");
+                }
+            }
             ComboBoxItem item = (ComboBoxItem)this.comboBoxBook.SelectedItem;
             if (item != null)
             {

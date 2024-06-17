@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -30,7 +32,15 @@ namespace AVX
             this.Hide();
         }
         private void search_Click(object sender, RoutedEventArgs e)
-        {/*
+        {
+            // API (to get matching verse references)
+            // app.MapGet("/debug/find/{spec}", (string spec) => API.api.engine.Debug_Find(spec, out message, quoted: false).ToString());
+            // app.MapGet("/debug/find-quoted/{spec}", (string spec) => API.api.engine.Debug_Find(spec, out message, quoted: true).ToString());
+            API api = new AVX.API();
+
+            var result = api.Find(this.TextCriteria.Text, null);
+
+            /*
             this.FoundTree.Items.Clear();
 
             var command = QuelleCommand(this.TextCriteria.Text);
