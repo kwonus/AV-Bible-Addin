@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Input;
 using Word = Microsoft.Office.Interop.Word;
 
@@ -40,65 +41,52 @@ namespace AVX
 
             var result = api.Find(this.TextCriteria.Text, null);
 
-            /*
             this.FoundTree.Items.Clear();
 
-            var command = QuelleCommand(this.TextCriteria.Text);
+            this.button_insert_all.IsEnabled = (result.Count > 0);
 
-            var verses = new HashSet<UInt16>();
-            if (command.success && command.result != null && command.result.verses != null && command.result.verses.Count > 0)
+            if (this.button_insert_all.IsEnabled)
             {
-                var root = new TreeViewItem();
-                root.Tag = (byte) 0;
-                root.Header = "All Matching Verses";
-                this.FoundTree.Items.Add(root);
-
                 TreeViewItem book = null;
-                TreeViewItem chapter = null;
-                TreeViewItem verse = null;
+                TreeViewItem cv = null;
 
-                byte bk = 0;
-                byte ch = 0;
-                byte vs = 0;
-                byte ignore;
+                byte b = 0;
+                byte c = 0;
+                byte v = 0;
 
-                foreach (UInt16 vidx in from v in command.result.verses orderby v select v)
+                foreach (BookResult br in result)
                 {
-                    if (!AVXAPI.SELF.XVerse.GetEntry(vidx, out bk, out ch, out vs, out ignore))
-                        return; // something unexpected went wrong
-
-                    if (book == null || (byte)book.Tag != bk)
+                    if (br.B != b)
                     {
-                        chapter = null;
+                        b = br.B;
                         book = new TreeViewItem();
-                        book.Tag = bk;
-                        book.Header = AVXAPI.SELF.XBook.GetBookByNum(bk).Value.name;
-                        root.Items.Add(book);
+                        book.Tag = (UInt16) b;
+                        book.Header = br.Info.Name;
+                        this.FoundTree.Items.Add(book);
+                        c = 0;
+                        v = 0;
                     }
-                    if (chapter == null || (byte)chapter.Tag != ch)
+                    foreach (ChapterResult cr in br)
                     {
-                        chapter = new TreeViewItem();
-                        chapter.Tag = ch;
-                        chapter.Header = "Chapter " + ((uint)ch).ToString();
-                        book.Items.Add(chapter);
+                        if (cr.C != c)
+                        {
+                            c = cr.C;
+                            v = 0;
+                        }
+                        foreach (VerseResult vr in cr)
+                        {
+                            if (vr.V != v)
+                            {
+                                v = vr.V;
+                                cv = new TreeViewItem();
+                                cv.Tag = (UInt16)((((UInt16)c) << 8) | (UInt16)v);
+                                cv.Header = c.ToString() + v.ToString();
+                                book.Items.Add(cv);
+                            }
+                        }
                     }
-                    verse = new TreeViewItem();
-                    verse.Tag = vs;
-                    verse.Header = ((uint)vs).ToString();
-                    chapter.Items.Add(verse);
                 }
-                if (this.FoundTree.Items.Count == 1)
-                {
-                    if (root.Items.Count == 1)
-                        this.textBoxChaterAndVerse.Text = ((TreeViewItem)root.Items[0]).Header.ToString() + ": all matching verses";
-                    else
-                        this.textBoxChaterAndVerse.Text = "all matching verses";
-                }
-                else
-                { 
-                    this.textBoxChaterAndVerse.Text = "";
-                }
-            }*/
+            }
         }
         /*
         private void AddVerseToDocument(Book book, byte chapter, byte verse)
@@ -129,7 +117,27 @@ namespace AVX
             }*/
             return null;
         }
-        private void insert_Click(object sender, RoutedEventArgs e)
+        private void insert_book_Click(object sender, RoutedEventArgs e)
+        {
+        }
+        private void insert_verse_Click(object sender, RoutedEventArgs e)
+        {
+        }
+        private void insert_variant_Click(object sender, RoutedEventArgs e)
+        {
+            InsertVerses.ShowForm(InsertVerses.InsertAny);
+
+            var verse = (TreeViewItem)this.FoundTree.SelectedItem;
+            var book  = (TreeViewItem) ((verse != null) ? verse.Parent : null);
+
+            if (book != null)
+            {
+                InsertVerses.ShowForm((byte)((UInt16)(book.Tag)));
+                InsertVerses.InsertAny.textBoxChapterAndVerse.Text = (string) verse.Header;
+                InsertVerses.InsertAny.button.IsEnabled = true;
+            }
+        }
+        private void insert_all_Click(object sender, RoutedEventArgs e)
         {/*
             var trimmed = this.textBoxChaterAndVerse.Text.Trim();
             if (trimmed.Equals("all matching verses", StringComparison.InvariantCultureIgnoreCase))
@@ -239,60 +247,52 @@ namespace AVX
         }
 
         private void FoundTree_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
-        {/*
+        {
             var node = (TreeViewItem) this.FoundTree.SelectedItem;
 
-            if (node == null)
+            if (node != null)
             {
-                this.textBoxChaterAndVerse.Text = "";
-            }
-            else if ((byte)node.Tag == 0)   // root
-            {
-                this.textBoxChaterAndVerse.Text = "all matching verses";
+                UInt16 tag = (UInt16)node.Tag;
+
+                if (tag == 0)
+                {
+                    this.button_insert_book.IsEnabled = false;
+                    this.button_insert_verse.IsEnabled = false;
+                    this.button_insert_variant.IsEnabled = false;
+                }
+                else if (tag >= 1 && tag <= 66)
+                {
+                    this.button_insert_book.IsEnabled = true;
+                    this.button_insert_verse.IsEnabled = false;
+                    this.button_insert_variant.IsEnabled = false;
+                }
+                else if (tag >= 0x100)
+                {
+                    this.button_insert_book.IsEnabled = false;
+                    this.button_insert_verse.IsEnabled = true;
+                    this.button_insert_variant.IsEnabled = true;
+                }
             }
             else
             {
-                var parent = (TreeViewItem)node.Parent;
-
-                if ((byte)parent.Tag == 0)        // Book
-                {
-                    this.textBoxChaterAndVerse.Text = node.Header.ToString() + ": all matching verses";
-                }
-                else
-                {
-                    var grandParent = (TreeViewItem)(parent.Parent);
-
-                    if ((byte)grandParent.Tag == 0)        // Chapter
-                    {
-                        char delimiter = ':';
-                        this.textBoxChaterAndVerse.Text = parent.Header.ToString() + ' ' + ((byte)node.Tag).ToString();
-                        foreach (var verse in node.Items)
-                        {
-                            this.textBoxChaterAndVerse.Text += delimiter;
-                            this.textBoxChaterAndVerse.Text += ((TreeViewItem)verse).Header.ToString();
-                            delimiter = ',';
-                        }
-                    }
-                    else // verse
-                    {
-                        this.textBoxChaterAndVerse.Text = grandParent.Header.ToString() + ' ' + ((byte)parent.Tag).ToString() + ':' + ((byte)node.Tag).ToString();
-                    }
-                }
-            }*/
+                this.button_insert_book.IsEnabled = false;
+                this.button_insert_book.IsEnabled = false;
+                this.button_insert_variant.IsEnabled = false;
+            }
         }
 
-        private void OnKeyDownCrieria(object sender, KeyEventArgs e)
+        private void OnKeyDownCrieria(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == Key.Return)
             {
                 this.search_Click(sender, null);
             }
         }
-        private void OnKeyDownSpec(object sender, KeyEventArgs e)
+        private void OnKeyDownSpec(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == Key.Return)
             {
-                this.insert_Click(sender, null);
+                this.insert_all_Click(sender, null);
             }
         }
 

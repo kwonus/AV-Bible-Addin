@@ -53,7 +53,7 @@ namespace AVX
             get
             {
                 if (this.B >= 1 && this.B <= 66)
-                    return BookInfo.Metrics[this.B];
+                    return BookInfo.GetBook(this.B);
                 return null;
             }
         }
