@@ -46,6 +46,12 @@ namespace AVX
             this._VerseCountsByChapter[0] = 0; // there is never a chapter-zero
         }
 
+        public static BookInfo GetBook(byte num)
+        {
+            return (num >=1 && num <= 66)
+                ? Metrics[num]
+                : null;
+        }
         public static BookInfo GetBook(string spec)
         {
             string norm = spec.Trim();
@@ -373,7 +379,7 @@ namespace AVX
             new string[] { "Revelation", "Re", "Rev", "Rv" },
             22
         );
-        public static BookInfo[] Metrics { get; private set; } = new BookInfo[] {
+        internal static BookInfo[] Metrics { get; private set; } = new BookInfo[] {
             null,
             B01, B02, B03, B04, B05, B06, B07, B08, B09, B10,
             B11, B12, B13, B14, B15, B16, B17, B18, B19, B20,

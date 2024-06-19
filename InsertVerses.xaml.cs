@@ -114,7 +114,6 @@ namespace AVX
 
         public static void ShowForm(InsertVerses form)
         {
-            var info = BookInfo.GetBook("I  co");
             if (form != null)
             {
                 form.WindowStartupLocation = WindowStartupLocation.Manual;
@@ -208,9 +207,9 @@ namespace AVX
         {
             ComboBoxItem item = (ComboBoxItem)this.comboBoxBook.SelectedItem;
             var bk = item.Tag.ToString().Substring(2);
-            var b = (byte)UInt16.Parse(bk);
-            var book = Ribbon.RIBBON.bkIdx[b];
-            string spec = item.Content.ToString() + " " + this.textBoxChaterAndVerse.Text.Trim().Replace(" ", "").Replace(",", ", ");
+            var b = byte.Parse(bk);
+            var info = BookInfo.GetBook(b);
+            string spec = info.Name + " " + this.textBoxChapterAndVerse.Text.Trim().Replace(" ", "").Replace(",", ", ");
             if (this.modernize.IsChecked == true)
                 spec += "  (AVX)";
             dynamic rng = Ribbon.AVX.Application.ActiveDocument.Range();
@@ -261,10 +260,10 @@ namespace AVX
             {
                 ComboBoxItem item = (ComboBoxItem) this.comboBoxBook.SelectedItem;
                 var bk = item.Tag.ToString().Substring(2);
-                var b = (byte) UInt16.Parse(bk);
-                var book = Ribbon.RIBBON.bkIdx[b];
+                var b = byte.Parse(bk);
+                var book = BookInfo.GetBook(b);
                 string bname = item.Content.ToString();
-                this.info.Text = bname + " has " + ((uint)book.ccnt).ToString() + " chapters";
+                this.info.Text = bname + " has " + ((uint)book.ChapterCount).ToString() + " chapters";
             }
         }
 
@@ -276,13 +275,15 @@ namespace AVX
             ComboBoxItem item = (ComboBoxItem)this.comboBoxBook.SelectedItem;
             var bk = item.Tag.ToString().Substring(2);
             var b = (byte)UInt16.Parse(bk);
-            var book = Ribbon.RIBBON.bkIdx[b];
+            var book = BookInfo.GetBook(b);
             string bname = item.Content.ToString();
-            this.info.Text = bname + " has " + ((uint)book.ccnt).ToString() + " chapters";
+            this.info.Text = bname + " has " + ((uint)book.ChapterCount).ToString() + " chapters";
 
-            if (this.textBoxChaterAndVerse.Text.Length > 0)
+            this.button.IsEnabled = false;
+
+            if (this.textBoxChapterAndVerse.Text.Length > 0)
             {
-                var text = this.textBoxChaterAndVerse.Text.Trim();
+                var text = this.textBoxChapterAndVerse.Text.Trim();
                 var len = text.Length;
 
                 UInt16 ch = 0;
@@ -295,14 +296,10 @@ namespace AVX
                     }
                     else break;
                 }
-                if (ch <= 255)
+                if (ch >= 1 && ch <= book.ChapterCount)
                 {
-                    byte c = (byte)ch;
-                    if (Ribbon.RIBBON.chIdx[b].ContainsKey(c))
-                    {
-                        var chapter = Ribbon.RIBBON.chIdx[b][c];
-                        this.info.Text += ("\nChapter " + ch.ToString() + " has " + ((uint)chapter.vcnt).ToString() + " verses");
-                    }
+                    this.button.IsEnabled = true;
+                    this.info.Text += ("\nChapter " + ch.ToString() + " has " + book.VerseCountsByChapter[ch].ToString() + " verses");
                 }
             }
         }
@@ -312,23 +309,6 @@ namespace AVX
         };
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            // using System.Net;
-            ServicePointManager.Expect100Continue = true;
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-            // Use SecurityProtocolType.Ssl3 if needed for compatibility reasons
-
-            using (var awaitable = AVAPI.GetAsync("Quelle"))
-            {
-                awaitable.Wait();
-                var response = awaitable.Result;
-
-                //if (response.EnsureSuccessStatusCode())
-                {
-                    var content = response.Content.ReadAsStringAsync();
-                    content.Wait();
-                    Console.WriteLine($"{content}\n");
-                }
-            }
             ComboBoxItem item = (ComboBoxItem)this.comboBoxBook.SelectedItem;
             if (item != null)
             {
@@ -338,14 +318,14 @@ namespace AVX
                 var list = new List<byte>();
 
                 var bk = item.Tag.ToString().Substring(2);
-                var b = (byte)UInt16.Parse(bk);
-                var book = Ribbon.RIBBON.bkIdx[b];
-                string bname = item.Content.ToString();
+                var b = byte.Parse(bk);
+                var info = BookInfo.GetBook(b);
+                string bname = info.Name;
                 byte c = 0;
 
-                if (this.textBoxChaterAndVerse.Text.Length > 0)
+                if (this.textBoxChapterAndVerse.Text.Length > 0)
                 {
-                    var text = this.textBoxChaterAndVerse.Text.Trim();
+                    var text = this.textBoxChapterAndVerse.Text.Trim();
                     var len = text.Length;
                     int colon = -1;
                     UInt16 ch = 0;
@@ -363,11 +343,10 @@ namespace AVX
                             break;
                         }
                     }
-                    if (ch <= 255 && Ribbon.RIBBON.chIdx[b].ContainsKey((byte)ch))
+                    if (ch >= 1 && ch <= info.ChapterCount)
                     {
                         c = (byte)ch;
-                        var chapter = Ribbon.RIBBON.chIdx[b][c];
-                        this.info.Text += ("\nChapter " + ch.ToString() + " has " + ((uint)chapter.vcnt).ToString() + " verses");
+                        this.info.Text += ("\nChapter " + ch.ToString() + " has " + ((uint)info.VerseCountsByChapter[ch]).ToString() + " verses");
 
                         if (colon > 0 && colon+1 < len)
                         {
@@ -380,7 +359,7 @@ namespace AVX
                                 if (range.Length == 1)
                                 {
                                     bad = range[0];
-                                    if (UInt16.TryParse(bad, out val) && val <= chapter.vcnt && val >= 1)
+                                    if (UInt16.TryParse(bad, out val) && val <= info.VerseCountsByChapter[ch] && val >= 1)
                                     {
                                         list.Add((byte)val);
                                         bad = null;
@@ -393,7 +372,7 @@ namespace AVX
                                     for (int i = 0; i < 2; i++)
                                     {
                                         bad = range[i];
-                                        if (UInt16.TryParse(bad, out val) && val <= chapter.vcnt && val >= 1)
+                                        if (UInt16.TryParse(bad, out val) && val <= info.VerseCountsByChapter[ch] && val >= 1)
                                         {
                                             vals[i] = (byte)val;
                                             bad = null;
@@ -426,13 +405,13 @@ namespace AVX
                         }
                         else
                         {
-                            for (byte v = 1; v <= chapter.vcnt; v++)
+                            for (byte v = 1; v <= info.VerseCountsByChapter[ch]; v++)
                                 list.Add(v);
                         }
                     }
                     else
                     {
-                        this.info.Text = "You must specify a chapter between 1 and " + ((uint)book.ccnt).ToString() + " (inclusive)";
+                        this.info.Text = "You must specify a chapter between 1 and " + ((uint)info.ChapterCount).ToString() + " (inclusive)";
                     }
                 }
                 if (bad == null && error == null)

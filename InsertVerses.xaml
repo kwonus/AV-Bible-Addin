@@ -81,7 +81,7 @@
             <ComboBoxItem Tag="bk66" Content="Revelation"/> "
         </ComboBox>
         <Label x:Name="label1" Content="Chapter &amp; Verse" HorizontalAlignment="Left" Margin="32,71,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="textBoxChaterAndVerse" Height="23" Margin="134,75,44,0" TextWrapping="Wrap" VerticalAlignment="Top" KeyUp="textBoxChaterAndVerse_KeyUp"/>
+        <TextBox x:Name="textBoxChapterAndVerse" Height="23" Margin="134,75,44,0" TextWrapping="Wrap" VerticalAlignment="Top" KeyUp="textBoxChaterAndVerse_KeyUp"/>
         <TextBlock x:Name="info" Margin="32,127,44,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="64"/>
         <CheckBox x:Name="modernize" Content="Modernize the text" HorizontalAlignment="Left" Margin="32,0,0,42" Height="15" VerticalAlignment="Bottom"/>
     </Grid>
