@@ -116,6 +116,7 @@ namespace AVX
         {
             if (form != null)
             {
+                form.button.IsEnabled = false;
                 form.WindowStartupLocation = WindowStartupLocation.Manual;
 
                 // First Insert* ShowForm()
