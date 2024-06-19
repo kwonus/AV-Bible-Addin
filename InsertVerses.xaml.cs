@@ -114,6 +114,7 @@ namespace AVX
 
         public static void ShowForm(InsertVerses form)
         {
+            var info = BookInfo.GetBook("I  co");
             if (form != null)
             {
                 form.WindowStartupLocation = WindowStartupLocation.Manual;

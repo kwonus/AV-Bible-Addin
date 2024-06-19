@@ -187,6 +187,7 @@
   <ItemGroup>
     <Compile Include="API.cs" />
     <Compile Include="AVResults.cs" />
+    <Compile Include="BookInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

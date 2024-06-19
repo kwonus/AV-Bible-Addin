@@ -75,9 +75,8 @@ namespace AVX
                         {
                             int C = content.ReadByte();
                             int V = content.ReadByte();
-                            int zero = content.ReadByte();
 
-                            if (C < 1 || V < 1 || zero < 0)
+                            if (C < 1 || V < 1)
                                 break;
 
                             if (B != b)

@@ -47,15 +47,9 @@ namespace AVX
             SetForegroundWindow(hwnd);
 
         }
-        private string CommonFolder;
         private Office.IRibbonUI ribbon;
         public (UInt32 idx, byte ccnt)[] bkIdx { get; private set; }
         public Dictionary<byte, Dictionary<byte, (UInt32 writIdx, byte vcnt)>> chIdx { get; private set; }
-        public (UInt16 word, byte punc, byte tx)[] writ { get; private set; }
-
-        public Dictionary<UInt16, string> Search;
-        public Dictionary<UInt16, string> Display;
-        public Dictionary<UInt16, string> Modern;
 
         private ThisAddIn avx;
         public static Ribbon RIBBON { get; private set; } = null;
@@ -77,7 +71,6 @@ namespace AVX
 //            if (len != (0xC0C93) * 4)
 //                MessageBox.Show(null, "AV-Bible Addin for Microsoft Word", "Possible File corruption error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-            this.writ = new (UInt16 word, byte punc, byte tx)[cnt];
             this.bkIdx = new (UInt32 idx, byte ccnt)[1 + 66];  // waste element-zero for a one-based index
             this.chIdx = new Dictionary<byte, Dictionary<byte, (UInt32 writIdx, byte vcnt)>>();
             for (byte num = 1; num <= 66; num++)

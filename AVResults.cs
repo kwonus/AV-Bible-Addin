@@ -48,6 +48,15 @@ namespace AVX
             this.B = b;
         }
         public byte B { get; private set; }
+        public BookInfo Info
+        {
+            get
+            {
+                if (this.B >= 1 && this.B <= 66)
+                    return BookInfo.Metrics[this.B];
+                return null;
+            }
+        }
 
         public UInt16 ChapterCnt
         {
