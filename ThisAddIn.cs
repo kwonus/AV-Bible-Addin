@@ -7,6 +7,7 @@ using Word = Microsoft.Office.Interop.Word;
 using Office = Microsoft.Office.Core;
 using Microsoft.Office.Tools.Word;
 using System.Drawing;
+using System.Runtime.Remoting.Messaging;
 
 namespace AVX
 {
@@ -44,19 +45,19 @@ namespace AVX
         {
             return new Ribbon(this);
         }
-        /*
-        public static void WriteVerse(Book book, byte c, byte v, bool modern, bool contiguous)
+        public static void WriteVerse(byte bookNum, byte c, byte v, bool modern, bool contiguous)
         {
-            ThisAddIn.WriteVerse(book.num, c, v, modern, contiguous);
+            ThisAddIn.WriteVerse(bookNum, c, v, modern, contiguous);
         }
 
         public static void WriteVerse(byte b, byte c, byte v, bool modern, bool contiguous, Word.WdColor label = Word.WdColor.wdColorBlue)
         {
             byte prevPunc = 0;
-            var chapter = Ribbon.RIBBON.chIdx[b][c];
-            var records = Ribbon.RIBBON.writ;
-            UInt32 r = chapter.writIdx;
-            for (int i = 1; i < v; //)
+            BookInfo book = BookInfo.GetBook(b);
+            if (book == null || c < 1 || c > book.ChapterCount || v < 1 || v > book.VerseCountsByChapter[c])
+                return;
+
+            /*for (int i = 1; i < v; //)
             {
                 r++;
                 if ((records[r].tx & 0x70) == 0x20) // BoV
@@ -64,14 +65,14 @@ namespace AVX
                 if ((records[r].tx & 0x70) == 0x70) // EoC or EoB
                     return;
             }
-            var keepr = r;
+            var keepr = r;*/
             var first = true;
             var verse = new StringBuilder();
 
-            do
+            /*do
             {
-                if (contiguous && ((records[r].tx & 0x70) == 0x20)) // BoV
-                    verse.Append(v.ToString() + (char)0x200B // zero-width-space //);
+                ///if (contiguous && ((records[r].tx & 0x70) == 0x20)) // BoV
+                ///    verse.Append(v.ToString() + (char)0x200B // zero-width-space //);
 
                 string word = null;
                 UInt16 key = (UInt16)(0x7FFF & records[r].word);
@@ -169,8 +170,8 @@ namespace AVX
                         }
                     }
                 }
-            }
-        }*/
+            }*/
+        }
 
 
         #region VSTO generated code

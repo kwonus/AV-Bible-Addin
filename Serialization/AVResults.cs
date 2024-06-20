@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AVX
+namespace AVX.Serialization
 {
     public class BibleResult : List<BookResult>
     {

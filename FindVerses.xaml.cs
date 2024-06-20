@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
 using Word = Microsoft.Office.Interop.Word;
+using AVX.Serialization;
 
 namespace AVX
 {
@@ -37,7 +38,7 @@ namespace AVX
             // API (to get matching verse references)
             // app.MapGet("/debug/find/{spec}", (string spec) => API.api.engine.Debug_Find(spec, out message, quoted: false).ToString());
             // app.MapGet("/debug/find-quoted/{spec}", (string spec) => API.api.engine.Debug_Find(spec, out message, quoted: true).ToString());
-            API api = new AVX.API();
+            API api = new API();
 
             var result = api.Find(this.TextCriteria.Text, null);
 
@@ -88,13 +89,28 @@ namespace AVX
                 }
             }
         }
-        /*
-        private void AddVerseToDocument(Book book, byte chapter, byte verse)
+        private void WriteVerseSpec(string book, string spec)
         {
-            this.WriteVerseSpec(book, chapter, verse);
-            ThisAddIn.WriteVerse(book, chapter, verse, this.modernize.IsChecked == true, false);
+            dynamic rng = Ribbon.AVX.Application.ActiveDocument.Range();
+            rng.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
+            rng.Bold = 1;
+            string insert = book + " " + spec;
+            if (this.modernize.IsChecked.Value)
+                insert += "  (AVX)";
+            insert += "\n";
+            rng.Text = insert;
+            foreach (Word.Range w in rng.Words)
+            {
+                w.Font.Bold = 1;
+            }
         }
-        private void AddChapterToDocument(Book book, TreeViewItem chapterNode)
+
+        private void AddVerseToDocument(BookInfo book, byte chapter, byte verse)
+        {
+            this.WriteVerseSpec(book.Name, chapter + ":" + verse);
+            ThisAddIn.WriteVerse(book.Num, chapter, verse, this.modernize.IsChecked == true, false);
+        }
+        private void AddChapterToDocument(BookInfo book, TreeViewItem chapterNode)
         {
             var c = (byte)chapterNode.Tag;
             //var chapter = api.Chapters[book.chapterIdx + c - 1];
@@ -103,7 +119,7 @@ namespace AVX
                 AddVerseToDocument(book, c, (byte)((TreeViewItem)verseNode).Tag);
             }
         }
-        */
+        
         TreeViewItem FindNode(string bookName)
         {/*
             foreach (var root in this.FoundTree.Items)
@@ -119,6 +135,32 @@ namespace AVX
         }
         private void insert_book_Click(object sender, RoutedEventArgs e)
         {
+            InsertVerses.ShowForm(InsertVerses.InsertAny);
+
+            var book = (TreeViewItem)this.FoundTree.SelectedItem;
+
+            foreach (var node in book.Items)
+            {
+                var verse = (TreeViewItem)node;
+            }
+
+            /*if (book != null)
+            {
+                InsertVerses.ShowForm((byte)((UInt16)(book.Tag)));
+                InsertVerses.InsertAny.textBoxChapterAndVerse.Text = (string)verse.Header;
+                InsertVerses.InsertAny.button.IsEnabled = true;
+            }
+
+            if (trimmed == ": all matching verses")
+            {
+                var bookNode = this.FindNode(book.name);
+                if (bookNode != null)
+                {
+                    foreach (var chapterNode in bookNode.Items)
+                        AddChapterToDocument(book, (TreeViewItem)chapterNode);
+                }
+                return;
+            }*/
         }
         private void insert_verse_Click(object sender, RoutedEventArgs e)
         {
@@ -153,96 +195,6 @@ namespace AVX
                     }
                 }
                 return;
-            }
-
-            else
-            {
-                for (byte bk = 1; bk <= 66; bk++)
-                {
-                    var book = api.Books[bk-1];
-                    var len = book.name.Length;
-
-                    if (trimmed.StartsWith(book.name, StringComparison.InvariantCultureIgnoreCase) && len < trimmed.Length)
-                    {
-                        trimmed = trimmed.Substring(len).Trim();
-                        if (trimmed == ": all matching verses")
-                        {
-                            var bookNode = this.FindNode(book.name);
-                            if (bookNode != null)
-                            {
-                                foreach (var chapterNode in bookNode.Items)
-                                    AddChapterToDocument(book, (TreeViewItem)chapterNode);
-                            }
-                            return;
-                        }
-                        else
-                        {
-                            var spec = trimmed.Split(':');
-                            if (spec.Length == 2)
-                            {
-                                var c = byte.Parse(spec[0].Trim());
-                                if (c >= 1 && c <= book.chapterCnt)
-                                {
-                                    // Chapter chapter = api.Chapters[book.chapterIdx + c - 1];
-
-                                    foreach (var verse in spec[1].Split(','))
-                                    {
-                                        var v = int.Parse(verse.Trim());
-                                        if (v >= 1 && v <= 255)
-                                            AddVerseToDocument(book, c, (byte)v);
-                                    }
-                                }
-                            }
-                        }
-                        return;
-                    }
-                }
-                for (byte bk = 1; bk <= 66; bk++)
-                {
-                    var book = api.Books[bk-1];
-                    foreach (var abbr in book.abbreviations)
-                    {
-                        var len = abbr.Length;
-                        if (trimmed.StartsWith(abbr, StringComparison.InvariantCultureIgnoreCase))
-                        {
-                            for (trimmed = trimmed.Substring(len); trimmed.Length > 0 && !char.IsWhiteSpace(trimmed[0]); trimmed = trimmed.Substring(1)) // handles Gen vs Ge for abbreviation
-                                ;
-                            trimmed = trimmed.Trim();
-                                if (trimmed.Length == 0)
-                                    return;
-
-                            if (trimmed == ": all matching verses")
-                            {
-                                var bookNode = this.FindNode(book.name);
-                                if (bookNode != null)
-                                {
-                                    foreach (var chapterNode in bookNode.Items)
-                                        AddChapterToDocument(book, (TreeViewItem)chapterNode);
-                                }
-                            }
-                            else
-                            {
-                                var spec = trimmed.Split(':');
-                                if (spec.Length == 2)
-                                {
-                                    var c = byte.Parse(spec[0].Trim());
-                                    if (c >= 1 && c <= book.chapterCnt)
-                                    {
-                                        // Chapter chapter = api.Chapters[book.chapterIdx + c - 1];
-
-                                        foreach (var verse in spec[1].Split(','))
-                                        {
-                                            var v = int.Parse(verse.Trim());
-                                            if (v >= 1 && v <= 255)
-                                                AddVerseToDocument(book, c, (byte)v);
-                                        }
-                                    }
-                                }
-                            }
-                            return;
-                        }
-                    }
-                }
             }*/
         }
 

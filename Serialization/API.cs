@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AVX
+namespace AVX.Serialization
 {
     public class API
     {

@@ -23,6 +23,7 @@ namespace AVX
 
         public byte ChapterCount { get => (byte)(_VerseCountsByChapter.Length - 1); }
         public string Name { get => Abbreviations[0]; }
+        public byte Num { get; private set; }
 
         private static bool Initialized = false;
 
@@ -39,8 +40,9 @@ namespace AVX
             Initialized = true;
         }
 
-        private BookInfo(string[] abbrev, byte cnt)
+        private BookInfo(byte num, string[] abbrev, byte cnt)
         {
+            this.Num = num;
             this.Abbreviations = abbrev;
             this._VerseCountsByChapter = new byte[cnt+1];
             this._VerseCountsByChapter[0] = 0; // there is never a chapter-zero
@@ -115,267 +117,267 @@ namespace AVX
             return null;
         }
 
-        static BookInfo B01 = new BookInfo(
+        static BookInfo B01 = new BookInfo(1,
             new string[] { "Genesis", "Ge", "Gen", "Gen", "Gn" },
             50
         );
-        static BookInfo B02 = new BookInfo(
+        static BookInfo B02 = new BookInfo(2,
             new string[] { "Exodus", "Ex", "Exo", "Exo", "Exod" },
             40
         );
-        static BookInfo B03 = new BookInfo(
+        static BookInfo B03 = new BookInfo(3,
             new string[] { "Leviticus", "Le", "Lev", "Lev", "Lv" },
             27
         );
-        static BookInfo B04 = new BookInfo(
+        static BookInfo B04 = new BookInfo(4,
             new string[] { "Numbers", "Nu", "Num", "Numb", "Nb" },
             36
         );
-        static BookInfo B05 = new BookInfo(
+        static BookInfo B05 = new BookInfo(5,
             new string[] { "Deuteronomy", "Dt", "D't", "Deut", "De" },
             34
         );
-        static BookInfo B06 = new BookInfo(
+        static BookInfo B06 = new BookInfo(6,
             new string[] { "Joshua", "Js", "Jsh", "Josh", "Jos" },
             24
         );
-        static BookInfo B07 = new BookInfo(
+        static BookInfo B07 = new BookInfo(7,
             new string[] { "Judges", "Jg", "Jdg", "Judg", "Jdgs" },
             21
         );
-        static BookInfo B08 = new BookInfo(
+        static BookInfo B08 = new BookInfo(8,
             new string[] { "Ruth", "Ru", "Rth", "Ruth", "Rut" },
             4
         );
-        static BookInfo B09 = new BookInfo(
+        static BookInfo B09 = new BookInfo(9,
             new string[] { "1 Samuel", "1S", "1Sm", "1Sam", "1Sa" },
             31
         );
-        static BookInfo B10 = new BookInfo(
+        static BookInfo B10 = new BookInfo(10,
             new string[] { "2 Samuel", "2S", "2Sm", "2Sam", "2Sa" },
             24
         );
-        static BookInfo B11 = new BookInfo(
+        static BookInfo B11 = new BookInfo(11,
             new string[] { "1 Kings", "1K", "1Ki", "1Kgs", "1Kg", "1Kin" },
             22
         );
-        static BookInfo B12 = new BookInfo(
+        static BookInfo B12 = new BookInfo(12,
             new string[] { "2 Kings", "2K", "2Ki", "2Kgs", "2Kg", "2Kin" },
             25
         );
-        static BookInfo B13 = new BookInfo(
+        static BookInfo B13 = new BookInfo(13,
             new string[] { "1 Chronicles", "", "1Ch", "1Chr", "1Chron" },
             29
         );
-        static BookInfo B14 = new BookInfo(
+        static BookInfo B14 = new BookInfo(14,
             new string[] { "2 Chronicles", "", "2Ch", "2Chr", "2Chron" },
             36
         );
-        static BookInfo B15 = new BookInfo(
+        static BookInfo B15 = new BookInfo(15,
             new string[] { "Ezra", "", "Ezr", "Ezra" },
             10
         );
-        static BookInfo B16 = new BookInfo(
+        static BookInfo B16 = new BookInfo(16,
             new string[] { "Nehemiah", "Ne", "Neh", "Neh" },
             13
         );
-        static BookInfo B17 = new BookInfo(
+        static BookInfo B17 = new BookInfo(17,
             new string[] { "Esther", "Es", "Est", "Est", "Esth" },
             10
         );
-        static BookInfo B18 = new BookInfo(
+        static BookInfo B18 = new BookInfo(18,
             new string[] { "Job", "Jb" },
             42
         );
-        static BookInfo B19 = new BookInfo(
+        static BookInfo B19 = new BookInfo(19,
             new string[] { "Psalms", "Ps", "Psa", "Pslm", "Psm", "Pss" },
             150
         );
-        static BookInfo B20 = new BookInfo(
+        static BookInfo B20 = new BookInfo(20,
             new string[] { "Proverbs", "Pr", "Pro", "Prov", "Prv" },
             31
         );
-        static BookInfo B21 = new BookInfo(
+        static BookInfo B21 = new BookInfo(21,
             new string[] { "Ecclesiastes", "Ec", "Ecc", "Eccl", "Eccle", "Qoh" },
             12
         );
-        static BookInfo B22 = new BookInfo(
+        static BookInfo B22 = new BookInfo(22,
             new string[] { "Song of Solomon", "So", "SoS", "Song", "SS", "Cant" },
             8
         );
-        static BookInfo B23 = new BookInfo(
+        static BookInfo B23 = new BookInfo(23,
             new string[] { "Isaiah", "Is", "Isa" },
             66
         );
-        static BookInfo B24 = new BookInfo(
+        static BookInfo B24 = new BookInfo(24,
             new string[] { "Jeremiah", "Je", "Jer", "Jer", "Jeremy", "Jr" },
             52
         );
-        static BookInfo B25 = new BookInfo(
+        static BookInfo B25 = new BookInfo(25,
             new string[] { "Lamentations", "La", "Lam" },
             5
         );
-        static BookInfo B26 = new BookInfo(
+        static BookInfo B26 = new BookInfo(26,
             new string[] { "Ezekiel", "", "Eze", "Ezek", "Ezk" },
             48
         );
-        static BookInfo B27 = new BookInfo(
+        static BookInfo B27 = new BookInfo(27,
             new string[] { "Daniel", "Da", "Dan", "Dan", "Dn" },
             12
         );
-        static BookInfo B28 = new BookInfo(
+        static BookInfo B28 = new BookInfo(28,
             new string[] { "Hosea", "Ho", "Hos" },
             14
         );
-        static BookInfo B29 = new BookInfo(
+        static BookInfo B29 = new BookInfo(29,
             new string[] { "Joel", "Jl", "Jol", "Joe" },
             3
         );
-        static BookInfo B30 = new BookInfo(
+        static BookInfo B30 = new BookInfo(30,
             new string[] { "Amos", "Am", "Amo" },
             9
         );
-        static BookInfo B31 = new BookInfo(
+        static BookInfo B31 = new BookInfo(31,
             new string[] { "Obadiah", "Ob", "Obd", "Obad" },
             1
         );
-        static BookInfo B32 = new BookInfo(
+        static BookInfo B32 = new BookInfo(32,
             new string[] { "Jonah", "Jnh", "Jona" },
             4
         );
-        static BookInfo B33 = new BookInfo(
+        static BookInfo B33 = new BookInfo(33,
             new string[] { "Micah", "Mc", "Mic", "Mica", "Mi" },
             7
         );
-        static BookInfo B34 = new BookInfo(
+        static BookInfo B34 = new BookInfo(34,
             new string[] { "Nahum", "Na", "Nah" },
             3
         );
-        static BookInfo B35 = new BookInfo(
+        static BookInfo B35 = new BookInfo(35,
             new string[] { "Habakkuk", "Hb", "Hab" },
             3
         );
-        static BookInfo B36 = new BookInfo(
+        static BookInfo B36 = new BookInfo(36,
             new string[] { "Zephaniah", "Zp", "Zep", "Zeph", "Zph" },
             3
         );
-        static BookInfo B37 = new BookInfo(
+        static BookInfo B37 = new BookInfo(37,
             new string[] { "Haggai", "Hg", "Hag" },
             2
         );
-        static BookInfo B38 = new BookInfo(
+        static BookInfo B38 = new BookInfo(38,
             new string[] { "Zechariah", "Zc", "Zec", "Zech", "Zch" },
             14
         );
-        static BookInfo B39 = new BookInfo(
+        static BookInfo B39 = new BookInfo(39,
             new string[] { "Malachi", "Ml", "Mal" },
             4
         );
-        static BookInfo B40 = new BookInfo(
+        static BookInfo B40 = new BookInfo(40,
             new string[] { "Matthew", "Mt", "Mat", "Matt" },
             28
         );
-        static BookInfo B41 = new BookInfo(
+        static BookInfo B41 = new BookInfo(41,
             new string[] { "Mark", "Mk", "Mrk" },
             16
         );
-        static BookInfo B42 = new BookInfo(
+        static BookInfo B42 = new BookInfo(42,
             new string[] { "Luke", "Lk", "Luk", "Lu" },
             24
         );
-        static BookInfo B43 = new BookInfo(
+        static BookInfo B43 = new BookInfo(43,
             new string[] { "John", "Jn", "Jhn", "John", "Joh" },
             21
         );
-        static BookInfo B44 = new BookInfo(
+        static BookInfo B44 = new BookInfo(44,
             new string[] { "Acts", "Ac", "Act", },
             28
         );
-        static BookInfo B45 = new BookInfo(
+        static BookInfo B45 = new BookInfo(45,
             new string[] { "Romans", "Ro", "Rom", "Rm" },
             16
         );
-        static BookInfo B46 = new BookInfo(
+        static BookInfo B46 = new BookInfo(46,
             new string[] { "1 Corinthians", "1Co", "1Cor" },
             16
         );
-        static BookInfo B47 = new BookInfo(
+        static BookInfo B47 = new BookInfo(47,
             new string[] { "2 Corinthians", "2Co", "2Cor" },
             13
         );
-        static BookInfo B48 = new BookInfo(
+        static BookInfo B48 = new BookInfo(48,
             new string[] { "Galatians", "Ga", "Gal" },
             6
         );
-        static BookInfo B49 = new BookInfo(
+        static BookInfo B49 = new BookInfo(49,
             new string[] { "Ephesians", "Ep", "Eph" },
             6
         );
-        static BookInfo B50 = new BookInfo(
+        static BookInfo B50 = new BookInfo(50,
             new string[] { "Philippians", "Pp", "Php", "Phil", "Philip" },
             4
         );
-        static BookInfo B51 = new BookInfo(
+        static BookInfo B51 = new BookInfo(51,
             new string[] { "Colossians", "Co", "Col", "Col" },
             4
         );
-        static BookInfo B52 = new BookInfo(
+        static BookInfo B52 = new BookInfo(52,
             new string[] { "1 Thessalonians", "1Th", "1Th", "1Thess", "1Thes" },
             5
         );
-        static BookInfo B53 = new BookInfo(
+        static BookInfo B53 = new BookInfo(53,
             new string[] { "2 Thessalonians", "2Th", "2Th", "2Thess", "2Thes" },
             3
         );
-        static BookInfo B54 = new BookInfo(
+        static BookInfo B54 = new BookInfo(54,
             new string[] { "1 Timothy", "1Ti", "1Tim" },
             6
         );
-        static BookInfo B55 = new BookInfo(
+        static BookInfo B55 = new BookInfo(55,
             new string[] { "2 Timothy", "2Ti", "2Tim" },
             4
         );
-        static BookInfo B56 = new BookInfo(
+        static BookInfo B56 = new BookInfo(56,
             new string[] { "Titus", "Ti" },
             3
         );
-        static BookInfo B57 = new BookInfo(
+        static BookInfo B57 = new BookInfo(57,
             new string[] { "Philemon", "Phm", "Phm", "Philem" },
             1
         );
-        static BookInfo B58 = new BookInfo(
+        static BookInfo B58 = new BookInfo(58,
             new string[] { "Hebrews", "Heb", "Hbr", "Hbrws" },
             13
         );
-        static BookInfo B59 = new BookInfo(
+        static BookInfo B59 = new BookInfo(59,
             new string[] { "James", "Jm", "Jam" },
             5
         );
-        static BookInfo B60 = new BookInfo(
+        static BookInfo B60 = new BookInfo(60,
             new string[] { "1 Peter", "1P", "1Pe", "1Pet", "1Pt" },
             5
         );
-        static BookInfo B61 = new BookInfo(
+        static BookInfo B61 = new BookInfo(61,
             new string[] { "2 Peter", "2P", "2Pe", "2Pet", "2Pt" },
             3
         );
-        static BookInfo B62 = new BookInfo(
+        static BookInfo B62 = new BookInfo(62,
             new string[] { "1 John", "1J", "1Jn", "1Jhn" },
             5
         );
-        static BookInfo B63 = new BookInfo(
+        static BookInfo B63 = new BookInfo(63,
             new string[] { "2 John", "2J", "2Jn", "2Jhn" },
             1
         );
-        static BookInfo B64 = new BookInfo(
+        static BookInfo B64 = new BookInfo(64,
             new string[] { "3 John", "3J", "3Jn", "3Jhn" },
             1
         );
-        static BookInfo B65 = new BookInfo(
+        static BookInfo B65 = new BookInfo(65,
             new string[] { "Jude", "Jd" },
             1
         );
-        static BookInfo B66 = new BookInfo(
+        static BookInfo B66 = new BookInfo(66,
             new string[] { "Revelation", "Re", "Rev", "Rv" },
             22
         );
