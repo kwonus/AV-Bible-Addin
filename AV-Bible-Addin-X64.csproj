@@ -190,7 +190,6 @@
   <ItemGroup>
     <Compile Include="Serialization\API.cs" />
     <Compile Include="Serialization\AVResults.cs" />
-    <Compile Include="Serialization\BCVW.cs" />
     <Compile Include="BookInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -204,8 +203,9 @@
     <Compile Include="HelpWindow.xaml.cs">
       <DependentUpon>HelpWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Serialization\BCVW.cs" />
     <Compile Include="Serialization\PNPOS.cs" />
-    <Compile Include="Serialization\Rendering.cs" />
+    <Compile Include="Serialization\DataStream.cs" />
     <Compile Include="Serialization\Strongs.cs" />
     <Compile Include="Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>

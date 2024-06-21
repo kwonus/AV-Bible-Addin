@@ -38,9 +38,8 @@ namespace AVX
             // API (to get matching verse references)
             // app.MapGet("/debug/find/{spec}", (string spec) => API.api.engine.Debug_Find(spec, out message, quoted: false).ToString());
             // app.MapGet("/debug/find-quoted/{spec}", (string spec) => API.api.engine.Debug_Find(spec, out message, quoted: true).ToString());
-            API api = new API();
 
-            var result = api.Find(this.TextCriteria.Text, null);
+            var result = ThisAddIn.API.Find(this.TextCriteria.Text, null);
 
             this.FoundTree.Items.Clear();
 
@@ -105,19 +104,10 @@ namespace AVX
             }
         }
 
-        private void AddVerseToDocument(BookInfo book, byte chapter, byte verse)
+        private void AddVerseToDocument(BookInfo book, DataStream[] words, int idx)
         {
-            this.WriteVerseSpec(book.Name, chapter + ":" + verse);
-            ThisAddIn.WriteVerse(book.Num, chapter, verse, this.modernize.IsChecked == true, false);
-        }
-        private void AddChapterToDocument(BookInfo book, TreeViewItem chapterNode)
-        {
-            var c = (byte)chapterNode.Tag;
-            //var chapter = api.Chapters[book.chapterIdx + c - 1];
-            foreach (var verseNode in chapterNode.Items)
-            {
-                AddVerseToDocument(book, c, (byte)((TreeViewItem)verseNode).Tag);
-            }
+            this.WriteVerseSpec(book.Name, words[idx].Coordinates.C + ":" + words[idx].Coordinates.V);
+            ThisAddIn.WriteVerse(book.Num, words, idx, this.modernize.IsChecked == true, false);
         }
         
         TreeViewItem FindNode(string bookName)
@@ -135,13 +125,37 @@ namespace AVX
         }
         private void insert_book_Click(object sender, RoutedEventArgs e)
         {
-            InsertVerses.ShowForm(InsertVerses.InsertAny);
+            var node = (TreeViewItem)this.FoundTree.SelectedItem;
+            BookInfo book = BookInfo.GetBook((byte)((UInt16)node.Tag));
 
-            var book = (TreeViewItem)this.FoundTree.SelectedItem;
-
-            foreach (var node in book.Items)
+            DataStream[] words = null;
+            byte C = 0;
+            foreach (var cvnode in node.Items)
             {
-                var verse = (TreeViewItem)node;
+                UInt16 cv = (UInt16)((TreeViewItem)cvnode).Tag;
+                byte c = (byte)(cv >> 8);
+                byte v = (byte)(cv & 0xff);
+                if (c >= 1 && v >= 1 && c <= book.ChapterCount && v <= book.VerseCountsByChapter[c])
+                {
+                    if (C != c)
+                    {
+                        words = ThisAddIn.API.FindWithDetails(this.TextCriteria.Text, new Dictionary<string, string>(), book, c);
+                        C = c;
+                    }
+                    if (words != null)
+                    {
+                        int i = 0;
+                        foreach (var word in words)
+                        {
+                            if (word.Coordinates.V == v)
+                            {
+                                AddVerseToDocument(book, words, i);
+                                break;
+                            }
+                            i++;
+                        }
+                    }
+                }
             }
 
             /*if (book != null)

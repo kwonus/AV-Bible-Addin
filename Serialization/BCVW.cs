@@ -6,13 +6,19 @@ using System.Threading.Tasks;
 
 namespace AVX.Serialization
 {
-    public struct BCVW
+    public class BCVW
     {
-        public BCVW(byte b, byte c, byte v, byte wc)
+        public BCVW()
         {
-            this.elements = (UInt32)(b << 24 | c << 16 | v << 8 | wc);
+            this.B = 0;
+            this.C = 0;
+            this.V = 0;
+            this.WC = 0;
         }
-        public UInt32 elements { get; private set; }
+        public UInt32 elements
+        {
+            get => (UInt32)(B << 24 | C << 16 | V << 8 | WC);
+        }
 
         internal byte this[int idx]
         {
@@ -29,48 +35,20 @@ namespace AVX.Serialization
             }
             set
             {
-                UInt32 nibbles = value;
-
                 switch (idx)
                 {
-                    case 0:
-                        elements &= 0x00FFFFFF;
-                        elements |= (nibbles << (8 * 3));
-                        return;
-                    case 1:
-                        elements &= 0xFF00FFFF;
-                        elements |= (nibbles << (8 * 2));
-                        return;
-                    case 2:
-                        elements &= 0xFFFF00FF;
-                        elements |= (nibbles << 8);
-                        return;
-                    case 3:
-                        elements &= 0xFFFFFF00;
-                        elements |= nibbles;
-                        return;
-                    default:
-                        elements = 0xFFFFFF00;
-                        return; // silent error (except, obviously bad value)
+                    case 0:  this.B = value; break;
+                    case 1:  this.C = value; break;
+                    case 2:  this.V = value; break;
+                    case 3:  this.WC= value; break;
+                    //default: // silent error (except, obviously bad value)
                 }
             }
         }
-        public byte B
-        {
-            get => (byte)(this.elements >> (8 * 3));
-        }
-        public byte C
-        {
-            get => (byte)((this.elements >> (8 * 2)) & 0xFF);
-        }
-        public byte V
-        {
-            get => (byte)((this.elements >> 8) & 0xFF);
-        }
-        public byte WC
-        {
-            get => (byte)(this.elements & 0xFF);
-        }
+        public byte B;
+        public byte C;
+        public byte V;
+        public byte WC;
         public override bool Equals(object obj)
         {
             return obj != null && obj.GetType() == typeof(BCVW) && ((BCVW)obj).elements == this.elements;

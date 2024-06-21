@@ -8,6 +8,7 @@ using Office = Microsoft.Office.Core;
 using Microsoft.Office.Tools.Word;
 using System.Drawing;
 using System.Runtime.Remoting.Messaging;
+using AVX.Serialization;
 
 namespace AVX
 {
@@ -20,6 +21,8 @@ namespace AVX
         public static Bitmap INFO { get; private set; }
         public static Bitmap ICON { get; private set; }
         public static Bitmap CFG { get; private set; }
+
+        public static AVX.Serialization.API API { get; private set; } = new AVX.Serialization.API();
 
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
@@ -45,83 +48,41 @@ namespace AVX
         {
             return new Ribbon(this);
         }
-        public static void WriteVerse(byte bookNum, byte c, byte v, bool modern, bool contiguous)
-        {
-            ThisAddIn.WriteVerse(bookNum, c, v, modern, contiguous);
-        }
-
-        public static void WriteVerse(byte b, byte c, byte v, bool modern, bool contiguous, Word.WdColor label = Word.WdColor.wdColorBlue)
+        public static void WriteVerse(byte bookNum, AVX.Serialization.DataStream[] words, int idx, bool modern, bool contiguous, Word.WdColor label = Word.WdColor.wdColorBlue)
         {
             byte prevPunc = 0;
-            BookInfo book = BookInfo.GetBook(b);
-            if (book == null || c < 1 || c > book.ChapterCount || v < 1 || v > book.VerseCountsByChapter[c])
-                return;
-
-            /*for (int i = 1; i < v; //)
-            {
-                r++;
-                if ((records[r].tx & 0x70) == 0x20) // BoV
-                    i++;
-                if ((records[r].tx & 0x70) == 0x70) // EoC or EoB
-                    return;
-            }
-            var keepr = r;*/
             var first = true;
             var verse = new StringBuilder();
 
-            /*do
+            bool end = false;
+            int i = idx;
+            do
             {
+                DataStream word = words[i++];
                 ///if (contiguous && ((records[r].tx & 0x70) == 0x20)) // BoV
                 ///    verse.Append(v.ToString() + (char)0x200B // zero-width-space //);
 
-                string word = null;
-                UInt16 key = (UInt16)(0x7FFF & records[r].word);
-                bool diff = modern && Ribbon.RIBBON.Modern.ContainsKey(key);
-                if (diff)
-                {
-                    word = Ribbon.RIBBON.Modern[key];
-                    ThisAddIn.api.XWrit.SetCursor(r);
-                    byte pn = (byte) (ThisAddIn.api.XWrit.WClass >> 12);
-                    bool plural = (pn & 0xC) == 0x8;
-                    bool singular = (pn & 0xC) == 0x4;
-                    byte p = (byte) (pn & 0x3);
-
-                    if ((p == 2) && singular)
-                    {
-                        word += (char)0x200B; // zero-width-space //
-                        word += '†';
-                    }
-                    else
-                    {
-                        var orig = Ribbon.RIBBON.Search[key];
-                        if (orig.StartsWith("th", StringComparison.InvariantCultureIgnoreCase) && word.StartsWith("you", StringComparison.InvariantCultureIgnoreCase))
-                            word += '†';
-                        else if (orig.EndsWith("st", StringComparison.InvariantCultureIgnoreCase) && !word.EndsWith("st", StringComparison.InvariantCultureIgnoreCase))
-                            word += '†';
-                    }
-
-                }
-                if (word == null && Ribbon.RIBBON.Display.ContainsKey(key))
-                    word = Ribbon.RIBBON.Display[key];
-                if (word == null && Ribbon.RIBBON.Search.ContainsKey(key))
-                    word = Ribbon.RIBBON.Search[key];
+                bool diff = word.Modernized;
+                string text = modern ? word.Modern : word.Text;
 
                 if (first)
                     first = false;
                 else
                     verse.Append(' ');
 
-                var postfix = PUNC.PostfixPunctuation(word, records[r].punc);
-                var prefix = PUNC.PrefixPunctuation(records[r].punc, prevPunc);
-                prevPunc = records[r].punc;
+                var postfix = PUNC.PostfixPunctuation(text, word.Punctuation);
+                var prefix = PUNC.PrefixPunctuation(word.Punctuation, prevPunc);
+                prevPunc = word.Punctuation;
 
                 if (prefix.Length > 0)
                     verse.Append(prefix);
-                verse.Append(CAPS.Captitalize(records[r].word, word));
+                verse.Append(text);
                 if (postfix.Length > 0)
                     verse.Append(postfix);
 
-            } while ((records[r++].tx & 0x30) != 0x30); // EoV or EoC or EoB
+                end = (word.Coordinates.WC == 1);
+
+            }   while (!end);
 
             if (contiguous)
                 verse.Append("  ");
@@ -133,9 +94,12 @@ namespace AVX
             rng.Text = verse.ToString();
 
             Word.WdColor original = label;
-            r = keepr;
+
+            i = idx;
             foreach (Word.Range w in rng.Words)
             {
+                DataStream word = words[i++];
+
                 if (contiguous && (original == label))
                     original = w.Font.Color;
 
@@ -159,10 +123,9 @@ namespace AVX
                         {
                             w.Font.Subscript = 0;
 
-                            var italics = PUNC.IsItalisized(records[r].punc);
+                            var italics = PUNC.IsItalisized(word.Punctuation);
                             if (italics)
                                 w.Font.Italic = 1;
-                            r++;
                         }
                         else
                         {
@@ -170,9 +133,10 @@ namespace AVX
                         }
                     }
                 }
-            }*/
+                if (word.Coordinates.WC == 1)
+                    break; // fail-safety
+            }
         }
-
 
         #region VSTO generated code
 
