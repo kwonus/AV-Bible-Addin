@@ -80,7 +80,7 @@ namespace AVX
                                 v = vr.V;
                                 cv = new TreeViewItem();
                                 cv.Tag = (UInt16)((((UInt16)c) << 8) | (UInt16)v);
-                                cv.Header = c.ToString() + v.ToString();
+                                cv.Header = c.ToString() + ":" + v.ToString();
                                 book.Items.Add(cv);
                             }
                         }
@@ -110,21 +110,9 @@ namespace AVX
             ThisAddIn.WriteVerse(book.Num, words, idx, this.modernize.IsChecked == true, false);
         }
         
-        TreeViewItem FindNode(string bookName)
-        {/*
-            foreach (var root in this.FoundTree.Items)
-            {
-                foreach (var candidate in ((TreeViewItem)root).Items)
-                {
-                    var book = (TreeViewItem)candidate;
-                    if (book.Header.ToString().Equals(bookName, StringComparison.InvariantCultureIgnoreCase))
-                        return book;
-                }
-            }*/
-            return null;
-        }
         private void insert_book_Click(object sender, RoutedEventArgs e)
         {
+            bool inserted = false;
             var node = (TreeViewItem)this.FoundTree.SelectedItem;
             BookInfo book = BookInfo.GetBook((byte)((UInt16)node.Tag));
 
@@ -135,6 +123,7 @@ namespace AVX
                 UInt16 cv = (UInt16)((TreeViewItem)cvnode).Tag;
                 byte c = (byte)(cv >> 8);
                 byte v = (byte)(cv & 0xff);
+
                 if (c >= 1 && v >= 1 && c <= book.ChapterCount && v <= book.VerseCountsByChapter[c])
                 {
                     if (C != c)
@@ -150,6 +139,7 @@ namespace AVX
                             if (word.Coordinates.V == v)
                             {
                                 AddVerseToDocument(book, words, i);
+                                inserted = true;
                                 break;
                             }
                             i++;
@@ -157,59 +147,95 @@ namespace AVX
                     }
                 }
             }
-
-            /*if (book != null)
-            {
-                InsertVerses.ShowForm((byte)((UInt16)(book.Tag)));
-                InsertVerses.InsertAny.textBoxChapterAndVerse.Text = (string)verse.Header;
-                InsertVerses.InsertAny.button.IsEnabled = true;
-            }
-
-            if (trimmed == ": all matching verses")
-            {
-                var bookNode = this.FindNode(book.name);
-                if (bookNode != null)
-                {
-                    foreach (var chapterNode in bookNode.Items)
-                        AddChapterToDocument(book, (TreeViewItem)chapterNode);
-                }
-                return;
-            }*/
+            if (inserted)
+                this.Close();
         }
         private void insert_verse_Click(object sender, RoutedEventArgs e)
         {
+            var node = (TreeViewItem)this.FoundTree.SelectedItem;
+            BookInfo book = BookInfo.GetBook((byte)((UInt16)((TreeViewItem)node.Parent).Tag));
+
+            UInt16 cv = (UInt16)node.Tag;
+            byte c = (byte)(cv >> 8);
+            byte v = (byte)(cv & 0xff);
+            if (c >= 1 && v >= 1 && c <= book.ChapterCount && v <= book.VerseCountsByChapter[c])
+            {
+                DataStream[] words = ThisAddIn.API.FindWithDetails(this.TextCriteria.Text, new Dictionary<string, string>(), book, c);
+
+                if (words != null)
+                {
+                    int i = 0;
+                    foreach (var word in words)
+                    {
+                        if (word.Coordinates.V == v)
+                        {
+                            AddVerseToDocument(book, words, i);
+                            this.Close();
+                            break;
+                        }
+                        i++;
+                    }
+                }
+            }
         }
         private void insert_variant_Click(object sender, RoutedEventArgs e)
         {
-            InsertVerses.ShowForm(InsertVerses.InsertAny);
-
             var verse = (TreeViewItem)this.FoundTree.SelectedItem;
             var book  = (TreeViewItem) ((verse != null) ? verse.Parent : null);
 
             if (book != null)
             {
-                InsertVerses.ShowForm((byte)((UInt16)(book.Tag)));
+                byte bk = (byte)((UInt16)(book.Tag));
+                UInt16 cv = (byte)((UInt16)(verse.Tag));
+                string spec = (cv >> 8).ToString() + ":" + (cv & 0xff);
+                InsertVerses.ShowForm(bk, spec);
                 InsertVerses.InsertAny.textBoxChapterAndVerse.Text = (string) verse.Header;
                 InsertVerses.InsertAny.button.IsEnabled = true;
+                this.Close();
             }
         }
         private void insert_all_Click(object sender, RoutedEventArgs e)
-        {/*
-            var trimmed = this.textBoxChaterAndVerse.Text.Trim();
-            if (trimmed.Equals("all matching verses", StringComparison.InvariantCultureIgnoreCase))
+        {
+            bool inserted = false;
+
+            foreach (var node in this.FoundTree.Items)
             {
-                foreach (var root in this.FoundTree.Items)
+                var bk = (TreeViewItem)node;
+                BookInfo book = BookInfo.GetBook((byte)((UInt16)bk.Tag));
+
+                DataStream[] words = null;
+                byte C = 0;
+                foreach (var cvnode in bk.Items)
                 {
-                    foreach (var candidate in ((TreeViewItem)root).Items)
+                    UInt16 cv = (UInt16)((TreeViewItem)cvnode).Tag;
+                    byte c = (byte)(cv >> 8);
+                    byte v = (byte)(cv & 0xff);
+                    if (c >= 1 && v >= 1 && c <= book.ChapterCount && v <= book.VerseCountsByChapter[c])
                     {
-                        var bookNode = (TreeViewItem)candidate;
-                        var book = api.Books[(byte)bookNode.Tag-1];
-                        foreach (var chapterNode in bookNode.Items)
-                            AddChapterToDocument(book, (TreeViewItem)chapterNode);
+                        if (C != c)
+                        {
+                            words = ThisAddIn.API.FindWithDetails(this.TextCriteria.Text, new Dictionary<string, string>(), book, c);
+                            C = c;
+                        }
+                        if (words != null)
+                        {
+                            int i = 0;
+                            foreach (var word in words)
+                            {
+                                if (word.Coordinates.V == v)
+                                {
+                                    AddVerseToDocument(book, words, i);
+                                    inserted = true;
+                                    break;
+                                }
+                                i++;
+                            }
+                        }
                     }
                 }
-                return;
-            }*/
+                if (inserted)
+                    this.Close();
+            }
         }
 
         private void FoundTree_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)

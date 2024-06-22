@@ -98,15 +98,19 @@ namespace AVX
             i = idx;
             foreach (Word.Range w in rng.Words)
             {
-                DataStream word = words[i++];
+                DataStream word = words[i];
 
                 if (contiguous && (original == label))
                     original = w.Font.Color;
 
-                w.Bold = 0;
+                w.Bold = (word.Triggers != null && word.Triggers.Count > 0) ? 1 : 0;
                 var text = w.Text.Trim();
                 if (text.Length >= 1)
                 {
+                    if (char.IsLetter(text[0]))
+                    {
+                        i++;
+                    }
                     if (char.IsDigit(text[0]))
                     {
                         w.Font.Subscript = 0;

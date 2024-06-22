@@ -25,7 +25,7 @@
     <OutputType>Library</OutputType>
     <NoStandardLibraries>false</NoStandardLibraries>
     <RootNamespace>AVX</RootNamespace>
-    <AssemblyName>AV-Bible-Addin-Unusable</AssemblyName>
+    <AssemblyName>AV-Bible-Addin</AssemblyName>
     <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
     <DefineConstants>VSTO40</DefineConstants>
     <TargetFrameworkProfile />

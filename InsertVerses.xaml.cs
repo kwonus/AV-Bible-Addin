@@ -93,6 +93,8 @@ namespace AVX
     /// </summary>
     public partial class InsertVerses : Window
     {
+        private string SearchSpec;  // this form can be called from SearchForm to allow for custom verse variant
+
         private static bool PositionForm(InsertVerses form)
         {
             bool repositioned = false;
@@ -118,6 +120,7 @@ namespace AVX
             {
                 form.button.IsEnabled = false;
                 form.WindowStartupLocation = WindowStartupLocation.Manual;
+                form.SearchSpec = null;
 
                 // First Insert* ShowForm()
                 //
@@ -159,9 +162,10 @@ namespace AVX
                 Ribbon.BringToTop(form);
             }
         }
-        public static void ShowForm(byte bkNum)
+        public static void ShowForm(byte bkNum, string searchSpec = null)
         {
             var form = InsertAny;
+            form.SearchSpec = searchSpec;
 
             if (bkNum >= 1 && bkNum <= 66)
                 form.comboBoxBook.SelectedItem = form.comboBoxBook.Items.GetItemAt(bkNum - 1);
@@ -226,6 +230,7 @@ namespace AVX
         private InsertVerses(bool ot = false, bool nt = false)
         {
             InitializeComponent();
+            this.SearchSpec = null;
 
             if (this.comboBoxBook.Items.Count > 66) // Why?
             {
