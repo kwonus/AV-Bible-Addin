@@ -160,6 +160,7 @@ namespace AVX
                     Coordinates.left = form.Left;
                 }
                 Ribbon.BringToTop(form);
+                form.textBoxChaterAndVerse_KeyUp(null, null);
             }
         }
         public static void ShowForm(byte bkNum, string searchSpec = null)

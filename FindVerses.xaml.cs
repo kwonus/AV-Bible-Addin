@@ -186,10 +186,9 @@ namespace AVX
             if (book != null)
             {
                 byte bk = (byte)((UInt16)(book.Tag));
-                UInt16 cv = (byte)((UInt16)(verse.Tag));
-                string spec = (cv >> 8).ToString() + ":" + (cv & 0xff);
+                string spec = (string) verse.Header;
                 InsertVerses.ShowForm(bk, spec);
-                InsertVerses.InsertAny.textBoxChapterAndVerse.Text = (string) verse.Header;
+                InsertVerses.InsertAny.textBoxChapterAndVerse.Text = spec;
                 InsertVerses.InsertAny.button.IsEnabled = true;
                 this.Close();
             }

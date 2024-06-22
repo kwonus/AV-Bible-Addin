@@ -3,9 +3,9 @@
     <ribbon>
         <tabs>
           <tab id="OT" label="Old Testament">
-            <group id="Bible_OT" label="All Books">
-              <button id="Find_OT"  size="large"  label="Find Verses"     tag="FIND"            onAction="clickFind" getImage="GetImage" description="Find a bible verse or verses (which can optionally be inserted into current document)" />
-              <button id="Ref_OT"   size="large"  label="Old Testament"   tag="OT"              onAction="clickRef"  getImage="GetImage" description="Insert a bible verse or verses into current document" />
+            <group id="Bible_OT" label="Old or New Testament">
+              <button id="Find_OT"  size="large"  label="Find Any Verse"   tag="FIND"           onAction="clickFind" getImage="GetImage" description="Find a bible verse or verses (which can optionally be inserted into current document)" />
+              <button id="Ref_OT"   size="large"  label="Insert Any Verse" tag="OT"             onAction="clickRef"  getImage="GetImage" description="Insert a bible verse or verses into current document" />
             </group>
             <group id="OT_Law" label="The Law">
               <button id="bk01"     size="normal" label="Genesis"         tag="Genesis"         onAction="clickBook" getImage="GetImage" />
@@ -63,9 +63,9 @@
             </group>
           </tab>
           <tab id="NT" label="New Testament">
-            <group id="Bible_NT" label="All Books">
-              <button id="Find_NT"  size="large"  label="Find Verses"     tag="FIND"            onAction="clickFind" getImage="GetImage" description="Find a bible verse or verses (which can optionally be inserted into current document)" />
-              <button id="Ref_NT"   size="large"  label="New Testament"   tag="NT"              onAction="clickRef"  getImage="GetImage" description="Insert a bible verse or verses into current document" />
+            <group id="Bible_NT" label="New or Old Testament">
+              <button id="Find_NT"  size="large"  label="Find Any Verse"   tag="FIND"           onAction="clickFind" getImage="GetImage" description="Find a bible verse or verses (which can optionally be inserted into current document)" />
+              <button id="Ref_NT"   size="large"  label="Insert Any Verse" tag="NT"             onAction="clickRef"  getImage="GetImage" description="Insert a bible verse or verses into current document" />
             </group>
             <group id="NT_Gospels_and_Acts" label="Gospels &#38;&#38; Acts">
               <button id="bk40"     size="normal" label="Matthew"         tag="Matthew"         onAction="clickBook" getImage="GetImage" />
