@@ -203,10 +203,6 @@ namespace AVX
                             if (italics)
                                 w.Font.Italic = 1;
                         }
-                        else
-                        {
-                            w.Font.Subscript = 1;
-                        }
                     }
                 }
             }
