@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AVX.Serialization;
+using Microsoft.Office.Interop.Word;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
@@ -8,6 +10,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
+using System.Xml.Linq;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace AVX
@@ -91,7 +94,7 @@ namespace AVX
     /// <summary>
     /// Interaction logic for SelectVerse.xaml
     /// </summary>
-    public partial class InsertVerses : Window
+    public partial class InsertVerses : System.Windows.Window
     {
         private string SearchSpec;  // this form can be called from SearchForm to allow for custom verse variant
 
@@ -423,20 +426,61 @@ namespace AVX
                 }
                 if (bad == null && error == null)
                 {
-                    this.WriteVerseSpec();
+                    int idx = 0;
+                    DataStream[] words = ThisAddIn.API.InsertDetails(new Dictionary<string, string>(), info, c);
 
-                    bool first = true;
-                    int prev = 0;
-                    foreach (var v in list)
+                    if (words != null)
                     {
-                        //ThisAddIn.WriteVerse(b, c, v, this.modernize.IsChecked == true, true);
-                        prev = v;
-                        first = false;
-                    }
-                    dynamic rng = Ribbon.AVX.Application.ActiveDocument.Range();
-                    rng.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
+                        this.WriteVerseSpec();
 
-                    this.Close();
+                        if (list.Count == 1)
+                        {
+                            byte v = list[0];
+                            do
+                            {
+                                DataStream word = words[idx];
+
+                                if (word.Coordinates.V == v)
+                                {
+                                    ThisAddIn.WriteVerse(b, words, idx, this.modernize.IsChecked.Value, squelchHighlights: true);
+                                    break;
+                                }
+                                idx += word.Coordinates.WC;
+
+                            }   while (idx < words.Length);
+                            dynamic rng = Ribbon.AVX.Application.ActiveDocument.Range();
+                            rng.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
+
+                            this.Close();
+                        }
+                        else if (list.Count > 1)
+                        {
+                            int cnt = 0;
+                            foreach (byte v in list)
+                            {
+                                DataStream word = words[idx];
+
+                                while (word.Coordinates.V < v && word != null)
+                                {
+                                    idx += word.Coordinates.WC;
+                                    word = idx < words.Length ? words[idx] : null;
+                                }
+                                if (word != null && word.Coordinates.V == v)
+                                {
+                                    ThisAddIn.WriteInlineVerse(b, words, idx, this.modernize.IsChecked.Value, (++cnt == 1), squelchHighlights: true);
+                                    idx += word.Coordinates.WC;
+                                }
+                                else // something went wrong
+                                {
+                                    break;
+                                }
+                            }
+                            dynamic rng = Ribbon.AVX.Application.ActiveDocument.Range();
+                            rng.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
+
+                            this.Close();
+                        }
+                    }
                 }
             }
             else

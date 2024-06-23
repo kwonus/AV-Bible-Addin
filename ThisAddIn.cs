@@ -48,7 +48,7 @@ namespace AVX
         {
             return new Ribbon(this);
         }
-        public static void WriteVerse(byte bookNum, AVX.Serialization.DataStream[] words, int idx, bool modern, bool contiguous, Word.WdColor label = Word.WdColor.wdColorBlue)
+        public static void WriteVerse(byte bookNum, AVX.Serialization.DataStream[] words, int idx, bool modern, bool squelchHighlights = false)
         {
             byte prevPunc = 0;
             var first = true;
@@ -59,8 +59,6 @@ namespace AVX
             do
             {
                 DataStream word = words[i++];
-                ///if (contiguous && ((records[r].tx & 0x70) == 0x20)) // BoV
-                ///    verse.Append(v.ToString() + (char)0x200B // zero-width-space //);
 
                 bool diff = word.Modernized;
                 string text = modern ? word.Modern : word.Text;
@@ -84,10 +82,79 @@ namespace AVX
 
             }   while (!end);
 
-            if (contiguous)
-                verse.Append("  ");
-            else
-                verse.Append("\n");
+            verse.Append("\n");
+
+            dynamic rng = Ribbon.AVX.Application.ActiveDocument.Range();
+            rng.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
+            rng.Text = verse.ToString();
+
+            i = idx;
+            foreach (Word.Range w in rng.Words)
+            {
+                DataStream word = words[i];
+
+                w.Bold = (word != null && word.Triggers != null && word.Triggers.Count > 0 && squelchHighlights == false) ? 1 : 0;
+                var text = w.Text.Trim();
+                if (text.Length >= 1)
+                {
+                    if (char.IsLetter(text[0]))
+                    {
+                        i++;
+
+                        w.Font.Superscript = 0;
+
+                        var italics = PUNC.IsItalisized(word.Punctuation);
+                        if (italics)
+                            w.Font.Italic = 1;
+                    }
+                }
+                if (word.Coordinates.WC == 1)
+                    break; // fail-safety
+            }
+        }
+
+        public static void WriteInlineVerse(byte bookNum, AVX.Serialization.DataStream[] words, int idx, bool modern, bool first, bool squelchHighlights = false, Word.WdColor label = Word.WdColor.wdColorBlue)
+        {
+            byte prevPunc = 0;
+            var verse = new StringBuilder();
+
+            DataStream word = null;
+            int i = idx;
+            int end = -1;
+            do
+            {
+                if (!first)
+                    verse.Append("  ");
+
+                bool addNum = (word == null) || (word.Coordinates.WC == 1);
+                if (word != null)
+                    verse.Append(" ");
+
+                word = words[i++];
+                if (end == (-1))
+                    end = idx + word.Coordinates.WC;
+
+                string text = modern ? word.Modern : word.Text;
+
+                if (addNum)
+                {
+                    verse.Append(word.Coordinates.V.ToString());
+                    addNum = false;
+                }
+                verse.Append(' ');
+
+                var postfix = PUNC.PostfixPunctuation(text, word.Punctuation);
+                var prefix = PUNC.PrefixPunctuation(word.Punctuation, prevPunc);
+                prevPunc = word.Punctuation;
+
+                if (prefix.Length > 0)
+                    verse.Append(prefix);
+                verse.Append(text);
+                if (postfix.Length > 0)
+                    verse.Append(postfix);
+
+            }   while (i < end);
+
 
             dynamic rng = Ribbon.AVX.Application.ActiveDocument.Range();
             rng.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
@@ -96,21 +163,27 @@ namespace AVX
             Word.WdColor original = label;
 
             i = idx;
+            word = null;
             foreach (Word.Range w in rng.Words)
             {
-                DataStream word = words[i];
-
-                if (contiguous && (original == label))
+                if (i == idx)
+                {
                     original = w.Font.Color;
+                }
 
-                w.Bold = (word.Triggers != null && word.Triggers.Count > 0) ? 1 : 0;
+                w.Bold = (word != null && word.Triggers != null && word.Triggers.Count > 0 && squelchHighlights == false) ? 1 : 0;
                 var text = w.Text.Trim();
                 if (text.Length >= 1)
                 {
                     if (char.IsLetter(text[0]))
                     {
-                        i++;
+                        if (i < words.Length)
+                        {
+                            word = words[i];
+                            i++;
+                        }
                     }
+
                     if (char.IsDigit(text[0]))
                     {
                         w.Font.Subscript = 0;
@@ -120,8 +193,7 @@ namespace AVX
                     else
                     {
                         w.Font.Superscript = 0;
-                        if (contiguous)
-                            w.Font.Color = original;
+                        w.Font.Color = original;
 
                         if (char.IsLetter(text[0]))
                         {
@@ -137,8 +209,6 @@ namespace AVX
                         }
                     }
                 }
-                if (word.Coordinates.WC == 1)
-                    break; // fail-safety
             }
         }
 

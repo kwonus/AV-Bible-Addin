@@ -107,7 +107,7 @@ namespace AVX
         private void AddVerseToDocument(BookInfo book, DataStream[] words, int idx)
         {
             this.WriteVerseSpec(book.Name, words[idx].Coordinates.C + ":" + words[idx].Coordinates.V);
-            ThisAddIn.WriteVerse(book.Num, words, idx, this.modernize.IsChecked == true, false);
+            ThisAddIn.WriteVerse(book.Num, words, idx, this.modernize.IsChecked == true);
         }
         
         private void insert_book_Click(object sender, RoutedEventArgs e)

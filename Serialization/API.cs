@@ -24,6 +24,40 @@ namespace AVX.Serialization
                 BaseAddress = new Uri("http://localhost:1769"),
             };
         }
+        // app.MapGet("/{book}/{chapter}.yml", (string book, string chapter, string spec)
+        public DataStream[] InsertDetails(Dictionary<string, string> settings, BookInfo book, byte c)
+        {
+            if (book == null || c < 1 || c > book.ChapterCount)
+                return null;
+
+            string url = book.Name + "/" + c.ToString() + ".yml";
+
+            try
+            {
+                using (var awaitable = this.Client.GetAsync(url))
+                {
+                    awaitable.Wait();
+                    var response = awaitable.Result;
+
+                    //if (response.EnsureSuccessStatusCode())
+                    {
+                        var awaitableStream = response.Content.ReadAsStreamAsync();
+                        awaitableStream.Wait();
+                        using (TextReader content = new StreamReader(awaitableStream.Result))
+                        {
+                            var result = DataStream.CreateFromYaml(content, singleton: false);
+                            return result.verses;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ;
+            }
+            return null;
+        }
+
         // app.MapGet("/{book}/{chapter}/find/{spec}.yml", (string book, string chapter, string spec)
         // app.MapGet("/{book}/{chapter}/find-quoted/{spec}.yml", (string book, string chapter, string spec)
         public DataStream[] FindWithDetails(string spec, Dictionary<string, string> settings, BookInfo book, byte c)
