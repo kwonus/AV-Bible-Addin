@@ -123,12 +123,9 @@ namespace AVX
             int end = -1;
             do
             {
-                if (!first)
-                    verse.Append("  ");
-
                 bool addNum = (word == null) || (word.Coordinates.WC == 1);
-                if (word != null)
-                    verse.Append(" ");
+                if ((word == null) && !first)
+                    verse.Append("  ");
 
                 word = words[i++];
                 if (end == (-1))
@@ -138,7 +135,7 @@ namespace AVX
 
                 if (addNum)
                 {
-                    verse.Append(word.Coordinates.V.ToString());
+                    verse.Append(word.Coordinates.V.ToString() + " ");
                     addNum = false;
                 }
                 verse.Append(' ');
