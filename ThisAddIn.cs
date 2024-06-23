@@ -135,10 +135,13 @@ namespace AVX
 
                 if (addNum)
                 {
-                    verse.Append(word.Coordinates.V.ToString() + " ");
+                    verse.Append(word.Coordinates.V.ToString() + "\u200B"); // add a non-printable space so that everything tokenizes correctly below.
                     addNum = false;
                 }
-                verse.Append(' ');
+                else
+                {
+                    verse.Append(' ');
+                }
 
                 var postfix = PUNC.PostfixPunctuation(text, word.Punctuation);
                 var prefix = PUNC.PrefixPunctuation(word.Punctuation, prevPunc);
