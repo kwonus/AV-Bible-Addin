@@ -12,22 +12,30 @@
         <TabControl x:Name="tabControl">
             <TabItem Header="Overview">
                 <Grid Background="#FFE5E5E5">
-                    <RichTextBox Name="OverviewHelp"></RichTextBox>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                        <RichTextBox Name="OverviewHelp"></RichTextBox>
+                    </ScrollViewer>
                 </Grid>
             </TabItem>
             <TabItem Header="Searching">
                 <Grid Background="#FFE5E5E5">
-                    <RichTextBox Name="SearchingHelp"></RichTextBox>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                        <RichTextBox Name="SearchingHelp"></RichTextBox>
+                    </ScrollViewer>
                 </Grid>
             </TabItem>
             <TabItem Header="Settings">
                 <Grid Background="#FFE5E5E5">
-                    <RichTextBox Name="SettingsHelp"></RichTextBox>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                        <RichTextBox Name="SettingsHelp"></RichTextBox>
+                    </ScrollViewer>
                 </Grid>
             </TabItem>
             <TabItem Header="Language Tips">
                 <Grid Background="#FFE5E5E5">
-                    <RichTextBox Name="LanguageHelp"></RichTextBox>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                        <RichTextBox Name="LanguageHelp"></RichTextBox>
+                    </ScrollViewer>
                 </Grid>
             </TabItem>
         </TabControl>

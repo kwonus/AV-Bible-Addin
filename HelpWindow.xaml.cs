@@ -5,6 +5,7 @@
     using System.IO;
     using System.Text;
     using System.Windows;
+    using System.Windows.Controls;
 
     /// <summary>
     /// Interaction logic for Window1.xaml
@@ -13,6 +14,13 @@
     {
 		public static HelpWindow HelpForm { get; private set; } = new HelpWindow();
         public static bool ForceClose;
+
+        private void ClearSelectionAndMakeReadOnly(RichTextBox rtf)
+        {
+            rtf.IsReadOnly = true;
+            rtf.Selection.Select(rtf.Document.ContentStart, rtf.Document.ContentStart);
+        }
+
         public HelpWindow()
         {
             InitializeComponent();
@@ -29,6 +37,11 @@
 
             using (var language = new MemoryStream(Encoding.UTF8.GetBytes(Properties.Resources.language)))
                 this.LanguageHelp.Selection.Load(language, DataFormats.Rtf);
+
+            this.ClearSelectionAndMakeReadOnly(this.OverviewHelp);
+            this.ClearSelectionAndMakeReadOnly(this.SettingsHelp);
+            this.ClearSelectionAndMakeReadOnly(this.SearchingHelp);
+            this.ClearSelectionAndMakeReadOnly(this.LanguageHelp);
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
