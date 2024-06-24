@@ -208,10 +208,11 @@ namespace AVX
         }
         public void clickCfg(Office.IRibbonControl control)
         {
-            Settings.SettingsForm.Show();
+            Settings settings = new Settings();
+            settings.Show();
             try
             {
-                Ribbon.BringToTop(Settings.SettingsForm);
+                Ribbon.BringToTop(settings);
             }
             catch
             {

@@ -197,5 +197,101 @@ namespace AVX.Serialization
             }
             return found;
         }
+        // app.MapGet("/settings.yml", () => API.api.engine.Get_Settings());
+        // app.MapGet("/settings/span",    (uint value)   => API.api.engine.Update_Settings("span", value.ToString()));
+        // app.MapGet("/settings/word",    (string value) => API.api.engine.Update_Settings("word", value));
+        // app.MapGet("/settings/lemma",   (string value) => API.api.engine.Update_Settings("lemma", value));
+        // app.MapGet("/settings/lexicon", (string value) => API.api.engine.Update_Settings("lexicon", value));
+
+        public Dictionary<string,string> ManageSettings()
+        {
+            Dictionary<string, string> items = new Dictionary<string, string>();
+
+            string url = "settings.yml";
+
+            try
+            {
+                using (var awaitable = this.Client.GetAsync(url))
+                {
+                    awaitable.Wait();
+                    var response = awaitable.Result;
+
+                    //if (response.EnsureSuccessStatusCode())
+                    {
+                        var awaitableStream = response.Content.ReadAsStreamAsync();
+                        awaitableStream.Wait();
+                        using (TextReader content = new StreamReader(awaitableStream.Result))
+                        {
+                            for (string line = content.ReadLine(); line != null; line = content.ReadLine())
+                            {
+                                string[] parts = line.Split(':');
+                                if (parts.Length == 2)
+                                {
+                                    switch(parts[0].Trim().ToLower())
+                                    {
+                                        case "span":             items["span"]    = parts[1].Trim().ToLower(); break;
+                                        case "lexicon.search":   items["lexicon"] = parts[1].Trim().ToLower(); break;
+                                        case "similarity.word":  items["word"]    = parts[1].Trim().ToLower(); break;
+                                        case "similarity.lemma": items["lemma"]   = parts[1].Trim().ToLower(); break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                items.Clear();
+            }
+            return items;
+        }
+        public Dictionary<string, string> ManageSettings(string key, string value)
+        {
+            if (string.IsNullOrWhiteSpace(key) || string.IsNullOrWhiteSpace(key))
+                return ManageSettings();
+
+            Dictionary<string, string> items = new Dictionary<string, string>();
+
+            string url = "settings/" + key.Trim().ToLower() + "?value=" + value;
+
+            try
+            {
+                using (var awaitable = this.Client.GetAsync(url))
+                {
+                    awaitable.Wait();
+                    var response = awaitable.Result;
+
+                    //if (response.EnsureSuccessStatusCode())
+                    {
+                        var awaitableStream = response.Content.ReadAsStreamAsync();
+                        awaitableStream.Wait();
+                        using (TextReader content = new StreamReader(awaitableStream.Result))
+                        {
+                            var result = content.ReadToEnd();
+                            for (string line = content.ReadLine(); line != null; line = content.ReadLine())
+                            {
+                                string[] parts = line.Split(':');
+                                if (parts.Length == 2)
+                                {
+                                    switch (parts[0].Trim().ToLower())
+                                    {
+                                        case "span": items["span"] = parts[1].Trim().ToLower(); break;
+                                        case "lexicon.search": items["lexicon"] = parts[1].Trim().ToLower(); break;
+                                        case "similarity.word": items["word"] = parts[1].Trim().ToLower(); break;
+                                        case "similarity.lemma": items["lemma"] = parts[1].Trim().ToLower(); break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                items.Clear();
+            }
+            return items;
+        }
     }
 }

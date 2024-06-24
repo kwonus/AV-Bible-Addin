@@ -1,4 +1,5 @@
-﻿using Microsoft.Office.Interop.Word;
+﻿using AVX.Serialization;
+using Microsoft.Office.Interop.Word;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace AVX
 {
@@ -16,7 +18,6 @@ namespace AVX
     /// </summary>
     public partial class Settings : System.Windows.Window
     {
-        public static Settings SettingsForm { get; private set; } = new Settings();
         [DllImport("gdi32")]
         static extern int DeleteObject(IntPtr o);
         public Settings()
@@ -35,18 +36,57 @@ namespace AVX
             {
                 DeleteObject(ip);
             }
-            if (src != null) 
+            if (src != null)
                 this.AVIcon.Source = src;
-        }
-        public static bool ForceClose = false; // Indicate if it is an explicit close request
-        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
-        {
-            base.OnClosing(e);
-            if (ForceClose)
-                return;
 
-            e.Cancel = true;
-            this.Hide();
+            this.Loaded += new RoutedEventHandler(OnFormShow);
+        }
+
+        private void OnFormShow(object sender, RoutedEventArgs e)
+        {
+            var settings = ThisAddIn.API.ManageSettings();
+
+            if (settings != null)
+            {
+                foreach (var key in settings.Keys)
+                {
+                    switch(key)
+                    {
+                        case "span":    this.span.Text    = settings[key]; break;
+                        case "lexicon": this.lexicon.Text = settings[key]; break;
+                        case "word":    this.word.Text    = settings[key]; break;
+                        case "lemma":   this.lemma.Text   = settings[key]; break;
+                    }
+                }
+            }
+        }
+
+        private void ButtonUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            var settings = ThisAddIn.API.ManageSettings();
+
+            if (settings != null)
+            {
+                foreach (var key in settings.Keys)
+                {
+                    switch(key)
+                    {
+                        case "span":    if (!this.span.Text.Trim().Equals(settings[key], StringComparison.InvariantCultureIgnoreCase))
+                                            ThisAddIn.API.ManageSettings("span", this.span.Text.Trim());
+                                        break;
+                        case "lexicon": if (!this.lexicon.Text.Trim().Equals(settings[key], StringComparison.InvariantCultureIgnoreCase))
+                                            ThisAddIn.API.ManageSettings("lexicon", this.lexicon.Text.Trim());
+                                        break;
+                        case "word":    if (!this.word.Text.Trim().Equals(settings[key], StringComparison.InvariantCultureIgnoreCase))
+                                            ThisAddIn.API.ManageSettings("word", this.word.Text.Trim());
+                                        break;
+                        case "lemma":   if (!this.lemma.Text.Trim().Equals(settings[key], StringComparison.InvariantCultureIgnoreCase))
+                                            ThisAddIn.API.ManageSettings("lemma", this.lemma.Text.Trim());
+                                        break;
+                    }
+                }
+            }
+            Close();
         }
     }
 }
