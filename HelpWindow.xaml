@@ -10,6 +10,13 @@
         Background="LightGray">
     <Grid>
         <TabControl x:Name="tabControl">
+            <TabItem Header="Getting Started">
+                <Grid Background="#FFE5E5E5">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                        <RichTextBox Name="QuickStartHelp"></RichTextBox>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
             <TabItem Header="Overview">
                 <Grid Background="#FFE5E5E5">
                     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">

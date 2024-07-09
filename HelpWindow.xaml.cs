@@ -26,6 +26,9 @@
             InitializeComponent();
             HelpWindow.ForceClose = false;
 
+            using (var quickstart = new MemoryStream(Encoding.UTF8.GetBytes(Properties.Resources.quickstart)))
+                this.QuickStartHelp.Selection.Load(quickstart, DataFormats.Rtf);
+
             using (var overview = new MemoryStream(Encoding.UTF8.GetBytes(Properties.Resources.overview)))
                 this.OverviewHelp.Selection.Load(overview, DataFormats.Rtf);
 

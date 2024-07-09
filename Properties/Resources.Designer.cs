@@ -115,7 +115,8 @@ namespace AVX.Properties {
         ///{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
         ///\widowctrl\hyphauto
         ///
-        ///{\pard \ql \f0 \sa180 \li0 \fi0 Early-Modern-English, the language spoken at the time of Shakespeare, is known to be more morphologically rich than contemporary Modern-English. There are also some words that are seldomly used today. We&apos;ll discuss a few of those, too. For brevity&apos;s sake, we will refer to a word in the Early-Modern-English vocabulary as an &quot;Eli [rest of string was truncated]&quot;;.
+        ///{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel2 \b \fs28 Early Modern English\par}
+        ///{\pard \ql \f0 \sa180 \li0 \fi0 Early-Modern-English, the language spoken at the time of Shakespeare, is known to be more morphologically rich than contemporary Modern-English. There are also some words that are seldomly used today. We&apos;ll discuss a few of those, too. For br [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string language {
             get {
@@ -144,12 +145,8 @@ namespace AVX.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
-        ///{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
-        ///\widowctrl\hyphauto
-        ///
-        ///{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel1 \b \fs32 Background\par}
-        ///{\pard \ql \f0 \sa180 \li0 \fi0 Near the end of the last century, Google pioneered the modern search interface by employing an elegantly simple &quot;search box&quot;. This was an evolution away from the complex interfaces that preceded it. Still, it becomes problematic when we want to search for m [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to {\rtf1\adeflang1025\ansi\ansicpg1252\uc1\adeff31507\deff0\stshfdbch31505\stshfloch31506\stshfhich31506\stshfbi31507\deflang1033\deflangfe1033\themelang1033\themelangfe0\themelangcs0{\fonttbl{\f0\fbidi \froman\fcharset0\fprq2{\*\panose 02020603050405020304}Times New Roman;}{\f4\fbidi \fswiss\fcharset0\fprq2{\*\panose 020b0604020202020204}Helvetica;}
+        ///{\f34\fbidi \froman\fcharset0\fprq2{\*\panose 02040503050406030204}Cambria Math;}{\f37\fbidi \fswiss\fcharset0\fprq2{\*\panose 020f0502020204030204}Calibri;}{\f [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string overview {
             get {
@@ -158,12 +155,18 @@ namespace AVX.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
-        ///{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
-        ///\widowctrl\hyphauto
-        ///
-        ///{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel1 \b \fs32 Selection Criteria\par}
-        ///{\pard \ql \f0 \sa180 \li0 \fi0 The selection criteria controls how verses are selected. It is made up of one to three blocks. The ordering of blocks is partly prescribed. When present, the expression block must be in the initial position. The scoping block and the settings-block  [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to {\rtf1\adeflang1025\ansi\ansicpg1252\uc1\adeff0\deff0\stshfdbch31505\stshfloch31506\stshfhich31506\stshfbi0\deflang1033\deflangfe1033\themelang1033\themelangfe0\themelangcs0{\fonttbl{\f0\fbidi \froman\fcharset0\fprq2{\*\panose 02020603050405020304}Times New Roman;}{\f4\fbidi \fswiss\fcharset0\fprq2{\*\panose 020b0604020202020204}Helvetica;}
+        ///{\f34\fbidi \froman\fcharset0\fprq2{\*\panose 02040503050406030204}Cambria Math;}{\f37\fbidi \fswiss\fcharset0\fprq2{\*\panose 020f0502020204030204}Calibri;}{\flomajor\ [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string quickstart {
+            get {
+                return ResourceManager.GetString("quickstart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {\rtf1\adeflang1025\ansi\ansicpg1252\uc1\adeff0\deff0\stshfdbch31505\stshfloch31506\stshfhich31506\stshfbi0\deflang1033\deflangfe1033\themelang1033\themelangfe0\themelangcs0{\fonttbl{\f0\fbidi \froman\fcharset0\fprq2{\*\panose 02020603050405020304}Times New Roman;}{\f4\fbidi \fswiss\fcharset0\fprq2{\*\panose 020b0604020202020204}Helvetica;}
+        ///{\f34\fbidi \froman\fcharset0\fprq2{\*\panose 02040503050406030204}Cambria Math;}{\f37\fbidi \fswiss\fcharset0\fprq2{\*\panose 020f0502020204030204}Calibri;}{\flomajor\ [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string searching {
             get {
@@ -172,12 +175,8 @@ namespace AVX.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
-        ///{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
-        ///\widowctrl\hyphauto
-        ///
-        ///{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel2 \b \fs28 Commands that control persistent Settings\par}
-        ///{\pard \ql \f0 \sa180 \li0 \fi0 | Action | Parameters | shorthand invocation | | ---------- | ---------------------------- | -------------------- | | {\b @clear} | {\i setting} or ALL | n/a | | {\b @get} | {\i setting} or ALL or revision | n/a | | {\b @set}  [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to {\rtf1\adeflang1025\ansi\ansicpg1252\uc1\adeff31507\deff0\stshfdbch31505\stshfloch31506\stshfhich31506\stshfbi31507\deflang1033\deflangfe1033\themelang1033\themelangfe0\themelangcs0{\fonttbl{\f0\fbidi \froman\fcharset0\fprq2{\*\panose 02020603050405020304}Times New Roman;}{\f4\fbidi \fswiss\fcharset0\fprq2{\*\panose 020b0604020202020204}Helvetica;}
+        ///{\f34\fbidi \froman\fcharset0\fprq2{\*\panose 02040503050406030204}Cambria Math;}{\f37\fbidi \fswiss\fcharset0\fprq2{\*\panose 020f0502020204030204}Calibri;}{\f [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string settings {
             get {

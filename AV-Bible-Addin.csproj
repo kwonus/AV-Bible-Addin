@@ -224,6 +224,7 @@
     <EmbeddedResource Include="help\overview.rtf" />
     <EmbeddedResource Include="help\searching.rtf" />
     <EmbeddedResource Include="help\settings.rtf" />
+    <EmbeddedResource Include="help\quickstart.rtf" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
