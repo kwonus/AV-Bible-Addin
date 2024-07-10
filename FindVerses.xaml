@@ -4,19 +4,25 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AVX"
-             mc:Ignorable="d" d:DesignWidth="420"
-            Height="601" Width="420"
+             mc:Ignorable="d" d:DesignWidth="480"
+            Height="660" Width="480" MinWidth="480" MinHeight="660" 
+            Activated="Window_Activated"
             Title="AV-Bible – Find Verses">
     <Grid>
-        <TextBox x:Name="TextCriteria" Margin="80,33,132,0" TextWrapping="Wrap" Height="23" VerticalAlignment="Top" KeyDown="OnKeyDownCrieria"/>
-        <Label Content="Find" HorizontalAlignment="Left" Margin="32,30,0,0" VerticalAlignment="Top"/>
-        <CheckBox x:Name="modernize" Content="Modernize the text" HorizontalAlignment="Left" Margin="80,0,0,169" VerticalAlignment="Bottom"/>
-        <TreeView x:Name="FoundTree" Margin="80,79,38,189" SelectedItemChanged="FoundTree_SelectedItemChanged"/>
-        <Label Content="verses" HorizontalAlignment="Left" Margin="32,79,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="button_search" Content="Search" Margin="0,33,38,0" RenderTransformOrigin="-0.453,0.502" Click="search_Click" HorizontalAlignment="Right" Width="75" Height="20" VerticalAlignment="Top"/>
-        <Button x:Name="button_insert_all" Content="Insert All Verse Matches" Margin="0,0,35,132" VerticalAlignment="Bottom" RenderTransformOrigin="-0.453,0.502" Click="insert_all_Click" HorizontalAlignment="Right" Width="186" IsEnabled="False"/>
-        <Button x:Name="button_insert_book" Content="Insert Selected Book Matches" Margin="0,0,35,96" VerticalAlignment="Bottom" RenderTransformOrigin="-0.453,0.502" Click="insert_book_Click" HorizontalAlignment="Right" Width="186" IsEnabled="False"/>
-        <Button x:Name="button_insert_verse" Content="Insert Selected Verse Match" Margin="0,0,35,61" VerticalAlignment="Bottom" RenderTransformOrigin="-0.453,0.502" Click="insert_verse_Click" HorizontalAlignment="Right" Width="186" IsEnabled="False"/>
-        <Button x:Name="button_insert_variant" Content="Insert Custom Verse Range" Margin="0,0,35,25" VerticalAlignment="Bottom" RenderTransformOrigin="-0.453,0.502" Click="insert_variant_Click" HorizontalAlignment="Right" Width="186" IsEnabled="False"/>
+        <TextBox x:Name="TextCriteria" Margin="84,20,128,0" TextWrapping="Wrap" Height="23" VerticalAlignment="Top" KeyDown="OnKeyDownCrieria"/>
+        <Label Content="Find" HorizontalAlignment="Left" Margin="36,17,0,0" VerticalAlignment="Top"/>
+        <CheckBox x:Name="modernize" Content="Modernize the text" Margin="84,0,216,118" Height="79" VerticalAlignment="Bottom"/>
+        <TreeView x:Name="FoundTree" Margin="84,66,34,202" SelectedItemChanged="FoundTree_SelectedItemChanged"/>
+        <Label Content="verses" HorizontalAlignment="Left" Margin="36,66,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="button_search" Content="Search" Margin="0,20,34,0" RenderTransformOrigin="-0.453,0.502" Click="search_Click" HorizontalAlignment="Right" Width="76" Height="20" VerticalAlignment="Top"/>
+        <Button x:Name="button_insert_all" Content="Insert All Verse Matches" Margin="0,0,34,159" RenderTransformOrigin="-0.453,0.502" Click="insert_all_Click" HorizontalAlignment="Right" Width="186" IsEnabled="False" Height="20" VerticalAlignment="Bottom"/>
+        <Button x:Name="button_insert_book" Content="Insert Selected Book Matches" Margin="0,0,34,123" RenderTransformOrigin="-0.453,0.502" Click="insert_book_Click" HorizontalAlignment="Right" Width="186" IsEnabled="False" Height="20" VerticalAlignment="Bottom"/>
+        <Button x:Name="button_insert_verse" Content="Insert Selected Verse Match" Margin="0,0,34,88" RenderTransformOrigin="-0.453,0.502" Click="insert_verse_Click" HorizontalAlignment="Right" Width="186" IsEnabled="False" Height="20" VerticalAlignment="Bottom"/>
+        <Button x:Name="button_insert_variant" Content="Insert Custom Verse Range" Margin="0,0,34,52" VerticalAlignment="Bottom" RenderTransformOrigin="-0.453,0.502" Click="insert_variant_Click" HorizontalAlignment="Right" Width="186" IsEnabled="False"/>
+        <StatusBar Height="40" Margin="0,0,0,0" VerticalAlignment="Bottom">
+            <StatusBarItem Margin="22,0,0,0">
+                <TextBlock Name="Status" />
+            </StatusBarItem>
+        </StatusBar>
     </Grid>
 </Window>

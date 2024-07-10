@@ -9,6 +9,8 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using Word = Microsoft.Office.Interop.Word;
 using AVX.Serialization;
+using System.Windows.Media;
+using System.Runtime.InteropServices;
 
 namespace AVX
 {
@@ -17,6 +19,23 @@ namespace AVX
     /// </summary>
     public partial class FindVerses : Window
     {
+        // Constants from winuser.h
+        private const int GWL_STYLE = -16;
+        private const int WS_MAXIMIZEBOX = 0x10000;
+        private const int WS_MINIMIZEBOX = 0x20000;
+
+        [DllImport("user32.dll")]
+        private static extern int GetWindowLong(IntPtr hwnd, int index);
+
+        [DllImport("user32.dll")]
+        private static extern int SetWindowLong(IntPtr hwnd, int index, int value);
+
+        private void HideMinimizeAndMaximizeButtons()
+        {
+            IntPtr hwnd = new System.Windows.Interop.WindowInteropHelper(this).Handle;
+            var currentStyle = GetWindowLong(hwnd, GWL_STYLE);
+            SetWindowLong(hwnd, GWL_STYLE, (currentStyle & ~WS_MAXIMIZEBOX & ~WS_MINIMIZEBOX));
+        }
         public static FindVerses SearchForm { get; private set; } = new FindVerses();
 
         public FindVerses()
@@ -40,6 +59,27 @@ namespace AVX
             // app.MapGet("/debug/find-quoted/{spec}", (string spec) => API.api.engine.Debug_Find(spec, out message, quoted: true).ToString());
 
             var result = ThisAddIn.API.Find(this.TextCriteria.Text, null);
+
+            if (result.Count == 0)
+            {
+                string revison = ThisAddIn.API.GetRevision();
+                if (string.IsNullOrWhiteSpace(revison))
+                {
+                    this.Status.Foreground = new SolidColorBrush(Colors.Maroon);
+                    this.Status.Text = "AV Data-Manager is not running. See User-Help: 'Getting Started'";
+                    return;
+                }
+                else
+                {
+                    this.Status.Foreground = new SolidColorBrush(Colors.Black);
+                    this.Status.Text = "";
+                }
+            }
+            else
+            {
+                this.Status.Foreground = new SolidColorBrush(Colors.Black);
+                this.Status.Text = "";
+            }
 
             this.FoundTree.Items.Clear();
 
@@ -287,5 +327,9 @@ namespace AVX
             }
         }
 
+        private void Window_Activated(object sender, EventArgs e)
+        {
+            this.HideMinimizeAndMaximizeButtons();
+        }
     }
 }

@@ -246,6 +246,41 @@ namespace AVX.Serialization
             }
             return items;
         }
+        public string GetRevision()
+        {
+            string url = "revision.yml";
+
+            try
+            {
+                using (var awaitable = this.Client.GetAsync(url))
+                {
+                    awaitable.Wait();
+                    var response = awaitable.Result;
+
+                    //if (response.EnsureSuccessStatusCode())
+                    {
+                        var awaitableStream = response.Content.ReadAsStreamAsync();
+                        awaitableStream.Wait();
+                        using (TextReader content = new StreamReader(awaitableStream.Result))
+                        {
+                            for (string line = content.ReadLine(); line != null; line = content.ReadLine())
+                            {
+                                string[] parts = line.Split(':');
+                                if (parts.Length == 2)
+                                {
+                                    return parts[1].Trim();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                ;
+            }
+            return string.Empty;
+        }
         public Dictionary<string, string> ManageSettings(string key, string value)
         {
             if (string.IsNullOrWhiteSpace(key) || string.IsNullOrWhiteSpace(key))

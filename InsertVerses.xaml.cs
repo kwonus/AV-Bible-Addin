@@ -4,12 +4,15 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Runtime.InteropServices;
+using System.Runtime.Remoting.Messaging;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
+using System.Windows.Media;
 using System.Xml.Linq;
 using Word = Microsoft.Office.Interop.Word;
 
@@ -96,9 +99,26 @@ namespace AVX
     /// </summary>
     public partial class InsertVerses : System.Windows.Window
     {
+        // Constants from winuser.h
+        private const int GWL_STYLE = -16;
+        private const int WS_MAXIMIZEBOX = 0x10000;
+        private const int WS_MINIMIZEBOX = 0x20000;
+
+        [DllImport("user32.dll")]
+        private static extern int GetWindowLong(IntPtr hwnd, int index);
+
+        [DllImport("user32.dll")]
+        private static extern int SetWindowLong(IntPtr hwnd, int index, int value);
+
+        private void HideMinimizeAndMaximizeButtons()
+        {
+            IntPtr hwnd = new System.Windows.Interop.WindowInteropHelper(this).Handle;
+            var currentStyle = GetWindowLong(hwnd, GWL_STYLE);
+            SetWindowLong(hwnd, GWL_STYLE, (currentStyle & ~WS_MAXIMIZEBOX & ~WS_MINIMIZEBOX));
+        }
         private string SearchSpec;  // this form can be called from SearchForm to allow for custom verse variant
 
-        private static bool PositionForm(InsertVerses form)
+        internal static bool PositionForm(InsertVerses form)
         {
             bool repositioned = false;
 
@@ -157,6 +177,8 @@ namespace AVX
                 }
 
                 form.Show();
+                form.HideMinimizeAndMaximizeButtons();
+
                 if (InsertVerses.PositionForm(form))
                 {
                     Coordinates.top = form.Top;
@@ -424,68 +446,91 @@ namespace AVX
                         this.info.Text = "You must specify a chapter between 1 and " + ((uint)info.ChapterCount).ToString() + " (inclusive)";
                     }
                 }
-                if (bad == null && error == null)
+                if (bad != null)
                 {
-                    int idx = 0;
-                    DataStream[] words = ThisAddIn.API.InsertDetails(new Dictionary<string, string>(), info, c);
+                    this.Status.Text = bad;
+                    return;
+                }
+                if (error != null)
+                {
+                    this.Status.Text = error;
+                    return;
+                }
+                this.Status.Text = "";
 
-                    if (words != null)
+                int idx = 0;
+                DataStream[] words = ThisAddIn.API.InsertDetails(new Dictionary<string, string>(), info, c);
+
+                if (words != null)
+                {
+                    this.Status.Foreground = new SolidColorBrush(Colors.Black);
+                    this.Status.Text = "";
+                    this.WriteVerseSpec();
+
+                    if (list.Count == 1)
                     {
-                        this.WriteVerseSpec();
-
-                        if (list.Count == 1)
+                        byte v = list[0];
+                        do
                         {
-                            byte v = list[0];
-                            do
+                            DataStream word = words[idx];
+
+                            if (word.Coordinates.V == v)
                             {
-                                DataStream word = words[idx];
-
-                                if (word.Coordinates.V == v)
-                                {
-                                    ThisAddIn.WriteVerse(b, words, idx, this.modernize.IsChecked.Value, squelchHighlights: true);
-                                    break;
-                                }
-                                idx += word.Coordinates.WC;
-
-                            }   while (idx < words.Length);
-                            dynamic rng = Ribbon.AVX.Application.ActiveDocument.Range();
-                            rng.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
-
-                            this.Close();
-                        }
-                        else if (list.Count > 1)
-                        {
-                            int cnt = 0;
-                            foreach (byte v in list)
-                            {
-                                DataStream word = words[idx];
-
-                                while (word.Coordinates.V < v && word != null)
-                                {
-                                    idx += word.Coordinates.WC;
-                                    word = idx < words.Length ? words[idx] : null;
-                                }
-                                if (word != null && word.Coordinates.V == v)
-                                {
-                                    ThisAddIn.WriteInlineVerse(b, words, idx, this.modernize.IsChecked.Value, (++cnt == 1), squelchHighlights: true);
-                                    idx += word.Coordinates.WC;
-                                }
-                                else // something went wrong
-                                {
-                                    break;
-                                }
+                                ThisAddIn.WriteVerse(b, words, idx, this.modernize.IsChecked.Value, squelchHighlights: true);
+                                break;
                             }
-                            dynamic rng = Ribbon.AVX.Application.ActiveDocument.Range();
-                            rng.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
+                            idx += word.Coordinates.WC;
 
-                            this.Close();
+                        } while (idx < words.Length);
+                        dynamic rng = Ribbon.AVX.Application.ActiveDocument.Range();
+                        rng.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
+
+                        this.Close();
+                    }
+                    else if (list.Count > 1)
+                    {
+                        int cnt = 0;
+                        foreach (byte v in list)
+                        {
+                            DataStream word = words[idx];
+
+                            while (word.Coordinates.V < v && word != null)
+                            {
+                                idx += word.Coordinates.WC;
+                                word = idx < words.Length ? words[idx] : null;
+                            }
+                            if (word != null && word.Coordinates.V == v)
+                            {
+                                ThisAddIn.WriteInlineVerse(b, words, idx, this.modernize.IsChecked.Value, (++cnt == 1), squelchHighlights: true);
+                                idx += word.Coordinates.WC;
+                            }
+                            else // something went wrong
+                            {
+                                break;
+                            }
                         }
+                        dynamic rng = Ribbon.AVX.Application.ActiveDocument.Range();
+                        rng.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
+
+                        this.Close();
+                    }
+                }
+                else
+                {
+                    string revison = ThisAddIn.API.GetRevision();
+                    if (string.IsNullOrWhiteSpace(revison))
+                    {
+                        this.Status.Foreground = new SolidColorBrush(Colors.Maroon);
+                        this.Status.Text = "AV Data-Manager is not running. See User-Help: 'Getting Started'";
+                        return;
                     }
                 }
             }
             else
             {
+                this.Status.Foreground = new SolidColorBrush(Colors.Maroon);
                 this.info.Text = "You must first select a book from the list prior to attempting to inserting verses.";
+                this.Status.Text = this.info.Text;
             }
         }
 

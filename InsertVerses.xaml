@@ -6,13 +6,13 @@
              xmlns:local="clr-namespace:AVX"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="420"
-            Height="300" Width="420"
+            Height="300" Width="420" MinWidth="420" MinHeight="300" MaxWidth="500" MaxHeight="380"
             Title="AV-Bible – Insert Verses"
             Loaded="Window_Loaded">
     <Grid>
-        <Button x:Name="button" Content="Insert" HorizontalAlignment="Right" Margin="0,0,44,42" VerticalAlignment="Bottom" Width="75" RenderTransformOrigin="-0.453,0.502" Click="button_Click"/>
+        <Button x:Name="button" Content="Insert" HorizontalAlignment="Right" Margin="0,0,44,55" VerticalAlignment="Bottom" Width="75" RenderTransformOrigin="-0.453,0.502" Click="button_Click"/>
         <Label x:Name="label" Content="Book" HorizontalAlignment="Left" Margin="32,30,0,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="comboBoxBook" HorizontalAlignment="Left" Margin="134,34,0,0" VerticalAlignment="Top" Width="234" SelectionChanged="comboBox_SelectionChanged">
+        <ComboBox x:Name="comboBoxBook" Margin="134,34,44,0" VerticalAlignment="Top" SelectionChanged="comboBox_SelectionChanged">
             <ComboBoxItem Tag="bk01" Content="Genesis"/>
             <ComboBoxItem Tag="bk02" Content="Exodus"/>
             <ComboBoxItem Tag="bk03" Content="Leviticus"/>
@@ -83,6 +83,11 @@
         <Label x:Name="label1" Content="Chapter &amp; Verse" HorizontalAlignment="Left" Margin="32,71,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="textBoxChapterAndVerse" Height="23" Margin="134,75,44,0" TextWrapping="Wrap" VerticalAlignment="Top" KeyUp="textBoxChaterAndVerse_KeyUp"/>
         <TextBlock x:Name="info" Margin="32,127,44,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="64"/>
-        <CheckBox x:Name="modernize" Content="Modernize the text" HorizontalAlignment="Left" Margin="32,0,0,42" Height="15" VerticalAlignment="Bottom"/>
+        <CheckBox x:Name="modernize" Content="Modernize the text" HorizontalAlignment="Left" Margin="32,0,0,55" Height="15" VerticalAlignment="Bottom"/>
+        <StatusBar Height="40" Margin="0,0,0,0" VerticalAlignment="Bottom">
+            <StatusBarItem Margin="22,0,0,0">
+                <TextBlock Name="Status" />
+            </StatusBarItem>
+        </StatusBar>
     </Grid>
 </Window>
