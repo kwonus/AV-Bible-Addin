@@ -288,6 +288,7 @@ namespace AVX
 
         private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            this.textBoxChapterAndVerse.Text = "";
             if (this.comboBoxBook.SelectedItem != null)
             {
                 ComboBoxItem item = (ComboBoxItem) this.comboBoxBook.SelectedItem;
@@ -485,6 +486,7 @@ namespace AVX
                         dynamic rng = Ribbon.AVX.Application.ActiveDocument.Range();
                         rng.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
 
+                        this.info.Text = "";
                         this.Close();
                     }
                     else if (list.Count > 1)
@@ -512,6 +514,7 @@ namespace AVX
                         dynamic rng = Ribbon.AVX.Application.ActiveDocument.Range();
                         rng.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
 
+                        this.info.Text = "";
                         this.Close();
                     }
                 }

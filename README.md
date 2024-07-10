@@ -1,7 +1,8 @@
-So you don't want to fiddle with the source code ... a Windows installer is available here:
+This Addin requires 64-bit Windows and .Net Framework 4.8, which is installed by default in all versions of Windows 11 and the May 2019 Update of Windows 10 (Win10/1903)
 
-The 1.0 release allows insertion of bible verses into your currently-open Microsoft Word document. No more Copy&Paste; just click a button in the Ribbon, specify chapter & verse, and voila!
+This application also requires Microsoft Word 2010 or newer. However, it has only been tested with Windows 11 and the latest versions of Microsoft Word.
 
-![image-20210506222500439](AVXAddin.png)
+If your installation of Windows does not have the .Net Framework 4.8 installed, you must install it by default for any hopes of this addin to function correctly.
 
-I wrote the code in just a couple days, so it's not the prettiest.  Still, I had done this before with a much older SDK, and there's not much to it.  But you'll likely have to wait for Fall-2021 until I add search capability also from inside of Word.
+This Addin may appear to work on 32-bit Windows. However, the AV Data-Manager is designed for 64-bit Windows. The Addin obtains much of its functionality from the AV Data-Manager.
+Therefore, the Addin will not function correctly on 32-bit Windows.
