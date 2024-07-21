@@ -42,18 +42,19 @@
     <ROW Component="AVSearch.dll" ComponentId="{9041EE42-50DE-4515-B458-15FD7BD9431D}" Directory_="Manager_Dir" Attributes="0" KeyPath="AVSearch.dll"/>
     <ROW Component="AVXLib.dll" ComponentId="{BDBA9D44-14B9-482F-8B33-E5C14AF11F52}" Directory_="Manager_Dir" Attributes="0" KeyPath="AVXLib.dll"/>
     <ROW Component="AVXOmega.data" ComponentId="{E58D5842-2462-47C1-B5C8-52F35EAE93EB}" Directory_="Data_Dir" Attributes="0" KeyPath="AVXOmega.data" Type="0"/>
-    <ROW Component="Addins" ComponentId="{6562FC19-16FA-4799-9B5D-F0614AC8EA84}" Directory_="APPDIR" Attributes="4" KeyPath="Addins"/>
+    <ROW Component="Addins_1" ComponentId="{16039512-0D0D-43B7-8862-F1CC772C86B2}" Directory_="APPDIR" Attributes="4" KeyPath="Addins_1"/>
     <ROW Component="BlueprintBlueLib.dll" ComponentId="{DF59763D-FCB5-4EF4-A093-7E645E19EE8A}" Directory_="Manager_Dir" Attributes="0" KeyPath="BlueprintBlueLib.dll"/>
     <ROW Component="Description" ComponentId="{6FCE308D-3DD1-492F-B23F-08A6D398AC01}" Directory_="APPDIR" Attributes="4" KeyPath="Description"/>
     <ROW Component="FriendlyName" ComponentId="{554CD53A-07DF-4E93-BFCF-8A543A2012E6}" Directory_="APPDIR" Attributes="4" KeyPath="FriendlyName"/>
     <ROW Component="LoadBehavior" ComponentId="{840E8F0F-365F-4C1C-A899-BBAC5893397A}" Directory_="APPDIR" Attributes="4" KeyPath="LoadBehavior"/>
     <ROW Component="Manifest" ComponentId="{8DD4AAC2-FDF2-47BA-ADBB-B6CE667218F0}" Directory_="APPDIR" Attributes="4" KeyPath="Manifest"/>
+    <ROW Component="Microsoft" ComponentId="{30E335D1-364A-4221-BF6F-4C15A7CDB234}" Directory_="APPDIR" Attributes="4" KeyPath="Microsoft"/>
     <ROW Component="Microsoft.Office.Tools.Common.v4.0.Utilities.dll" ComponentId="{9A216BFB-393F-411C-96E5-C1377FFB2CBD}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Office.Tools.Common.v4.0.Utilities.dll"/>
+    <ROW Component="Office" ComponentId="{235E8048-3265-4407-A867-031B7290106F}" Directory_="APPDIR" Attributes="4" KeyPath="Office"/>
     <ROW Component="PhonemeEmbeddings.dll" ComponentId="{9FE3D5F6-6D87-4469-B73E-48969ADA032F}" Directory_="Manager_Dir" Attributes="0" KeyPath="PhonemeEmbeddings.dll"/>
-    <ROW Component="ProductInformation" ComponentId="{FF1D078A-F2BC-45CC-9554-90C5797DA339}" Directory_="APPDIR" Attributes="4" KeyPath="Version"/>
     <ROW Component="SHORTCUTDIR" ComponentId="{46D6774C-1104-4F48-ABCB-7F6E89FFDA0D}" Directory_="SHORTCUTDIR" Attributes="0"/>
     <ROW Component="Store50x50Logo.scale100.png" ComponentId="{4938C632-9141-4C0C-A028-05BBD26155F9}" Directory_="Assets" Attributes="0" KeyPath="Store50x50Logo.scale100.png" Type="0"/>
-    <ROW Component="Word" ComponentId="{70FB6F4A-1BC5-4501-B855-56F092400F7F}" Directory_="APPDIR" Attributes="4" KeyPath="Word"/>
+    <ROW Component="Word_1" ComponentId="{5CFB4CB3-5B15-4548-B229-F388F6D00997}" Directory_="APPDIR" Attributes="4" KeyPath="Word_1"/>
     <ROW Component="YamlDotNet.dll" ComponentId="{2F8E24C7-7028-45F8-A5F1-D23BFB1665A4}" Directory_="APPDIR" Attributes="0" KeyPath="YamlDotNet.dll"/>
     <ROW Component="YamlDotNet.dll_1" ComponentId="{BC88B094-9924-45CF-A949-FBF49DDFFB33}" Directory_="Manager_Dir" Attributes="0" KeyPath="YamlDotNet.dll_1"/>
     <ROW Component="appsettings.json" ComponentId="{F8C14564-A008-4925-B53A-2EBECFFDDEF8}" Directory_="Manager_Dir" Attributes="0" KeyPath="appsettings.json" Type="0"/>
@@ -81,10 +82,8 @@
     <ROW File="Store50x50Logo.scale400.png" Component_="Store50x50Logo.scale100.png" FileName="STORE5~5.PNG|Store50x50Logo.scale-400.png" Attributes="0" SourcePath="..\websites\Digital-AV\images\gutenburg-press.png" SelfReg="false"/>
     <ROW File="appsettings.json" Component_="appsettings.json" FileName="APPSET~1.JSO|appsettings.json" Attributes="0" SourcePath="..\AV-Data-Manager\bin\Release\net8.0-windows7.0\appsettings.json" SelfReg="false"/>
     <ROW File="AVAPI.dll" Component_="AVAPI.dll" FileName="AV-API.dll" Attributes="0" SourcePath="..\AV-Data-Manager\bin\Release\net8.0-windows7.0\AV-API.dll" SelfReg="false"/>
-    <ROW File="AVDataManager.application" Component_="appsettings.json" FileName="AV-DAT~1.APP|AV-Data-Manager.application" Attributes="0" SourcePath="..\AV-Data-Manager\bin\Release\net8.0-windows7.0\AV-Data-Manager.application" SelfReg="false"/>
     <ROW File="AVDataManager.deps.json" Component_="appsettings.json" FileName="AV-DAT~1.JSO|AV-Data-Manager.deps.json" Attributes="0" SourcePath="..\AV-Data-Manager\bin\Release\net8.0-windows7.0\AV-Data-Manager.deps.json" SelfReg="false"/>
     <ROW File="AVDataManager.dll" Component_="AVDataManager.dll" FileName="AV-DAT~1.DLL|AV-Data-Manager.dll" Attributes="0" SourcePath="..\AV-Data-Manager\bin\Release\net8.0-windows7.0\AV-Data-Manager.dll" SelfReg="false"/>
-    <ROW File="AVDataManager.dll.manifest" Component_="appsettings.json" FileName="AV-DAT~1.MAN|AV-Data-Manager.dll.manifest" Attributes="0" SourcePath="..\AV-Data-Manager\bin\Release\net8.0-windows7.0\AV-Data-Manager.dll.manifest" SelfReg="false"/>
     <ROW File="AVDataManager.exe" Component_="AVDataManager.exe" FileName="AV-DAT~1.EXE|AV-Data-Manager.exe" Attributes="0" SourcePath="..\AV-Data-Manager\bin\Release\net8.0-windows7.0\AV-Data-Manager.exe" SelfReg="false"/>
     <ROW File="AVDataManager.runtimeconfig.json" Component_="appsettings.json" FileName="AV-DAT~2.JSO|AV-Data-Manager.runtimeconfig.json" Attributes="0" SourcePath="..\AV-Data-Manager\bin\Release\net8.0-windows7.0\AV-Data-Manager.runtimeconfig.json" SelfReg="false"/>
     <ROW File="AVEngine.dll" Component_="AVEngine.dll" FileName="AV-ENG~1.DLL|AV-Engine.dll" Attributes="0" SourcePath="..\AV-Data-Manager\bin\Release\net8.0-windows7.0\AV-Engine.dll" SelfReg="false"/>
@@ -360,20 +359,17 @@
     <ROW Action="AI_ResolveKnownFolders" Type="1" Source="aicustact.dll" Target="AI_ResolveKnownFolders"/>
     <ROW Action="AI_SHOW_LOG" Type="65" Source="aicustact.dll" Target="LaunchLogFile" WithoutSeq="true"/>
     <ROW Action="AI_STORE_LOCATION" Type="51" Source="ARPINSTALLLOCATION" Target="[APPDIR]"/>
-    <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]" MultiBuildTarget="Build_MSIX_APPX:"/>
+    <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]"/>
     <ROW Action="SET_SHORTCUTDIR" Type="307" Source="SHORTCUTDIR" Target="[ProgramMenuFolder][ProductName]"/>
     <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatCompsComponent">
     <ROW Feature_="MainFeature" Component_="APPDIR"/>
-    <ROW Feature_="MainFeature" Component_="ProductInformation"/>
     <ROW Feature_="MainFeature" Component_="AVBibleAddin.dll"/>
     <ROW Feature_="MainFeature" Component_="AVBibleAddin.dll.manifest"/>
     <ROW Feature_="MainFeature" Component_="Microsoft.Office.Tools.Common.v4.0.Utilities.dll"/>
     <ROW Feature_="MainFeature" Component_="YamlDotNet.dll"/>
     <ROW Feature_="AiAppXAssets" Component_="Store50x50Logo.scale100.png"/>
-    <ROW Feature_="MainFeature" Component_="Word"/>
-    <ROW Feature_="MainFeature" Component_="Addins"/>
     <ROW Feature_="MainFeature" Component_="Description"/>
     <ROW Feature_="MainFeature" Component_="FriendlyName"/>
     <ROW Feature_="MainFeature" Component_="LoadBehavior"/>
@@ -391,6 +387,10 @@
     <ROW Feature_="MainFeature" Component_="YamlDotNet.dll_1"/>
     <ROW Feature_="MainFeature" Component_="SHORTCUTDIR"/>
     <ROW Feature_="MainFeature" Component_="AVXOmega.data"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft"/>
+    <ROW Feature_="MainFeature" Component_="Office"/>
+    <ROW Feature_="MainFeature" Component_="Word_1"/>
+    <ROW Feature_="MainFeature" Component_="Addins_1"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
     <ROW Name="gutenburgpress256.exe" SourcePath="..\AVBible\gutenburg-press-256.ico" Index="0"/>
@@ -410,18 +410,16 @@
     <ROW Action="AI_EnableDebugLog" Sequence="51"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiRegsComponent">
-    <ROW Registry="AVBibleAddin" Root="-1" Key="Software\Microsoft\Office\Word\Addins\AV-Bible-Addin" Name="\"/>
-    <ROW Registry="Addins" Root="-1" Key="Software\Microsoft\Office\Word\Addins" Name="+" Component_="Addins"/>
-    <ROW Registry="Description" Root="-1" Key="Software\Microsoft\Office\Word\Addins\AV-Bible-Addin" Name="Description" Value="AV-Bible Addin" Component_="Description"/>
-    <ROW Registry="FriendlyName" Root="-1" Key="Software\Microsoft\Office\Word\Addins\AV-Bible-Addin" Name="FriendlyName" Value="AV-Bible Addin for Microsoft Word" Component_="FriendlyName"/>
-    <ROW Registry="LoadBehavior" Root="-1" Key="Software\Microsoft\Office\Word\Addins\AV-Bible-Addin" Name="LoadBehavior" Value="#3" Component_="LoadBehavior" VirtualValue="#"/>
-    <ROW Registry="Manifest" Root="-1" Key="Software\Microsoft\Office\Word\Addins\AV-Bible-Addin" Name="Manifest" Value="file:///[APPDIR]/addin/AV-Bible-Addin.vsto|vstolocal" Component_="Manifest"/>
-    <ROW Registry="Manufacturer" Root="-1" Key="Software\Microsoft" Name="\"/>
-    <ROW Registry="Path" Root="-1" Key="Software\Microsoft\Office" Name="Path" Value="[APPDIR]" Component_="ProductInformation"/>
-    <ROW Registry="ProductName" Root="-1" Key="Software\Microsoft\Office" Name="\"/>
-    <ROW Registry="Software" Root="-1" Key="Software" Name="\"/>
-    <ROW Registry="Version" Root="-1" Key="Software\Microsoft\Office" Name="Version" Value="[ProductVersion]" Component_="ProductInformation"/>
-    <ROW Registry="Word" Root="-1" Key="Software\Microsoft\Office\Word" Name="+" Component_="Word"/>
+    <ROW Registry="AVBibleAddin" Root="1" Key="Software\Microsoft\Office\Word\Addins\AV-Bible-Addin" Name="\"/>
+    <ROW Registry="Addins_1" Root="1" Key="Software\Microsoft\Office\Word\Addins" Name="+" Component_="Addins_1"/>
+    <ROW Registry="Description" Root="1" Key="Software\Microsoft\Office\Word\Addins\AV-Bible-Addin" Name="Description" Value="AV-Bible Addin" Component_="Description"/>
+    <ROW Registry="FriendlyName" Root="1" Key="Software\Microsoft\Office\Word\Addins\AV-Bible-Addin" Name="FriendlyName" Value="AV-Bible Addin for Microsoft Word" Component_="FriendlyName"/>
+    <ROW Registry="LoadBehavior" Root="1" Key="Software\Microsoft\Office\Word\Addins\AV-Bible-Addin" Name="LoadBehavior" Value="#3" Component_="LoadBehavior" VirtualValue="#"/>
+    <ROW Registry="Manifest" Root="1" Key="Software\Microsoft\Office\Word\Addins\AV-Bible-Addin" Name="Manifest" Value="file:///[APPDIR]/addin/AV-Bible-Addin.vsto|vstolocal" Component_="Manifest"/>
+    <ROW Registry="Microsoft" Root="1" Key="Software\Microsoft" Name="+" Component_="Microsoft"/>
+    <ROW Registry="Office" Root="1" Key="Software\Microsoft\Office" Name="+" Component_="Office"/>
+    <ROW Registry="Software_1" Root="1" Key="Software" Name="\"/>
+    <ROW Registry="Word_1" Root="1" Key="Software\Microsoft\Office\Word" Name="+" Component_="Word_1"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
     <ROW Shortcut="AVDataManager" Directory_="SHORTCUTDIR" Name="AV-BIB~1|AV-Bible Manager" Component_="AVDataManager.exe" Target="[#AVDataManager.exe]" Hotkey="0" Icon_="gutenburgpress256.exe" IconIndex="0" ShowCmd="1" WkDir="Manager_Dir" Advertised="true"/>
