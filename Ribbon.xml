@@ -82,10 +82,10 @@
               <button id="bk49"     size="normal" label="Ephesians"       tag="Ephesians"       onAction="clickBook" getImage="GetImage" />
               <button id="bk50"     size="normal" label="Philippians"     tag="Philippians"     onAction="clickBook" getImage="GetImage" />
               <button id="bk51"     size="normal" label="Colossians"      tag="Colossians"      onAction="clickBook" getImage="GetImage" />
-            </group>
-            <group id="NT_Pastoral_Epistles" label="Pastoral Epistles">
               <button id="bk52"     size="normal" label="1 Thessalonians" tag="1 Thessalonians" onAction="clickBook" getImage="GetImage" />
               <button id="bk53"     size="normal" label="2 Thessalonians" tag="2 Thessalonians" onAction="clickBook" getImage="GetImage" />
+            </group>
+            <group id="NT_Pastoral_Epistles" label="Pastoral Epistles">
               <button id="bk54"     size="normal" label="1 Timothy"       tag="1 Timothy"       onAction="clickBook" getImage="GetImage" />
               <button id="bk55"     size="normal" label="2 Timothy"       tag="2 Timothy"       onAction="clickBook" getImage="GetImage" />
               <button id="bk56"     size="normal" label="Titus"           tag="Titus"           onAction="clickBook" getImage="GetImage" />
