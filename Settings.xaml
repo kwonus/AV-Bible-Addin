@@ -15,7 +15,7 @@
             <Label Content="Search Parameters" Margin="10,220,0,0" Height="34" HorizontalAlignment="Left" FontSize="16" Width="178" VerticalAlignment="Top"/>
             <GroupBox BorderThickness="1" Margin="10,249,10,0" Height="65" VerticalAlignment="Top"/>
             <Label Content="Span:" Margin="21,268,0,0" Height="26" HorizontalAlignment="Left" FontSize="14" Width="64" VerticalAlignment="Top"/>
-            <TextBox x:Name="span" Margin="75,264,209,270" Height="26" FontSize="14"/>
+            <TextBox x:Name="span" Margin="75,264,209,0" Height="26" FontSize="14" VerticalAlignment="Top"/>
 
             <Label Content="Fuzziness Thresholds" Margin="10,320,0,0" Height="34" HorizontalAlignment="Left" FontSize="16" Width="169" VerticalAlignment="Top"/>
             <GroupBox BorderThickness="1" Margin="10,353,10,0" Height="96" VerticalAlignment="Top"/>
