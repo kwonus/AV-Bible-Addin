@@ -31,7 +31,7 @@
     <TargetFrameworkProfile />
     <IsWebBootstrapper>False</IsWebBootstrapper>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <PublishUrl>C:\src\AVX-Word-Addin-Installer\</PublishUrl>
+    <PublishUrl>C:\src\AV-Bible-Addin-Installer\</PublishUrl>
     <InstallUrl />
     <TargetCulture>en</TargetCulture>
     <ApplicationVersion>4.7.10.1</ApplicationVersion>
